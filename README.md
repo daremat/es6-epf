@@ -1,48 +1,24 @@
-# ECMAScript 6 ![TODO Module: 0 credits]
+# Initiation to ESNext ![Module: 0 credits]
 
 [![milestone-status]](https://master3-assistant.takima.io?milestoneId=40&redirectUri=https%3A%2F%2Fmaster3.takima.io%2Fmaster3%2Fes6-01)
 
-> read estimate : **TODO XX minutes**.
+> read estimate : **TODO 30 minutes**.
 
-![TODO SKILL X]
-![TODO SKILL Y]
-![TODO SKILL Z]
-
-##### \>>>>>  ![error] TODO remove link to badges list
-(find more badges [HERE](.README/badges.md))
-
-put your badge icon reference at the very end of the `README.md`
-##### \<<<<<
-
-|[Show me the slides](https://docs.google.com/presentation/d/TODO-slides-url)|[Fill in the talk survey (thank you ![heart])](https://docs.google.com/forms/d/e/TODO_link_to_survey)
-|--- |--- |
-
-##### \>>>>>  ![error] TODO remove link to template slide
-(slide template here : https://docs.google.com/presentation/d/11CDv9csucp6oNx10BXXUjMKfvonA72pomgglUL_jzMs/edit#slide=id.g484dff116a_0_233)
-
-(survey template here : https://docs.google.com/forms/d/1XF1F32ESj_z0YlWwwHCuan7m8SuYMSrqkSJy0oBKvCc/edit)
-##### \<<<<<
+![SKILL javascript]
 
 #### You are here because
 
-##### \>>>>>  ![error] TODO complete target audience
- - you know how to <TODO do some stuff>
- - you want to <TODO do some more stuff>
- - You know what **TODO_some_topic** is
- - You have basic knowledge in **TODO_some_topic**
- - you want to <TODO_SOMETHING>
-##### \<<<<<
+ - you know how to code in javascript
+ - you want to start on Angular, React or other recent framework
+ - You have basic knowledge in **ES6 or newer**
 
 ## Bill of modules
 
-##### \>>>>>  ![error] TODO complete bill of modules
 This tutorial is designed to come after those topics :
 
-[![TODO Module X]](https://master3.takima.io/master3/TODO_BillOfModule)
-[![TODO Milestone Y]](https://master3.takima.io/master3/TODO_BillOfModule)
+[![Milestone mmm]](https://master3.takima.io/master3/mmm-01)
 
 If you did not achieved those topics, please consider using their correction.
-##### \<<<<<
 
 ## Abstract
 
@@ -50,8 +26,15 @@ If you did not achieved those topics, please consider using their correction.
 In this milestone, we will focus on ...
 
 Write a short paragraph to
- - describe what is the topic of this milestone,
- - what should the milestone produce as a result
+ - babel
+ - webpack
+ - debugger
+ - sass
+ - closure (bug transpilation)
+ - promise / async await (feature ES6 voir slides kbottero)
+ - module
+ - lodash
+ 
 ##### \<<<<<
 
 #### Some useful references you should consider :
@@ -60,22 +43,20 @@ Write a short paragraph to
 - the [cheatsheet.md](./CHEATSHEET.md)
 
 #### Involved technologies
-![TODO tech]
-![TODO tech]
-![TODO tech]
+![es6]
+![babel]
+![webpack]
 
-![TODO tech]
-![TODO tech]
+![sass]
+![lodash]
 
 #### Prerequisites
- - have **TODO_some_tool** installed
- - have a working **TODO_some_working_prerequisite**
+ - have **nodejs** and **npm** installed
 
 ## Setup
 
 ##### \>>>>>  ![error] TODO complete setup
-[TODO explain how to install the required tools]
-  - `sudo apt-get install TODO-some-tool`
+  - `sudo apt-get install nodejs npm`
 
 During the whole README, if you feel something needs a particular attention, or is an extra,
 please widely use the quotes below.
@@ -182,12 +163,7 @@ Check your achievements with the [following test](https://TODO_link_to_google_fo
 https://docs.google.com/forms/d/1LV_mTVtP4LwDzwN1LawQDYi-Jk9rBvRWjEc19QqwfI8/edit
 ##### \<<<<<
 
-If you want more, please feel free to also explore those extra topics :
-- [![TODO Extra Module X]](https://master3.takima.io/master3/TODO_BillOfModule)
-- [![TODO Extra Milestone Y]](https://master3.takima.io/master3/TODO_BillOfModule)
-
-Ready to follow up? Another epic is waiting for you. [**Check it out in the guide**](https://master3.takima.io/master3/welcome/blob/master/wiki/welcome.md)   
-Ready to follow up? Get started for [![TODO Next Module Z]](https://master3.takima.io/master3/TODO_NextModule)  
+Ready to follow up? Get started for [![Next Milestone angular]](https://master3.takima.io/master3/angular-01)  
 
 ## Troubleshoot
 
@@ -269,18 +245,19 @@ As a reminder, here are the points you should check to ensure your `README.md` i
 
 [TODO Milestone : 0 credits]: https://img.shields.io/badge/TODO_milestone_name-0_credits-red.svg?longCache=true&style=for-the-badge&logoColor=ffffff&colorA=cd1c68&colorB=db9ab5&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABmJLR0QA0AB8AKD7i/b6AAAACXBIWXMAACE4AAAhOAFFljFgAAAAB3RJTUUH4gsbFCYzALEYOAAAAzNJREFUSMedlltoz2EYx7+/zchspuXY/iShnAljYiaUQ4gLSty4kFwosXKhkEtalMMds5mSRORGcmou0HJMccHmEDk1bMM2Pm6enx5vv//+/3nq7Xd4Dt/3eZ/D+0gZqCG16e87UACMB/YB94EWW4+AKmAykK//oQBoGLALuEtmugpMC21kCzQcOA900j36DZR1CRozgGJgLXCjC4MfgHt2rO+7kJuRCawMeJph95uAEqCfrRSwHHieINsAFCV6CcxOUPBH2QosSBcKoAdwzo7T06Ik4TKgIxB8CTS67yonnwcsAEoTbG0N7NT/E0sgH7geCLUCGwMPc02+v8Wt09YTYLAPD1AZeDrS72hKwlFWAkuc0jMn/zhNbGcFntY43lnP2B8o3rD/yxxgvZPvANqAE1ZzMTUCA10C5gJ3jPcFGBozHgSApfZ/iDvSJgdYC8xz39VOd3eQ9XOAdtv45vjnV6fQBAx0xk46XrGr01wnM89trCOIZQ5wy3jXgFyZuzHdBQrN0Epgh+NVp6nduUFyVQSxXO14w2QdwwOWA58SkuInsDow1hc4HcjtTCiVduMdlHX+mJptpaM24DKwBziaJmPPJPTkY8Z7JWBCFwC/gO/AjwztrtnJ3HZAQ+25JBbMkfRCUkNCt2qXVClpoqTpkqokdRrvjaS3kp5LqpM0X1Iv4/VwNqYCPb39nCiKWiRdSgA8HEVRlaQJklZEUbRNUo3xHkoaJ2lyFEXrJPmif+3ex0jqa5tvlvQhxxjHJBEAvrHnO0l7gUmSLkr6LWmmpKIoir6ZzHand9O9l0rqLemXpFZJF3x6nwri8tGKOq6jFLDG4kp8qwOrgr5Z7GL4GRhho0kTMDasqSOW/p1mJE6aVcav870TKAzGjrMObKm1wVEmdwDISyrklO16C7A+7jx28cbetVt21wY3zDgHeNN52BMYntUwBfQBLjkwrDGEN7y/L8fYSTUCJZkAUqZQDhwMgNJRfdBDD9n/K0BBJsCKbk5oV4E+Tn+0DWAbgEFZjYjA4izBHsfN3gEWJY2c2YAuBG6nAXoP7A11/DMrsITjLbRL9LgNVS8tewd0ywtHfwA7LOPX/9An6gAAAABJRU5ErkJggg== "TODO Milestone name"
 [milestone-status]: https://master3.takima.io/.assistant/badges/milestone-status?milestoneId=40
-[TODO Module: 0 credits]: https://img.shields.io/badge/TODO_module_name-0_credits-red.svg?longCache=true&style=for-the-badge&logoColor=ffffff&colorA=0e6dc5&colorB=59a5ec&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABmJLR0QA0AB8AKD7i/b6AAAACXBIWXMAACE4AAAhOAFFljFgAAAAB3RJTUUH4gsbFCYzALEYOAAAAzNJREFUSMedlltoz2EYx7+/zchspuXY/iShnAljYiaUQ4gLSty4kFwosXKhkEtalMMds5mSRORGcmou0HJMccHmEDk1bMM2Pm6enx5vv//+/3nq7Xd4Dt/3eZ/D+0gZqCG16e87UACMB/YB94EWW4+AKmAykK//oQBoGLALuEtmugpMC21kCzQcOA900j36DZR1CRozgGJgLXCjC4MfgHt2rO+7kJuRCawMeJph95uAEqCfrRSwHHieINsAFCV6CcxOUPBH2QosSBcKoAdwzo7T06Ik4TKgIxB8CTS67yonnwcsAEoTbG0N7NT/E0sgH7geCLUCGwMPc02+v8Wt09YTYLAPD1AZeDrS72hKwlFWAkuc0jMn/zhNbGcFntY43lnP2B8o3rD/yxxgvZPvANqAE1ZzMTUCA10C5gJ3jPcFGBozHgSApfZ/iDvSJgdYC8xz39VOd3eQ9XOAdtv45vjnV6fQBAx0xk46XrGr01wnM89trCOIZQ5wy3jXgFyZuzHdBQrN0Epgh+NVp6nduUFyVQSxXO14w2QdwwOWA58SkuInsDow1hc4HcjtTCiVduMdlHX+mJptpaM24DKwBziaJmPPJPTkY8Z7JWBCFwC/gO/AjwztrtnJ3HZAQ+25JBbMkfRCUkNCt2qXVClpoqTpkqokdRrvjaS3kp5LqpM0X1Iv4/VwNqYCPb39nCiKWiRdSgA8HEVRlaQJklZEUbRNUo3xHkoaJ2lyFEXrJPmif+3ex0jqa5tvlvQhxxjHJBEAvrHnO0l7gUmSLkr6LWmmpKIoir6ZzHand9O9l0rqLemXpFZJF3x6nwri8tGKOq6jFLDG4kp8qwOrgr5Z7GL4GRhho0kTMDasqSOW/p1mJE6aVcav870TKAzGjrMObKm1wVEmdwDISyrklO16C7A+7jx28cbetVt21wY3zDgHeNN52BMYntUwBfQBLjkwrDGEN7y/L8fYSTUCJZkAUqZQDhwMgNJRfdBDD9n/K0BBJsCKbk5oV4E+Tn+0DWAbgEFZjYjA4izBHsfN3gEWJY2c2YAuBG6nAXoP7A11/DMrsITjLbRL9LgNVS8tewd0ywtHfwA7LOPX/9An6gAAAABJRU5ErkJggg== "TODO Module name"
+[Module: 0 credits]: https://img.shields.io/badge/TODO_module_name-0_credits-red.svg?longCache=true&style=for-the-badge&logoColor=ffffff&colorA=0e6dc5&colorB=59a5ec&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABmJLR0QA0AB8AKD7i/b6AAAACXBIWXMAACE4AAAhOAFFljFgAAAAB3RJTUUH4gsbFCYzALEYOAAAAzNJREFUSMedlltoz2EYx7+/zchspuXY/iShnAljYiaUQ4gLSty4kFwosXKhkEtalMMds5mSRORGcmou0HJMccHmEDk1bMM2Pm6enx5vv//+/3nq7Xd4Dt/3eZ/D+0gZqCG16e87UACMB/YB94EWW4+AKmAykK//oQBoGLALuEtmugpMC21kCzQcOA900j36DZR1CRozgGJgLXCjC4MfgHt2rO+7kJuRCawMeJph95uAEqCfrRSwHHieINsAFCV6CcxOUPBH2QosSBcKoAdwzo7T06Ik4TKgIxB8CTS67yonnwcsAEoTbG0N7NT/E0sgH7geCLUCGwMPc02+v8Wt09YTYLAPD1AZeDrS72hKwlFWAkuc0jMn/zhNbGcFntY43lnP2B8o3rD/yxxgvZPvANqAE1ZzMTUCA10C5gJ3jPcFGBozHgSApfZ/iDvSJgdYC8xz39VOd3eQ9XOAdtv45vjnV6fQBAx0xk46XrGr01wnM89trCOIZQ5wy3jXgFyZuzHdBQrN0Epgh+NVp6nduUFyVQSxXO14w2QdwwOWA58SkuInsDow1hc4HcjtTCiVduMdlHX+mJptpaM24DKwBziaJmPPJPTkY8Z7JWBCFwC/gO/AjwztrtnJ3HZAQ+25JBbMkfRCUkNCt2qXVClpoqTpkqokdRrvjaS3kp5LqpM0X1Iv4/VwNqYCPb39nCiKWiRdSgA8HEVRlaQJklZEUbRNUo3xHkoaJ2lyFEXrJPmif+3ex0jqa5tvlvQhxxjHJBEAvrHnO0l7gUmSLkr6LWmmpKIoir6ZzHand9O9l0rqLemXpFZJF3x6nwri8tGKOq6jFLDG4kp8qwOrgr5Z7GL4GRhho0kTMDasqSOW/p1mJE6aVcav870TKAzGjrMObKm1wVEmdwDISyrklO16C7A+7jx28cbetVt21wY3zDgHeNN52BMYntUwBfQBLjkwrDGEN7y/L8fYSTUCJZkAUqZQDhwMgNJRfdBDD9n/K0BBJsCKbk5oV4E+Tn+0DWAbgEFZjYjA4izBHsfN3gEWJY2c2YAuBG6nAXoP7A11/DMrsITjLbRL9LgNVS8tewd0ywtHfwA7LOPX/9An6gAAAABJRU5ErkJggg== "TODO Module name"
 
-[TODO SKILL X]: https://img.shields.io/badge/TODO_TECH_X-%E2%98%85%E2%98%85%E2%98%85%E2%98%85-red.svg?longCache=true&style=for-the-badge&logoColor=ffffff&logo=java
-[TODO SKILL Y]: https://img.shields.io/badge/TODO_TECH_Y-%E2%98%85%E2%98%85%E2%98%85-orange.svg?longCache=true&style=for-the-badge&logoColor=ffffff&logo=java
-[TODO SKILL Z]: https://img.shields.io/badge/TODO_TECH_Z-%E2%98%85%20%20%20-green.svg?longCache=true&style=for-the-badge&logoColor=ffffff&logo=java
-[TODO Module X]: https://img.shields.io/badge/TODO_Module_x--red.svg?longCache=true&style=for-the-badge&logoColor=ffffff&colorA=0e6dc5&colorB=59a5ec&logo=java
-[TODO Milestone Y]: https://img.shields.io/badge/TODO_Milestone_y--red.svg?longCache=true&style=for-the-badge&logoColor=ffffff&colorA=cd1c68&colorB=db9ab5&logo=java
+[SKILL javascript]: https://img.shields.io/badge/JS-%E2%98%85%E2%98%85%20%20-yellow.svg?longCache=true&style=for-the-badge&logoColor=ffffff&logo=javascript
+[Milestone mmm]: https://img.shields.io/badge/maven_multi_module--red.svg?longCache=true&style=for-the-badge&logoColor=ffffff&colorA=0e6dc5&colorB=59a5ec
 [TODO Extra Module X]: https://img.shields.io/badge/TODO_Extra_Module_x--red.svg?longCache=true&style=for-the-badge&logoColor=ffffff&colorA=0e6dc5&colorB=59a5ec&logo=java
 [TODO Extra Milestone Y]: https://img.shields.io/badge/TODO_Extra_Milestone_y--red.svg?longCache=true&style=for-the-badge&logoColor=ffffff&colorA=cd1c68&colorB=db9ab5&logo=java
-[TODO Next Module Z]: https://img.shields.io/badge/TODO_next_Module_z--red.svg?longCache=true&style=for-the-badge&logoColor=ffffff&colorA=0e6dc5&colorB=59a5ec&logo=java
+[Next Milestone angular]: https://img.shields.io/badge/next_Module_angular--red.svg?longCache=true&style=for-the-badge&logoColor=ffffff&colorA=0e6dc5&colorB=59a5ec&logo=angular
 
-[TODO tech]: .README/icons/todo-tech-md.png
+[es6]: .README/icons/es6.png
+[babel]: .README/icons/babel.png
+[webpack]: .README/icons/webpack.png
+[sass]: .README/icons/sass.png
+[lodash]: .README/icons/lodash.png
 
 [info]: .README/info.png
 [warning]: .README/warning.png
