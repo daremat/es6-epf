@@ -1,0 +1,56 @@
+{
+  "milestone": {
+    "title": "TODO example milestone",
+    "description": "TODO example milestone description",
+    "type": "milestone",
+    "issues": [{
+      "title": "issue1",
+      "description": "first issue"
+    }, {
+      "title": "issue2",
+      "description": "second issue"
+    }
+    ]
+  },
+  "m3lint": {
+    "readme": {
+      "file-exists": true,
+      "milestone-badge": true,
+      "skill-badge": true,
+      "course-link": [true, "/.*docs\\.google.*/", "/show me the slides/i"],
+      "quick-intro-list": [true, "/^You are here because$/"],
+      "bill-of-modules-section": [true, "/^Bill of modules/"],
+      "abstract-section": [true, "^Abstract$"],
+      "references-section": [true, "/^Some useful references you should consider :$/"],
+      "tech-list-section": [true, "^Involved technologies$"],
+      "tech-icons": true,
+      "prerequisites-section": [true, "^Prerequisites$"],
+      "setup-section": [true, "/^Setup$/"],
+      "start-section": [true, "/^Get started$/"],
+      "step-section": [true, "/Step \\d+ - .+$/"],
+      "step-file-list": [true, "/^Files? produced(?:\\s\\(YMMV\\))?\\s?:?$/"],
+      "step-checklist": [true, "/^Checklist$/"],
+      "step-commit-notice": [true, "/^commit step$/", "/^commit$/"],
+      "troubleshoots-section": [true, "Troubleshoot( [0-9])?"],
+      "end-section": [true, "/^Check up$/"],
+      "end-extra-modules": true,
+      "contributors-section": [true, "^Contributors$"],
+      "mentors-section": [true, "^Mentors$"],
+      "copyright-notice": [true, "^© Takima 2019$"],
+      "no-todo": true,
+      "no-template-duplicate": true,
+      "scores": {
+        "min": [true, 100],
+        "troubleshoots-count": [true, 4],
+        "images-count": [true, 10],
+        "quotes-count": [true, 10],
+        "bolds-count": [true, 20],
+        "italics-count": [true, 2],
+        "links-count": [true, 15],
+        "code-inlines-count": [true, 10],
+        "code-blocks-count": [true, 8],
+        "char-count": [true, 20000]
+      }
+    }
+  }
+}
