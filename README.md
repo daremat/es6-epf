@@ -25,15 +25,7 @@ If you did not achieved those topics, please consider using their correction.
 ##### \>>>>>  ![error] TODO complete complete abstract
 In this milestone, we will focus on ...
 
->Write a short paragraph to
-> - babel
-> - webpack
-> - debugger
-> - sass
-> - closure (bug transpilation)
-> - promise / async await (feature ES6 voir slides kbottero)
-> - module
-> - lodash
+>Write a short paragraph to ...
  
 ##### \<<<<<
 
@@ -92,8 +84,8 @@ A short paragraph to introduce the goals,
 [TODO introduce tools core strength]
 ##### \<<<<<
 
-## Step 1 - [TODO what is step 1]
-topics: **TODO topic1**, **TODO topic2**
+## Step 1 - NPM & webpack setup
+topics: NPM, webpack
 
 ##### \>>>>>  ![error] TODO step prerequisites (modules, tools, etc)
 
@@ -103,45 +95,42 @@ If this is not the case, consider using the correction.
 ##### \<<<<<
 
 ##### \>>>>>  ![error] TODO introduce chapter goal
-This step is about [TODO do some great things], because ...
+This step is about setting up a standard npm module containing a webpack application, this will be the project skeleton.
 
-**Why ?** [TODO why step]
+**Why ?** Have a standardized NPM module and an easily runnable webpack application.
 
 **At the end, we should have ...** [TODO step result]
 ##### \<<<<<
 
 ### Files produced:
 ```sh
-src/TODO_produced_file.java
-src/TODO_produced_file.java
+package.json
+webpack.config.js
 ```
 
 ### Checklist
- - [ ] I know what **TODO checklist topic** is
- - [ ] I know how do to **TODO checklist assertion** is
- - [ ] ...
+ - [ ] I know how to setup a npm module
+ - [ ] I know npm package basis
+ - [ ] I know webpack basic setup and commands
 
 ![commit] **commit step**
 
 [troubleshoot](#troubleshoot-1)
 
-## Step 2 - [TODO what is step 2]
-topics: **TODO_topic1, TODO_topic2**
+## Step 2 - Style the application
+topics: webpack loader, sass
 
-[TODO_explain_step_2]
+## Step 3 - Implement memory game
+topics: ES6 features, lodash, Promise, async/await, debugger
 
-### Files produced:
-```sh
-src/TODO_produced_file.java
-```
+## Step 4 - Unit testing and browser support
+topics: Unit test, jasmine, phantomJS, polyfill
 
-### Checklist
- - [ ] I know what **TODO_topic** is
- - [ ] ...
+## Step 5 - Memory management
+topics: storage usage, cookies
 
-![commit] **commit step**
-
-[troubleshoot](#troubleshoot-2)
+## Step 6 - Bonus: Offline/dynamic and production deploy
+topics: websockects, webworkers, nginx docker
 
 ## Check up
 
