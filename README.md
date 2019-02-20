@@ -118,7 +118,30 @@ webpack.config.js
 [troubleshoot](#troubleshoot-1)
 
 ## Step 2 - Style the application
-topics: webpack loader, sass
+topics: semantic-ui, webpack loader, sass
+
+* add semantic-ui-css to the project
+```sh
+npm install --save semanti-ui-css
+```
+* load semantic-ui css in the application before your styling
+```javascript
+//index.js
+// ...
+import 'semantic-ui-css/semantic-ui.min.css';
+// ...
+```
+* add webpack static loader to handle semantic-ui fonts
+```javascript
+//webpack.config.js
+// ...
+module: {
+    loaders: [        // ...
+        { test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' }
+    ]
+}
+// ...
+```
 
 ## Step 3 - Implement memory game
 topics: ES6 features, lodash, Promise, async/await, debugger
