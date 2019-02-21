@@ -87,13 +87,6 @@ A short paragraph to introduce the goals,
 ## Step 1 - NPM & webpack setup
 topics: NPM, webpack
 
-##### \>>>>>  ![error] TODO step prerequisites (modules, tools, etc)
-
-> ![info] This step consider you successfully achieved <sub>[![TODO Module X]](TODO-link-to-module)</sub>.
-If this is not the case, consider using the correction.
-
-##### \<<<<<
-
 ##### \>>>>>  ![error] TODO introduce chapter goal
 This step is about setting up a standard npm module containing a webpack application, this will be the project skeleton.
 
@@ -102,18 +95,159 @@ This step is about setting up a standard npm module containing a webpack applica
 **At the end, we should have ...** [TODO step result]
 ##### \<<<<<
 
-### Files produced:
+### Step 1.1 - init your npm project
+```sh
+mkdir meme-mory
+cd meme-mory/
+npm init -y
+npm install
+```
+* set your package as private
+```json
+//package.json
+{
+  ...
+  "private": true,
+  ...
+}
+```
+Files produced:
 ```sh
 package.json
-webpack.config.js
 ```
+![commit] **commit step**
+### Step 1.2 - webpack: install and naive setup
+
+Webpack is a javascript tool used to bundle a web application, basically a coffee maker used in 99% of web projects.
+Webpack can be quite a complex bundler and does a lot of its work behind the scene, we will go trough a simple manual 
+setup to check what is going on. You can check the documentation to get a deeper insight of this tool:
+[https://webpack.js.org/guides/getting-started/] & [https://webpack.jakoblind.no/]
+(you might also want to check webpack-cli, a tool to help you create your webpack config: [https://github.com/webpack/webpack-cli])
+
+Let's head to our setup, this will start by installing everything we need:
+```sh
+npm install --save-dev webpack webpack-dev-server \
+babel-loader @babel/core @babel/preset-env \
+clean-webpack-plugin html-webpack-plugin
+```
+> ![question] What's the difference between the options --save-dev, --save and none?
+
+Create your webpack client application containing: .babelrc, src/index.html and src/app/index.js:
+```
+mem-ory
+│   .babelrc
+│   package.json
+└───src
+    │   index.html
+    └───app
+        |   index.js
+    
+```
+```json
+// .babelrc
+{
+  presets: [
+    [
+      '@babel/preset-env',
+      {
+        modules: false
+      }
+    ]
+  ]
+}
+```
+```html
+<!--src/index.html-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+    <h1>Hello World</h1>
+</body>
+</html>
+```
+```javascript
+// src/app/index.js
+console.log('Hello World');
+
+function component() {
+  let element = document.createElement('div');
+
+  // Lodash, currently included via a script, is required for this line to work
+  element.innerHTML = ['Hello', 'webpack', 'App'].join('\n\n');
+
+  return element;
+}
+
+document.body.appendChild(component());
+```
+We will now tell webpack how to bundle the application properly and use babel
+```javascript
+//webpack.config.js
+const path = require('path');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+  watch: false,
+  entry: './src/app/index.js',
+  plugins: [
+    new CleanWebpackPlugin(['dist']),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: './src/index.html'
+    })
+  ],
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist')
+  },
+  module: {
+    rules: [
+        {
+            test: /\.js$/,
+            use: 'babel-loader',
+            exclude: /node_modules/
+        }
+    ]
+  }
+};
+```
+
+### Step 1.3 - run webpack
+Now let's configure how we run our application using webpack by defining 2 npm scripts:
+```json
+// package.json
+{
+  ...
+  "scripts": {
+      "build": "webpack --config webpack.config.js",
+      "dev": "webpack-dev-server"
+  },
+  ...
+}
+```
+* *npm run build* will be used to generate a production bundle in dist/
+* *npm run dev* will be used to start a local development server
+
+![commit] **commit step**
+
+> ![tip] __Pro tip__: You can run npm scripts like so and add additional options:
+```sh
+npm run build
+npm run build -- -d
+npm run dev -- -p
+```
+> ![question] Have a look at the console output when building with production (-p) or development (-d) options, noticing any difference?
+Check the dist/ folder on build and inspect how the file is built, can you find your javascript code?
 
 ### Checklist
  - [ ] I know how to setup a npm module
  - [ ] I know npm package basis
  - [ ] I know webpack basic setup and commands
-
-![commit] **commit step**
 
 [troubleshoot](#troubleshoot-1)
 
