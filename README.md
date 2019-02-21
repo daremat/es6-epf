@@ -142,6 +142,9 @@ module: {
 }
 // ...
 ```
+* add sass support
+[https://sass-lang.com/guide]
+[https://github.com/webpack-contrib/sass-loader]
 
 ## Step 3 - Implement memory game
 topics: ES6 features, lodash, Promise, async/await, debugger
