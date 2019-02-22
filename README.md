@@ -134,7 +134,7 @@ clean-webpack-plugin html-webpack-plugin
 
 Create your webpack client application containing: .babelrc, src/index.html and src/app/index.js:
 ```
-mem-ory
+meme-ory
 │   .babelrc
 │   package.json
 └───src
