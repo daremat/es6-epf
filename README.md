@@ -332,7 +332,7 @@ node node_modules/jasmine/bin/jasmine init
 node node_modules/jasmine/bin/jasmine examples
 ```
 * Run your tests in standalone _(use ./spec/support/jasmine.json)_
-```json
+```javascript
 //package.json
 // ...
 "scripts": { "test": "jasmine" }
@@ -384,7 +384,7 @@ karma init
 ```
 
 * Add the plugins
-```json
+```javascript
 //karma.conf.js
 // ...
 plugins: [
@@ -397,20 +397,20 @@ plugins: [
 ```
 
 * Add the preprocessor
-```json
+```javascript
 //karma.conf.js
 // ...
 preprocessors: {
   'spec/**/*.spec.js': ['webpack']
-},
+}
 // ...
 ```
 
 * Add the reporters
-```json
+```javascript
 //karma.conf.js
 // ...
-reporters: ['progress', 'kjhtml'],
+reporters: ['progress', 'kjhtml']
 // ...
 ```
 
