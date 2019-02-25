@@ -312,6 +312,119 @@ es6-01
 ## Step 4 - Unit testing and browser support
 topics: Unit test, jasmine, phantomJS, polyfill
 
+### 4.1 - Jasmine
+
+#### 4.1.1 - Introduction
+
+[Jasmine](https://jasmine.github.io/) is a framework who allow to write and run unit tests for Javascript projects.
+
+At the end, we should have a folder _./spec_ next to the folder _./src_ who contains all our tests.
+
+#### 4.1.2 - Installation
+
+* Install and init Jasmine
+```sh
+npm install --save-dev jasmine
+node node_modules/jasmine/bin/jasmine init
+```
+* Generate sample tests
+```sh
+node node_modules/jasmine/bin/jasmine examples
+```
+* Run your tests in standalone _(use ./spec/support/jasmine.json)_
+```json
+//package.json
+// ...
+"scripts": { "test": "jasmine" }
+// ...
+```
+```sh
+npm run test
+```
+
+### 4.2 - Karma
+
+#### 4.2.1 - Introduction
+
+Jasmine does not run in a browser. That why now we will use [Karma](https://karma-runner.github.io) to run our tests in a headless browser [PhantomJS](http://phantomjs.org/).
+
+Karma we will also be able to generate reports, and other features (//TODO) 
+
+We will use these plugins to our project :
+
+[karma-webpack](https://www.npmjs.com/package/karma-webpack) to generates a webpack bundle for each test _(and allow to jasmine to understand the ESNext syntax)_
+
+[karma-jasmine](https://www.npmjs.com/package/karma-jasmine) an adapter to Jasmine
+
+[karma-jasmine-html-reporter](https://www.npmjs.com/package/karma-jasmine-html-reporter) to dynamically shows our tests results on the debug.html page.
+
+[karma-phantomjs-launcher](https://www.npmjs.com/package/karma-phantomjs-launcher) to run our tests on a headless browser.
+
+#### 4.2.2 - Preparation
+
+You can drop the _./spec/support/jasmine.json_ file, it is unused with Karma.
+
+#### 4.2.3 - Installation
+
+* Install Karma
+```sh
+npm install karma karma-jasmine jasmine-core ^
+            karma-webpack ^
+            karma-jasmine-html-reporter ^
+            karma-phantomjs-launcher --save-dev
+```
+
+* Init Karma _(Windows users : powershell)_
+```sh
+karma init
+| Which testing framework do you want to use : jasmine
+| Do you want to use Require.js : no
+| Do you want to capture any browsers automatically : PhantomJS
+| What is the location of your source and test files : spec/**/*.spec.js
+```
+
+* Add the plugins
+```json
+//karma.conf.js
+// ...
+plugins: [
+    require('karma-webpack'),
+    require('karma-jasmine'),
+    require('karma-jasmine-html-reporter'),
+    require('karma-phantomjs-launcher')
+]
+// ...
+```
+
+* Add the preprocessor
+```json
+//karma.conf.js
+// ...
+preprocessors: {
+  'spec/**/*.spec.js': ['webpack']
+},
+// ...
+```
+
+* Add the reporters
+```json
+//karma.conf.js
+// ...
+reporters: ['progress', 'kjhtml'],
+// ...
+```
+
+* Start Karma and go to [localhost:9876/debug.html](http://localhost:9876/debug.html)
+```sh
+karma start
+```
+
+### 4.2 - PhantomJS
+
+[PhantomJS](http://phantomjs.org/) the headless browser. 
+
+Runnable with the default Karma configuration, have a look at [karma-phantomjs-launcher](https://www.npmjs.com/package/karma-phantomjs-launcher) for your purpose
+
 ## Step 5 - Memory management
 topics: storage usage, cookies
 
