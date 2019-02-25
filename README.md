@@ -126,7 +126,7 @@ setup to check what is going on. You can check the documentation to get a deeper
 
 Let's head to our setup, this will start by installing everything we need:
 ```sh
-npm install --save-dev webpack webpack-dev-server \
+npm install --save-dev webpack webpack-dev-server webpack-cli \
 babel-loader @babel/core @babel/preset-env \
 clean-webpack-plugin html-webpack-plugin
 ```
@@ -255,7 +255,7 @@ topics: semantic-ui, webpack loader, sass
 
 * add semantic-ui-css to the project
 ```sh
-npm install --save semanti-ui-css
+npm install --save semantic-ui-css
 ```
 * load semantic-ui css in the application before your styling
 ```javascript
