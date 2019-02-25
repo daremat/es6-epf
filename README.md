@@ -12,22 +12,13 @@
  - you want to start on Angular, React or other recent framework
  - You have basic knowledge in **ES6 or newer**
 
-## Bill of modules
-
-This tutorial is designed to come after those topics :
-
-[![Milestone mmm]](https://master3.takima.io/master3/mmm-01)
-
-If you did not achieved those topics, please consider using their correction.
-
 ## Abstract
 
-##### \>>>>>  ![error] TODO complete complete abstract
-In this milestone, we will focus on ...
+In this milestone, we will focus on using Javascript modern development tools without using any frameworks.
+ The tools, patterns, and features used in this module will be a common ground for any Javascript project.
 
->Write a short paragraph to ...
- 
-##### \<<<<<
+>Although we asked our self if we should have you implement the React library itself we finally
+decided to go for an easy local game application exercise implementation.
 
 #### Some useful references you should consider :
 
@@ -43,13 +34,21 @@ In this milestone, we will focus on ...
 ![lodash]
 
 #### Prerequisites
- - have **nodejs** and **npm** installed
+> ![tip] __Pro tip__: NVM is a very usefull tool if you want to manage different versions of node at the same time,
+you might want to check: [https://github.com/creationix/nvm]
+ - have **nodejs** and **npm** installed (NodeJS 6+)
+ ```sh
+$ node -v
+v10.15.1
+$ npm -v
+6.4.1
+```
 
 ## Setup
 
-##### \>>>>>  ![error] TODO complete setup
-  - `sudo apt-get install nodejs npm`
+No specific setup is required.
 
+[TODO remove section]
 During the whole README, if you feel something needs a particular attention, or is an extra,
 please widely use the quotes below.
 
@@ -63,26 +62,31 @@ please widely use the quotes below.
 
 > ![question] TODO_some_question
 
-##### \<<<<<
-
 ## Get started
 
-##### \>>>>>  ![error] TODO complete "get started"
-[TODO write get started]
-Basically the same as abstract, but with more **storytelling**.
+### Specification
+As it has been said, the goal of this module is to discover modern Javascript tools while developing a 
+ simple memory game. We will guide you through the implementation but the features of the application will be 
+ described here.
 
-[TODO remember current context]
-The trainees are at some certain point of the training. Recall what we have right now, before telling about what we want right now
+The application will be composed of 3 views:
+* the welcome view, containing a simple form allowing the user to enter is name, the game size and 
+a start button to launch the game
+* the game view allowing the user to play the memory game, flipping cards 2 by 2 until all the cards are turned upwards
+* the end view, congratulating the user, allowing to start a new game and showing him is performance time
 
-[TODO introduce main goals.]
+![mock]
 
-A short paragraph to introduce the goals,
- - why are we doing this milestone, why is it important to do so...
- - what is the benefit once the milestone is achieved
- - ...
+Concerning the theming and what's behind the cards feel free to give it your own touch 
+(let's obviously keep everything safe for work).
 
-[TODO introduce tools core strength]
-##### \<<<<<
+Easy right? Well, the application will have to contain quite some ES6 features and use appropriate tools that's
+why we will guide you trough the configuration and some parts of the implementation. Let's do this.
+
+### Technical spec
+* The 3 distinct views will be independently served, this will be done using the appropriate webpack configuration
+* The styling will be done using preprocessed css: sass
+* The game implementation will use the following: classes, Promise, acync/await, lodash, ...
 
 ## Step 1 - NPM & webpack setup
 topics: NPM, webpack
@@ -92,8 +96,7 @@ This step is about setting up a standard npm module containing a webpack applica
 
 **Why ?** Have a standardized NPM module and an easily runnable webpack application.
 
-**At the end, we should have ...** [TODO step result]
-##### \<<<<<
+**At the end, we should have a standard NPM/webpack project starting base.**
 
 ### Step 1.1 - init your npm project
 ```sh
@@ -546,6 +549,8 @@ As a reminder, here are the points you should check to ensure your `README.md` i
 [webpack]: .README/icons/webpack.png
 [sass]: .README/icons/sass.png
 [lodash]: .README/icons/lodash.png
+
+[mock]: .README/meme-ory-mock.png
 
 [info]: .README/info.png
 [warning]: .README/warning.png
