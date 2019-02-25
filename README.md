@@ -287,7 +287,7 @@ topics: ES6 features, lodash, Promise, async/await, debugger
 
 The game should have three parts : **app** , **game**, **end**.
 
-//TODO: describe the parts
+### Step 3.1 - 3 views structure
 
 * you can create the following structure by copying the resources/ content
 ```
@@ -312,6 +312,13 @@ es6-01
                 └── end.scss
 ```
 
+### Step 3.2 - Welcome view
+> Basic navigation, form handling, view template
+### Step 3.3 - Game implementation
+> Classes, Promise, lodash, transform, component template
+### Step 3.4 - End view
+> Date, ...
+
 ## Step 4 - Unit testing and browser support
 topics: Unit test, jasmine, phantomJS, polyfill
 
@@ -335,11 +342,13 @@ node node_modules/jasmine/bin/jasmine init
 node node_modules/jasmine/bin/jasmine examples
 ```
 * Run your tests in standalone _(use ./spec/support/jasmine.json)_
-```javascript
+```json
 //package.json
-// ...
-"scripts": { "test": "jasmine" }
-// ...
+{
+    ...
+    "scripts": { "test": "jasmine" },
+    ...
+}
 ```
 ```sh
 npm run test
