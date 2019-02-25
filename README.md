@@ -141,7 +141,6 @@ meme-ory
     │   index.html
     └───app
         |   index.js
-    
 ```
 ```json
 // .babelrc
@@ -282,6 +281,33 @@ module: {
 
 ## Step 3 - Implement memory game
 topics: ES6 features, lodash, Promise, async/await, debugger
+
+The game should have three parts : **app** , **game**, **end**.
+
+//TODO: describe the parts
+
+* you can create the following structure by copying the resources/ content
+```
+es6-01
+├── resources/
+└── meme-ory/
+    ├── .babelrc
+    ├── package.json
+    └── src/
+        └── views/
+            ├── app/
+            │   ├── app.js
+            │   ├── app.html
+            │   └── app.scss
+            ├── game/
+            │   ├── game.js
+            │   ├── game.html
+            │   └── game.scss
+            └── end/
+                ├── end.js
+                ├── end.html
+                └── end.scss
+```
 
 ## Step 4 - Unit testing and browser support
 topics: Unit test, jasmine, phantomJS, polyfill
