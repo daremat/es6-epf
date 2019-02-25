@@ -319,9 +319,9 @@ topics: Unit test, jasmine, phantomJS, polyfill
 
 #### 4.1.1 - Introduction
 
-[Jasmine](https://jasmine.github.io/) is a framework who allow to write and run unit tests for Javascript projects.
+[Jasmine](https://jasmine.github.io/) is a framework allowing to write and run unit tests for Javascript projects.
 
-At the end, we should have a folder _./spec_ next to the folder _./src_ who contains all our tests.
+At the end, we should have a _./spec_ folder next to our _./src_ folder containing all our tests.
 
 #### 4.1.2 - Installation
 
@@ -349,9 +349,10 @@ npm run test
 
 #### 4.2.1 - Introduction
 
-Jasmine does not run in a browser. That why now we will use [Karma](https://karma-runner.github.io) to run our tests in a headless browser [PhantomJS](http://phantomjs.org/).
+Jasmine does not run in a browser and our user probably will. That's why we will now use 
+[Karma](https://karma-runner.github.io) to run our tests in a headless browser [PhantomJS](http://phantomjs.org/).
 
-Karma we will also be able to generate reports, and other features (//TODO) 
+Karma will also be able to generate reports, and other features (//TODO) 
 
 We will use these plugins to our project :
 
