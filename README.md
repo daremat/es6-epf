@@ -341,14 +341,15 @@ node node_modules/jasmine/bin/jasmine init
 ```sh
 node node_modules/jasmine/bin/jasmine examples
 ```
+
+#### 4.2.3 - Run
+
 * Run your tests in standalone _(use ./spec/support/jasmine.json)_
-```json
+```javascript
 //package.json
-{
-    ...
-    "scripts": { "test": "jasmine" },
-    ...
-}
+// ...
+"scripts": { "test": "jasmine" },
+// ...
 ```
 ```sh
 npm run test
@@ -361,7 +362,7 @@ npm run test
 Jasmine does not run in a browser and our user probably will. That's why we will now use 
 [Karma](https://karma-runner.github.io) to run our tests in a headless browser [PhantomJS](http://phantomjs.org/).
 
-Karma will also be able to generate reports, and other features (//TODO) 
+Karma will also be able to generate reports, and other features (//TODO)
 
 We will use these plugins to our project :
 
@@ -369,13 +370,15 @@ We will use these plugins to our project :
 
 [karma-jasmine](https://www.npmjs.com/package/karma-jasmine) an adapter to Jasmine
 
-[karma-jasmine-html-reporter](https://www.npmjs.com/package/karma-jasmine-html-reporter) to dynamically shows our tests results on the debug.html page.
+[karma-mocha-reporter](https://www.npmjs.com/package/karma-mocha-reporter) use the [Mocha](https://mochajs.org/) style logging for the cli report
 
-[karma-phantomjs-launcher](https://www.npmjs.com/package/karma-phantomjs-launcher) to run our tests on a headless browser.
+[karma-jasmine-html-reporter](https://www.npmjs.com/package/karma-jasmine-html-reporter) to dynamically shows our tests results on the debug.html page
+
+[karma-phantomjs-launcher](https://www.npmjs.com/package/karma-phantomjs-launcher) to run our tests on a headless browser
 
 #### 4.2.2 - Preparation
 
-You can drop the _./spec/support/jasmine.json_ file, it is unused with Karma.
+You can drop the _./spec/support/jasmine.json_ file, it's unused with Karma.
 
 #### 4.2.3 - Installation
 
@@ -383,6 +386,7 @@ You can drop the _./spec/support/jasmine.json_ file, it is unused with Karma.
 ```sh
 npm install karma karma-jasmine jasmine-core ^
             karma-webpack ^
+            karma-mocha-reporter ^
             karma-jasmine-html-reporter ^
             karma-phantomjs-launcher --save-dev
 ```
@@ -396,7 +400,8 @@ karma init
 | What is the location of your source and test files : spec/**/*.spec.js
 ```
 
-* Add the plugins
+* Add the plugins _(optional)_
+> ![info] Karma add the plugins automatically for you if the plugins array does not exist
 ```javascript
 //karma.conf.js
 // ...
@@ -423,14 +428,86 @@ preprocessors: {
 ```javascript
 //karma.conf.js
 // ...
-reporters: ['progress', 'kjhtml']
+reporters: ['mocha', 'kjhtml']
+// ...
+```
+
+#### 4.2.3 - Run
+
+* Replace your script _test_ from "jasmine" to "karma start"
+```javascript
+//package.json
+// ...
+"scripts": { "test": "karma start" },
 // ...
 ```
 
 * Start Karma and go to [localhost:9876/debug.html](http://localhost:9876/debug.html)
 ```sh
-karma start
+npm run test
 ```
+
+#### 4.2.4 - Troubleshoot at Running
+
+> ![troubleshoot] We use webpack without specify the 'mode' option (production or development)
+>```sh
+>WARNING in configuration
+>The 'mode' option has not been set, webpack will fallback to 'production' for this value. Set 'mode' option to 'development' or 'production' to enable defaults for each environment.
+>```
+
+
+> ![troubleshoot] PhantomJS don't understand the ES6 syntax
+>```sh
+>PhantomJS 2.1.1 (Windows 8.0.0) ERROR
+>  {
+>    "message": "An error was thrown in afterAll\nSyntaxError: Use of reserved word 'let' in strict mode",
+>    "str": "An error was thrown in afterAll\nSyntaxError: Use of reserved word 'let' in strict mode"
+>  }
+>```
+
+You need to add some webpack configurations to your karma config file
+
+* Create a webpack-test.config.js next to the webpack.config.js 
+
+> ![tip] __Pro tip__: It's a good practice to create a webpack config file instead of put the configuration directly on karma
+
+```javascript
+//webpack-test.config.js
+module.exports = {
+  mode: 'development',
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /(node_modules)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      }
+    ]
+  }
+};
+```
+
+As you see, we define the mode for webpack, and the babel-loader rule to transpile our code to ES5 for PhantomJS. Add other configurations here if necessary
+
+* Put the webpack config into the karma config
+
+```javascript
+var webpackConfig = require('./webpack-test.config.js');
+module.exports = function(config) {
+  config.set({
+    // ...
+    webpack: webpackConfig
+    // ...
+  }
+}
+```
+
+
 
 ### 4.2 - PhantomJS
 
