@@ -410,6 +410,7 @@ karma init
 plugins: [
     require('karma-webpack'),
     require('karma-jasmine'),
+    require('karma-mocha-reporter'),
     require('karma-jasmine-html-reporter'),
     require('karma-phantomjs-launcher')
 ]
