@@ -444,7 +444,7 @@ reporters: ['mocha', 'kjhtml']
 // ...
 ```
 
-* Start Karma and go to [localhost:9876/debug.html](http://localhost:9876/debug.html) to see the result
+* Start Karma and see the result at [localhost:9876/debug.html](http://localhost:9876/debug.html)
 ```sh
 npm run test
 ```
