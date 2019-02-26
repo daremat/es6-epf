@@ -658,11 +658,11 @@ npm run test
 >  }
 >```
 
-You need to add some webpack configurations to your karma config file
+You need to add some webpack configurations to your Karma config file
 
 * Create a webpack-test.config.js next to the webpack.config.js 
 
-> ![tip] __Pro tip__: It's a good practice to create a webpack config file instead of putting the configuration directly on karma
+> ![tip] __Pro tip__: It's a good practice to create a webpack config file instead of putting the configuration directly on Karma
 
 ```javascript
 //webpack-test.config.js
@@ -687,8 +687,7 @@ module.exports = {
 
 As you see, we define the mode for webpack, and the [babel rule to transpile our code to ES5](https://babeljs.io/docs/en/babel-preset-env) for PhantomJS. Add other configurations here if necessary
 
-* Put the webpack config into the karma config
-
+* Put the webpack config into the Karma config
 ```javascript
 var webpackConfig = require('./webpack-test.config.js');
 module.exports = function(config) {
@@ -700,13 +699,17 @@ module.exports = function(config) {
 }
 ```
 
-
-
 ### 4.2 - PhantomJS
 
-[PhantomJS](http://phantomjs.org/) the headless browser. 
+[PhantomJS](http://phantomjs.org/) is an headless browser, we use [karma-phantomjs-launcher](https://www.npmjs.com/package/karma-phantomjs-launcher) to launch it with Karma
 
-Runnable with the default Karma configuration, have a look at [karma-phantomjs-launcher](https://www.npmjs.com/package/karma-phantomjs-launcher) for your purpose
+* Make sure you have the following in your Karma config
+```javascript
+//karma.conf.js
+// ...
+browsers: ['PhantomJS']
+// ...
+```
 
 ## Step 5 - Memory management
 topics: storage usage, cookies
