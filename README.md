@@ -351,6 +351,8 @@ node node_modules/jasmine/bin/jasmine examples
 "scripts": { "test": "jasmine" },
 // ...
 ```
+
+* Start Jasmine and see the result
 ```sh
 npm run test
 ```
@@ -442,7 +444,7 @@ reporters: ['mocha', 'kjhtml']
 // ...
 ```
 
-* Start Karma and go to [localhost:9876/debug.html](http://localhost:9876/debug.html)
+* Start Karma and go to [localhost:9876/debug.html](http://localhost:9876/debug.html) to see the result
 ```sh
 npm run test
 ```
