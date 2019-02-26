@@ -133,7 +133,16 @@ npm install --save-dev webpack webpack-dev-server webpack-cli \
 babel-loader @babel/core @babel/preset-env \
 clean-webpack-plugin html-webpack-plugin
 ```
-> ![question] What's the difference between the options --save-dev, --save and none?
+
+Let's also install the polyfills as we are going to use javascript advanced features:
+```sh
+npm install --save @babel/polyfill
+```
+
+> ![info] __Tip__: We use polyfills to patch our browser with some code it might miss
+
+> ![question] We just installed a bunch of libraries but with different options, check your package.json. Do you know 
+what's the difference between the options --save-dev, --save and none?
 
 Create your webpack client application containing: .babelrc, src/index.html and src/app/index.js:
 ```
@@ -148,16 +157,15 @@ meme-ory
 ```json
 // .babelrc
 {
-  presets: [
-    [
-      '@babel/preset-env',
-      {
-        modules: false
-      }
-    ]
-  ]
+    "presets": [
+      ["@babel/preset-env", { "useBuiltIns": "usage" }]
+    ],
+    "plugins": []
 }
 ```
+
+> ![tip] __Pro tip__: You can check how babel actually process javascript easily there: [https://babeljs.io/repl]
+
 ```html
 <!--src/index.html-->
 <!DOCTYPE html>
@@ -278,9 +286,13 @@ module: {
 }
 // ...
 ```
-* add sass support
+* add sass support and write your first sass styles
 [https://sass-lang.com/guide]
 [https://github.com/webpack-contrib/sass-loader]
+
+### Checklist
+ - [ ] I know how to load css in webpack
+ - [ ] I know what sass is
 
 ## Step 3 - Implement memory game
 topics: ES6 features, lodash, Promise, async/await, debugger
@@ -432,6 +444,10 @@ welcome._form.addEventListener('submit', e => welcome.startGame(e));
 > Classes, Promise, lodash, transform, component template
 * add static flippable images to the game view
 > A flippable card is very easy to write, here is an example: [https://jsfiddle.net/68agoj1q/]
+
+> ![tip] __Pro tip__: Use your browser debugger as often as you can, this can be tricky and sometimes confusing to go
+into javascript realtime machinery, but this is a very good habit.
+
 * initialize the game with n cards, using 2 classes: *Board* and *Card*
 ```javascript
 //board.js
@@ -488,8 +504,16 @@ export class Card {
 ### Step 3.4 - End view
 > Date, ...
 
+### Checklist
+ - [ ] I know how to modularize a webpack app
+ - [ ] I know how to handle a basic form
+ - [ ] I know how to use Javascript classes
+ - [ ] I know lodash basis
+ - [ ] I know how to handle Javascript asynchronous behavior using Promise and async/await 
+ - [ ] I know the concept of Javascript scope/closure
+
 ## Step 4 - Unit testing and browser support
-topics: Unit test, jasmine, phantomJS, polyfill
+topics: Unit test, jasmine, phantomJS
 
 ### 4.1 - Jasmine
 
