@@ -495,7 +495,7 @@ module.exports = {
 };
 ```
 
-As you see, we define the mode for webpack, and the babel-loader rule to transpile our code to ES5 for PhantomJS. Add other configurations here if necessary
+As you see, we define the mode for webpack, and the [babel rule to transpile our code to ES5](https://babeljs.io/docs/en/babel-preset-env#targets) for PhantomJS. Add other configurations here if necessary
 
 * Put the webpack config into the karma config
 
