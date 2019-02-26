@@ -344,7 +344,7 @@ node node_modules/jasmine/bin/jasmine examples
 
 #### 4.2.3 - Run
 
-* Run your tests in standalone _(use ./spec/support/jasmine.json)_
+* Add a script _test_ to run Jasmine
 ```javascript
 //package.json
 // ...
