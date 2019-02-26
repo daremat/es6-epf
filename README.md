@@ -17,7 +17,7 @@
 In this milestone, we will focus on using Javascript modern development tools without using any frameworks.
  The tools, patterns, and features used in this module will be a common ground for any Javascript project.
 
->Although we asked our self if we should have you implement the React library itself we finally
+>Although we asked our selves if we should have you implement your custom React library we finally
 decided to go for an easy local game application exercise implementation.
 
 #### Some useful references you should consider :
@@ -46,21 +46,7 @@ $ npm -v
 
 ## Setup
 
-No specific setup is required.
-
-[TODO remove section]
-During the whole README, if you feel something needs a particular attention, or is an extra,
-please widely use the quotes below.
-
-> ![info] TODO_some_more_info.
-
-> ![warning] TODO_some_warning.
-
-> ![tip] __Pro tip__: TODO_some_tip.
-
-> ![danger] TODO_some_danger
-
-> ![question] TODO_some_question
+No specific setup is required. As stated before having nodejs and also a modern browser might be useful.
 
 ## Get started
 
@@ -105,6 +91,14 @@ cd meme-mory/
 npm init -y
 npm install
 ```
+Files produced:
+```sh
+package.json
+```
+
+> ![info] You just created a NPM module, that is not different from any module in the central registry at
+[https://www.npmjs.com/]
+
 * set your package as private
 ```json
 //package.json
@@ -114,17 +108,15 @@ npm install
   ...
 }
 ```
-Files produced:
-```sh
-package.json
-```
+> ![info] Making it private so we do not accidentally push to the central (you will need to be connected to do so)
+
 ![commit] **commit step**
 ### Step 1.2 - webpack: install and naive setup
 
 Webpack is a javascript tool used to bundle a web application, basically a coffee maker used in 99% of web projects.
 Webpack can be quite a complex bundler and does a lot of its work behind the scene, we will go trough a simple manual 
 setup to check what is going on. You can check the documentation to get a deeper insight of this tool:
-[https://webpack.js.org/guides/getting-started/] & [https://webpack.jakoblind.no/]
+[https://webpack.js.org/guides/getting-started/]
 (you might also want to check webpack-cli, a tool to help you create your webpack config: [https://github.com/webpack/webpack-cli])
 
 Let's head to our setup, this will start by installing everything we need:
@@ -226,6 +218,7 @@ module.exports = {
   }
 };
 ```
+> ![tip] __Tip__: Have a look at [https://webpack.jakoblind.no/] to easily scaffold your webpack config.
 
 ### Step 1.3 - run webpack
 Now let's configure how we run our application using webpack by defining 2 npm scripts:
@@ -448,6 +441,9 @@ welcome._form.addEventListener('submit', e => welcome.startGame(e));
 > ![tip] __Pro tip__: Use your browser debugger as often as you can, this can be tricky and sometimes confusing to go
 into javascript realtime machinery, but this is a very good habit.
 
+> ![tip] __Pro tip__: Using Javascript online runners can be very useful to isolate a bug and get help from the community 
+we used jsfiddle here but other like: [https://plnkr.co/] or [https://jsbin.com] will do. And the best interpreter will 
+be directly your browser console.
 * initialize the game with n cards, using 2 classes: *Board* and *Card*
 ```javascript
 //board.js
@@ -511,6 +507,7 @@ export class Card {
  - [ ] I know lodash basis
  - [ ] I know how to handle Javascript asynchronous behavior using Promise and async/await 
  - [ ] I know the concept of Javascript scope/closure
+ - [ ] I know the basis of debugging in a browser
 
 ## Step 4 - Unit testing and browser support
 topics: Unit test, jasmine, phantomJS
@@ -765,12 +762,12 @@ Please write some initial troubleshoots here.
 - > ![troubleshoot] [TODO troubleshot 1]
 
 # Contributors
- - [TODO contributor] John DOE <[jdoe@takima.fr](mailto://jdoe@takima.fr)>
- - ...
+ - Logan LEPAGE <[llepage@takima.fr](mailto://llepage@takima.fr)>
+ - Alexandre NUNESSE <[anunesse@takima.fr](mailto://anunesse@takima.fr)>
 
 ### Mentors
- - [TODO mentor] John DOE <[jdoe@takima.fr](mailto://jdoe@takima.fr)>
- - ...
+ - Logan LEPAGE <[llepage@takima.fr](mailto://llepage@takima.fr)>
+ - Alexandre NUNESSE <[anunesse@takima.fr](mailto://anunesse@takima.fr)>
 
 
 | <sub>contact us: <[formation@takima.io](mailto://formation@takima.io)></sub> | <sub>© Takima 2019</sub> |
