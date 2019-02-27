@@ -377,6 +377,10 @@ module.exports = {
           chunks: ['end']
         })
       ],
+      output: {
+        filename: 'bundle-[name].js',
+        path: path.resolve(__dirname, 'dist')
+      },
     // ...
 }
 ```
@@ -385,7 +389,7 @@ module.exports = {
 ### Step 3.2 - Welcome view
 * create the welcome view form, containing player name and game size
 * add minimal validation, player name: alphanumerical and length between 3 and 20, size: number between 2 and 10
-* link the form to the game view passing parameters as get params
+* link the form to the **game view** passing parameters as get params
 
 To help you here are a couple code snippets:
 ```javascript
@@ -438,7 +442,7 @@ welcome._form.addEventListener('submit', e => welcome.startGame(e));
         <div class="field">
             <div class="ui left icon input">
                 <i class="user icon"></i>
-                <input type="text" name="name" placeholder="Name" pattern="[A-Za-z0-9]">
+                <input type="text" name="name" placeholder="Name" pattern="[A-Za-z0-9]{3,20}">
             </div>
         </div>
         <div class="ui info message">
@@ -451,8 +455,47 @@ welcome._form.addEventListener('submit', e => welcome.startGame(e));
 
 ### Step 3.3 - Game implementation
 > Classes, Promise, lodash, transform, component template
-* add static flippable images to the game view
-> A flippable card is very easy to write, here is an example: [jsfiddle.net/68agoj1q/](https://jsfiddle.net/68agoj1q/])
+
+We are going to implement the logic of the game, composed of a board who contains cards. 
+we recommend to you to follow this structure :
+```
+es6-01
+...
+├── assets/
+│   └─ here your static card images
+└── views/
+    ├── welcome/
+    ├── game/
+    │   ├── card.js
+    │   ├── board.js
+    │   ├── game.js
+    │   ├── game.html
+    │   └── game.scss
+    └── end/
+```
+
+#### 3.3.1 - Preparation
+
+To begin, you need some static images for your cards
+
+##### Get the static images
+* put the following in your project (find them inside the resources/ folder)
+
+![unknown-card-img] ![takima-card-img] ![jawg-card-img] ![gatling-card-img]
+
+##### How to build a flippable card
+
+* import your image dynamically from your code _(url-loader)_
+```html
+<img alt="test" id="my-card-img"/>
+```
+```javascript
+import Back from '../../static/back-card.png';
+document.getElementById('my-card-img').src = Back;
+```
+
+* code a simple flippable card
+> A flippable card is very easy to write, here is an example: [jsfiddle.net/68agoj1q](https://jsfiddle.net/68agoj1q/)
 
 > ![tip] __Pro tip__: Use your browser debugger as often as you can, this can be tricky and sometimes confusing to go
 into javascript realtime machinery, but this is a very good habit.
@@ -460,6 +503,28 @@ into javascript realtime machinery, but this is a very good habit.
 > ![tip] __Pro tip__: Using Javascript online runners can be very useful to isolate a bug and get help from the community 
 we used jsfiddle here but other like: [plnkr.co](https://plnkr.co/) or [jsbin.com](https://jsbin.com) will do. And the best interpreter will 
 be directly your browser console.
+
+##### How to handle with the dom
+* create multiple flippable cards
+```html
+<template id="card-template">
+    <div class="ui card">
+        <div class="image">
+            <img class="front-face" alt="card">
+            <img class="back-face" alt="card">
+        </div>
+    </div>
+</template>
+<div id="cards"></div>
+```
+```javascript
+const htmlCards = document.getElementById('cards');
+const htmlCard = document.getElementById('card-template').content.cloneNode(true).firstElementChild
+htmlCards.appendChild(htmlCard);
+```
+
+#### 3.3.2 - Implementation
+
 * initialize the game with n cards, using 2 classes: *Board* and *Card*
 ```javascript
 //board.js
@@ -512,9 +577,9 @@ export class Card {
 ```
 * implement the game logic: flip cards 2 by 2, keep matches flipped, end the game when all cards are flipped
 
-
 ### Step 3.4 - End view
 > Date, ...
+* retrieve the results from get parameters and print them on your end.html
 
 ### Checklist
  - [ ] I know how to modularize a webpack app
@@ -528,7 +593,7 @@ export class Card {
 ## Step 4 - Unit testing and browser support
 topics: Unit test, jasmine, phantomJS
 
-### 4.1 - Jasmine
+### Step 4.1 - Jasmine
 
 [Jasmine](https://jasmine.github.io/) is a framework allowing to write and run unit tests for Javascript projects.
 
@@ -561,7 +626,7 @@ node node_modules/jasmine/bin/jasmine examples
 npm run test
 ```
 
-### 4.2 - Karma
+### Step 4.2 - Karma
 
 Jasmine does not run in a browser and our user probably will. That's why we will now use 
 [Karma](https://karma-runner.github.io) to run our tests in a headless browser [PhantomJS](http://phantomjs.org/) 
@@ -892,5 +957,10 @@ As a reminder, here are the points you should check to ensure your `README.md` i
 [question]: .README/question.png
 [troubleshoot]: .README/error.png
 [commit]: .README/commit.png
+
+[unknown-card-img]: .README/cards-miniatures/back-card.png
+[takima-card-img]: .README/cards-miniatures/takima-card.png
+[jawg-card-img]: .README/cards-miniatures/jawg-card.png
+[gatling-card-img]: .README/cards-miniatures/gatling-card.png
 
 [heart]: .README/smileys/heart_14x14.png "heart"
