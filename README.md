@@ -514,13 +514,11 @@ topics: Unit test, jasmine, phantomJS
 
 ### 4.1 - Jasmine
 
-#### 4.1.1 - Introduction
-
 [Jasmine](https://jasmine.github.io/) is a framework allowing to write and run unit tests for Javascript projects.
 
 At the end, we should have a _./spec_ folder next to our _./src_ folder containing all our tests.
 
-#### 4.1.2 - Installation
+#### 4.1.1 - Installation
 
 * Install and init Jasmine
 ```sh
@@ -532,7 +530,7 @@ node node_modules/jasmine/bin/jasmine init
 node node_modules/jasmine/bin/jasmine examples
 ```
 
-#### 4.2.3 - Run
+#### 4.2.2 - Run
 
 * Add a script _test_ to run Jasmine
 ```javascript
@@ -549,12 +547,15 @@ npm run test
 
 ### 4.2 - Karma
 
-#### 4.2.1 - Introduction
-
 Jasmine does not run in a browser and our user probably will. That's why we will now use 
-[Karma](https://karma-runner.github.io) to run our tests in a headless browser [PhantomJS](http://phantomjs.org/).
+[Karma](https://karma-runner.github.io) to run our tests in a headless browser [PhantomJS](http://phantomjs.org/) 
+, but also to be able to generate reports.
 
-Karma will also be able to generate reports, and other features (//TODO)
+#### 4.2.1 - Preparation
+
+You can drop the _./spec/support/jasmine.json_ file, it's unused with Karma.
+
+#### 4.2.2 - Installation
 
 We will use these plugins to our project :
 
@@ -567,12 +568,6 @@ We will use these plugins to our project :
 [karma-jasmine-html-reporter](https://www.npmjs.com/package/karma-jasmine-html-reporter) to dynamically shows our tests results on the debug.html page
 
 [karma-phantomjs-launcher](https://www.npmjs.com/package/karma-phantomjs-launcher) to run our tests on a headless browser
-
-#### 4.2.2 - Preparation
-
-You can drop the _./spec/support/jasmine.json_ file, it's unused with Karma.
-
-#### 4.2.3 - Installation
 
 * Install Karma
 ```sh
@@ -607,7 +602,7 @@ plugins: [
 // ...
 ```
 
-### 4.2.4 - Configure the reporters
+### 4.2.3 - Configure the reporters
 
 Karma can do reports of your tests, but you need to configure it. In our project we use 
 [karma-mocha-reporter](https://www.npmjs.com/package/karma-mocha-reporter) and 
@@ -623,14 +618,24 @@ reporters: ['mocha', 'kjhtml']
 // ...
 ```
 
-### 4.2.5 - Configure the browsers
+### 4.2.4 - Configure the browsers
 
 We have configured Karma to use [PhantomJS](http://phantomjs.org/) as browser. Karma need you to specify what browsers where you want to launch your tests.
 
-#### Let's try to change browsers
+#### PhantomJS
 
-You can use browsers like Chrome or Firefox or others, the Karma launcher of the desired browser need to be on your project. 
+We prefer use [PhantomJS](http://phantomjs.org/) because it's an headless browser but you can use browsers like Chrome, 
+Firefox or others, the Karma launcher of the desired browser need to be on your project. 
 
+* Make sure you have the following
+```javascript
+//karma.conf.js
+// ...
+browsers: ['PhantomJS']
+// ...
+```
+
+#### Let's try others browsers _(extra)_
 * Add the launchers to your projects
 ```sh
 npm install karma-chrome-launcher karma-firefox-launcher --save-dev
@@ -644,19 +649,7 @@ browsers: ['Chrome', 'Firefox']
 // ...
 ```
 
-#### Finally, PhantomJS
-
-In fact, we prefer use [PhantomJS](http://phantomjs.org/) because it's an headless browser
-
-* Make sure you have the following if you want PhantomJS
-```javascript
-//karma.conf.js
-// ...
-browsers: ['PhantomJS']
-// ...
-```
-
-### 4.2.6 - Configure the preprocessors
+### 4.2.5 - Configure the preprocessors
 
 You can define preprocessor to transpile your code if you use a non-standard syntax like CoffeeScript or TypeScript.
 In our project, the code need is bundled with webpack, so we use the webpack preprocessor
@@ -728,7 +721,7 @@ module.exports = function(config) {
 }
 ```
 
-#### 4.2.7 - Run
+#### 4.2.6 - Run
 
 * Replace your script _test_ from "jasmine" to "karma start"
 ```javascript
