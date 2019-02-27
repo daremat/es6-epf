@@ -515,7 +515,9 @@ be directly your browser console.
         </div>
     </div>
 </template>
-<div id="cards"></div>
+<main class="ui container">
+    <div class="ui special cards" id="cards"></div>
+</main>
 ```
 ```javascript
 const htmlCards = document.getElementById('cards');
