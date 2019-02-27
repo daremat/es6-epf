@@ -629,8 +629,7 @@ We have configured Karma to use [PhantomJS](http://phantomjs.org/) as browser. K
 
 #### Let's try to change browsers
 
-To do this, the Karma launcher of the browser concerned need to be on your project. You can use browsers, 
-like Chrome or Firefox. 
+You can use browsers like Chrome or Firefox or others, the Karma launcher of the desired browser need to be on your project. 
 
 * Add the launchers to your projects
 ```sh
@@ -679,7 +678,6 @@ You will see these problems if you run like it
 >The 'mode' option has not been set, webpack will fallback to 'production' for this value. Set 'mode' option to 'development' or 'production' to enable defaults for each environment.
 >```
 
-
 > ![troubleshoot] PhantomJS don't understand the ES6 syntax
 >```sh
 >PhantomJS 2.1.1 (Windows 8.0.0) ERROR
@@ -688,7 +686,6 @@ You will see these problems if you run like it
 >    "str": "An error was thrown in afterAll\nSyntaxError: Use of reserved word 'let' in strict mode"
 >  }
 >```
-
 
 You need to add some webpack configurations to your Karma config file
 
@@ -747,21 +744,11 @@ npm run test
 ```
 
 ### Checklist
- - [ ] My **[TODO working feature]** works
- - [ ] I understand **..........**
- - [ ] I know **..........**
- - [ ] I will never **..........** again
- - [ ] I am able to choose whenever **..........**
- - [ ] I am confident with **..........**
- - [ ] I know how to use **..........**
- - [ ] ...
- 
  - [ ] I tested my app without karma, I saw the result on the terminal
  - [ ] I tested my app with karma, I saw the result on the terminal and on the [debug.html](http://localhost:9876/debug.html) page
  - [ ] I understand what do "describe" and "it" functions
  - [ ] I understand the Jasmine syntax to write tests
- - [ ] I know the difference between Jasmine and Karma
- - [ ] I know the difference between Jasmine and Karma
+ - [ ] I know what is an headless browser
  - [ ] I am able to choose other reporters and browsers for Karma
 
 ## Step 5 - Memory management
