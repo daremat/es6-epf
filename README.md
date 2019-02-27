@@ -234,7 +234,7 @@ Now let's configure how we run our application using webpack by defining 2 npm s
 }
 ```
 * *npm run build* will be used to generate a production bundle in dist/
-* *npm run dev* will be used to start a local development server
+* *npm run dev* will be used to start a local development server at [localhost:8080](http://localhost:8080/)
 
 ![commit] **commit step**
 
@@ -257,6 +257,11 @@ Check the dist/ folder on build and inspect how the file is built, can you find 
 ## Step 2 - Style the application
 topics: semantic-ui, webpack loader, sass
 
+* add webpack static loaders to the project
+```sh
+npm install --save-dev style-loader css-loader url-loader file-loader
+```
+
 * add semantic-ui-css to the project
 ```sh
 npm install --save semantic-ui-css
@@ -265,17 +270,28 @@ npm install --save semantic-ui-css
 ```javascript
 //index.js
 // ...
-import 'semantic-ui-css/semantic-ui.min.css';
+import 'semantic-ui-css/semantic.min.css';
 // ...
 ```
-* add webpack static loader to handle semantic-ui fonts
+* add webpack static loaders to handle css files and semantic-ui fonts / icons
 ```javascript
 //webpack.config.js
 // ...
 module: {
-    loaders: [        // ...
-        { test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' }
-    ]
+  rules: [
+    // ...
+    {
+      test: /\.(css)$/,
+      use: ['style-loader', 'css-loader']
+    },
+    {
+      test: /\.(png|svg|woff|woff2|eot|ttf|otf)$/,
+      use: [{
+        loader: 'url-loader',
+        options: { limit: 100000 } // in bytes
+      }]
+    }
+  ]
 }
 // ...
 ```
