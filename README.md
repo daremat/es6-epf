@@ -35,7 +35,7 @@ decided to go for an easy local game application exercise implementation.
 
 #### Prerequisites
 > ![tip] __Pro tip__: NVM is a very usefull tool if you want to manage different versions of node at the same time,
-you might want to check: [https://github.com/creationix/nvm]
+you might want to check: [github.com/creationix/nvm](github.com/creationix/nvm)
  - have **nodejs** and **npm** installed (NodeJS 6+)
  ```sh
 $ node -v
@@ -97,10 +97,10 @@ package.json
 ```
 
 > ![info] You just created a NPM module, that is not different from any module in the central registry at
-[https://www.npmjs.com/]
+[www.npmjs.com](https://www.npmjs.com/)
 
 * set your package as private
-```json
+```javascript
 //package.json
 {
   ...
@@ -116,8 +116,8 @@ package.json
 Webpack is a javascript tool used to bundle a web application, basically a coffee maker used in 99% of web projects.
 Webpack can be quite a complex bundler and does a lot of its work behind the scene, we will go trough a simple manual 
 setup to check what is going on. You can check the documentation to get a deeper insight of this tool:
-[https://webpack.js.org/guides/getting-started/]
-(you might also want to check webpack-cli, a tool to help you create your webpack config: [https://github.com/webpack/webpack-cli])
+[webpack.js.org/guides/getting-started/](https://webpack.js.org/guides/getting-started/)
+(you might also want to check webpack-cli, a tool to help you create your webpack config: [github.com/webpack/webpack-cli](https://github.com/webpack/webpack-cli))
 
 Let's head to our setup, this will start by installing everything we need:
 ```sh
@@ -146,7 +146,7 @@ meme-ory
     └───app
         |   index.js
 ```
-```json
+```javascript
 // .babelrc
 {
     "presets": [
@@ -156,7 +156,7 @@ meme-ory
 }
 ```
 
-> ![tip] __Pro tip__: You can check how babel actually process javascript easily there: [https://babeljs.io/repl]
+> ![tip] __Pro tip__: You can check how babel actually process javascript easily there: [babeljs.io/repl](https://babeljs.io/repl])
 
 ```html
 <!--src/index.html-->
@@ -218,11 +218,11 @@ module.exports = {
   }
 };
 ```
-> ![tip] __Tip__: Have a look at [https://webpack.jakoblind.no/] to easily scaffold your webpack config.
+> ![tip] __Tip__: Have a look at [webpack.jakoblind.no](https://webpack.jakoblind.no/) to easily scaffold your webpack config.
 
 ### Step 1.3 - run webpack
 Now let's configure how we run our application using webpack by defining 2 npm scripts:
-```json
+```javascript
 // package.json
 {
   ...
@@ -279,9 +279,9 @@ module: {
 }
 // ...
 ```
-* add sass support and write your first sass styles
-[https://sass-lang.com/guide]
-[https://github.com/webpack-contrib/sass-loader]
+* add sass support and write your first sass styles, see
+[sass-lang.com/guide](https://sass-lang.com/guide) and 
+[github.com/webpack-contrib/sass-loader](https://github.com/webpack-contrib/sass-loader)
 
 ### Checklist
  - [ ] I know how to load css in webpack
@@ -436,13 +436,13 @@ welcome._form.addEventListener('submit', e => welcome.startGame(e));
 ### Step 3.3 - Game implementation
 > Classes, Promise, lodash, transform, component template
 * add static flippable images to the game view
-> A flippable card is very easy to write, here is an example: [https://jsfiddle.net/68agoj1q/]
+> A flippable card is very easy to write, here is an example: [jsfiddle.net/68agoj1q/](https://jsfiddle.net/68agoj1q/])
 
 > ![tip] __Pro tip__: Use your browser debugger as often as you can, this can be tricky and sometimes confusing to go
 into javascript realtime machinery, but this is a very good habit.
 
 > ![tip] __Pro tip__: Using Javascript online runners can be very useful to isolate a bug and get help from the community 
-we used jsfiddle here but other like: [https://plnkr.co/] or [https://jsbin.com] will do. And the best interpreter will 
+we used jsfiddle here but other like: [plnkr.co](https://plnkr.co/) or [jsbin.com](https://jsbin.com) will do. And the best interpreter will 
 be directly your browser console.
 * initialize the game with n cards, using 2 classes: *Board* and *Card*
 ```javascript
@@ -607,6 +607,61 @@ plugins: [
 // ...
 ```
 
+### 4.2.4 - Configure the reporters
+
+Karma can do reports of your tests, but you need to configure it. In our project we use 
+[karma-mocha-reporter](https://www.npmjs.com/package/karma-mocha-reporter) and 
+[karma-jasmine-html-reporter](https://www.npmjs.com/package/karma-jasmine-html-reporter) but you can use others like 
+[karma-coverage-istanbul-reporter](https://www.npmjs.com/package/karma-coverage-istanbul-reporter) to do a coverage 
+report for example.
+
+* Add the reporters
+```javascript
+//karma.conf.js
+// ...
+reporters: ['mocha', 'kjhtml']
+// ...
+```
+
+### 4.2.5 - Configure the browsers
+
+We have configured Karma to use [PhantomJS](http://phantomjs.org/) as browser. Karma need you to specify what browsers where you want to launch your tests.
+
+#### Let's try to change browsers
+
+To do this, the Karma launcher of the browser concerned need to be on your project. You can use browsers, 
+like Chrome or Firefox. 
+
+* Add the launchers to your projects
+```sh
+npm install karma-chrome-launcher karma-firefox-launcher --save-dev
+```
+
+* And change your browsers conf
+```javascript
+//karma.conf.js
+// ...
+browsers: ['Chrome', 'Firefox']
+// ...
+```
+
+#### Finally, PhantomJS
+
+In fact, we prefer use [PhantomJS](http://phantomjs.org/) because it's an headless browser
+
+* Make sure you have the following if you want PhantomJS
+```javascript
+//karma.conf.js
+// ...
+browsers: ['PhantomJS']
+// ...
+```
+
+### 4.2.6 - Configure the preprocessors
+
+You can define preprocessor to transpile your code if you use a non-standard syntax like CoffeeScript or TypeScript.
+In our project, the code need is bundled with webpack, so we use the webpack preprocessor
+
 * Add the preprocessor
 ```javascript
 //karma.conf.js
@@ -617,31 +672,7 @@ preprocessors: {
 // ...
 ```
 
-* Add the reporters
-```javascript
-//karma.conf.js
-// ...
-reporters: ['mocha', 'kjhtml']
-// ...
-```
-
-#### 4.2.3 - Run
-
-* Replace your script _test_ from "jasmine" to "karma start"
-```javascript
-//package.json
-// ...
-"scripts": { "test": "karma start" },
-// ...
-```
-
-* Start Karma and see the result at [localhost:9876/debug.html](http://localhost:9876/debug.html)
-```sh
-npm run test
-```
-
-#### 4.2.4 - Troubleshoot at Running
-
+You will see these problems if you run like it
 > ![troubleshoot] We use webpack without specifying the 'mode' option (production or development)
 >```sh
 >WARNING in configuration
@@ -657,6 +688,7 @@ npm run test
 >    "str": "An error was thrown in afterAll\nSyntaxError: Use of reserved word 'let' in strict mode"
 >  }
 >```
+
 
 You need to add some webpack configurations to your Karma config file
 
@@ -699,17 +731,38 @@ module.exports = function(config) {
 }
 ```
 
-### 4.2 - PhantomJS
+#### 4.2.7 - Run
 
-[PhantomJS](http://phantomjs.org/) is an headless browser, we use [karma-phantomjs-launcher](https://www.npmjs.com/package/karma-phantomjs-launcher) to launch it with Karma
-
-* Make sure you have the following in your Karma config
+* Replace your script _test_ from "jasmine" to "karma start"
 ```javascript
-//karma.conf.js
+//package.json
 // ...
-browsers: ['PhantomJS']
+"scripts": { "test": "karma start" },
 // ...
 ```
+
+* Start Karma and see the result at [localhost:9876/debug.html](http://localhost:9876/debug.html)
+```sh
+npm run test
+```
+
+### Checklist
+ - [ ] My **[TODO working feature]** works
+ - [ ] I understand **..........**
+ - [ ] I know **..........**
+ - [ ] I will never **..........** again
+ - [ ] I am able to choose whenever **..........**
+ - [ ] I am confident with **..........**
+ - [ ] I know how to use **..........**
+ - [ ] ...
+ 
+ - [ ] I tested my app without karma, I saw the result on the terminal
+ - [ ] I tested my app with karma, I saw the result on the terminal and on the [debug.html](http://localhost:9876/debug.html) page
+ - [ ] I understand what do "describe" and "it" functions
+ - [ ] I understand the Jasmine syntax to write tests
+ - [ ] I know the difference between Jasmine and Karma
+ - [ ] I know the difference between Jasmine and Karma
+ - [ ] I am able to choose other reporters and browsers for Karma
 
 ## Step 5 - Memory management
 topics: storage usage, cookies
