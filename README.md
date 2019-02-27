@@ -519,8 +519,8 @@ be directly your browser console.
 ```
 ```javascript
 const htmlCards = document.getElementById('cards');
-const htmlCard = document.getElementById('card-template').content.cloneNode(true).firstElementChild
-htmlCards.appendChild(htmlCard);
+const clonedHtmlCard = document.getElementById('card-template').content.cloneNode(true).firstElementChild
+htmlCards.appendChild(clonedHtmlCard);
 ```
 
 #### 3.3.2 - Implementation
