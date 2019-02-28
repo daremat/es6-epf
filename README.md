@@ -537,7 +537,7 @@ node server.js
 
 For the parameters, **nb** is the number of the image you have and **size** the number of pairs you want to guess.
 
-The server return a list of IDs like this (nb=5, size=3) => [0, 4, 3, 4, 0, 3]
+The server return a ID list : ?nb=5&size=2 will return {ids: [0, 4, 3, 4, 0, 3]}
 
 > ![tip] __Pro tip__: Use Postman to try your http request on your API
 
