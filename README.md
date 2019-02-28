@@ -525,6 +525,24 @@ const clonedHtmlCard = document.getElementById('card-template').content.cloneNod
 htmlCards.appendChild(clonedHtmlCard);
 ```
 
+##### Shuffle your cards
+We will use the server inside your /resources folder to handle the shuffle, 
+* install and run the server
+```sh
+cd ../resources/server
+npm install
+node server.js
+```
+* use the fetch api to call the server (localhost:8081/ with **nb** and **size** as get parameters)
+
+For the parameters, **nb** is the number of the image you have and **size** the number of pairs you want to guess.
+
+The server return a list of IDs like this (nb=5, size=3) => [0, 4, 3, 4, 0, 3]
+
+> ![tip] __Pro tip__: Use Postman to try your http request on your API
+
+* use the IDs list to shuffle you cards
+
 #### 3.3.2 - Implementation
 
 * initialize the game with n cards, using 2 classes: *Board* and *Card*
