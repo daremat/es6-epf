@@ -157,7 +157,7 @@ meme-ory
 }
 ```
 
-> ![tip] __Pro tip__: You can check how babel actually process javascript easily there: [babeljs.io/repl](https://babeljs.io/repl])
+> ![tip] __Pro tip__: You can check how babel actually process javascript easily there: [babeljs.io/repl](https://babeljs.io/repl)
 
 ```html
 <!--src/index.html-->
@@ -219,6 +219,10 @@ module.exports = {
 };
 ```
 > ![tip] __Tip__: Have a look at [webpack.jakoblind.no](https://webpack.jakoblind.no/) to easily scaffold your webpack config.
+
+> ![tip] __Tip__: If you want to simplify your _../../../relative/import/paths_, have a look at 
+[webpack.js.org/configuration/resolve/](https://webpack.js.org/configuration/resolve/) and 
+[www.jetbrains.com/help/idea/using-webpack.html](https://www.jetbrains.com/help/idea/using-webpack.html).
 
 ### Step 1.3 - run webpack
 Now let's configure how we run our application using webpack by defining 2 npm scripts:
@@ -320,19 +324,20 @@ es6-01
     ├── .babelrc
     ├── package.json
     └── src/
-        └── views/
-            ├── welcome/
-            │   ├── welcome.js
-            │   ├── welcome.html
-            │   └── welcome.scss
-            ├── game/
-            │   ├── game.js
-            │   ├── game.html
-            │   └── game.scss
-            └── end/
-                ├── end.js
-                ├── end.html
-                └── end.scss
+        └── app/
+            └── modules/
+                ├── welcome/
+                │   ├── welcome.js
+                │   ├── welcome.html
+                │   └── welcome.scss
+                ├── game/
+                │   ├── game.js
+                │   ├── game.html
+                │   └── game.scss
+                └── end/
+                    ├── end.js
+                    ├── end.html
+                    └── end.scss
 ```
 * webpack configuration should be adjusted to output 3 views as well, using chunks
 ```javascript
@@ -340,9 +345,9 @@ es6-01
 module.exports = {
     // ...
       entry: {
-        app: './src/views/welcome/welcome.js',
-        game: './src/views/game/game.js',
-        end: './src/views/end/end.js'
+        app: './src/app/modules/welcome/welcome.js',
+        game: './src/app/modules/game/game.js',
+        end: './src/app/modules/end/end.js'
       },
       plugins: [
         new CleanWebpackPlugin(['dist']),
@@ -350,30 +355,30 @@ module.exports = {
           files: {
             chunks: {
               app: {
-                entry: './src/views/welcome/welcome.js'
+                entry: './src/app/modules/welcome/welcome.js'
               },
               game: {
-                entry: './src/views/game/game.js'
+                entry: './src/app/modules/game/game.js'
               },
               end: {
-                entry: './src/views/end/end.js'
+                entry: './src/app/modules/end/end.js'
               }
             }
           }
         }),
         new HtmlWebpackPlugin({
           filename: 'index.html',
-          template: './src/views/welcome/welcome.html',
+          template: './src/app/modules/welcome/welcome.html',
           chunks: ['app']
         }),
         new HtmlWebpackPlugin({
           filename: 'game.html',
-          template: './src/views/game/game.html',
+          template: './src/app/modules/game/game.html',
           chunks: ['game']
         }),
         new HtmlWebpackPlugin({
           filename: 'end.html',
-          template: './src/views/end/end.html',
+          template: './src/app/modules/end/end.html',
           chunks: ['end']
         })
       ],
@@ -468,15 +473,16 @@ es6-01
 ...
 ├── assets/
 │   └─ here your static card images
-└── views/
-    ├── welcome/
-    ├── game/
-    │   ├── card.js
-    │   ├── board.js
-    │   ├── game.js
-    │   ├── game.html
-    │   └── game.scss
-    └── end/
+└── app/
+    └── modules/
+        ├── welcome/
+        ├── game/
+        │   ├── card.js
+        │   ├── board.js
+        │   ├── game.js
+        │   ├── game.html
+        │   └── game.scss
+        └── end/
 ```
 
 #### 3.3.1 - Preparation
