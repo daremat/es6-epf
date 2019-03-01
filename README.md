@@ -97,7 +97,8 @@ package.json
 ```
 
 > ![info] You just created a NPM module, that is not different from any module in the central registry at
-[www.npmjs.com](https://www.npmjs.com/)
+[www.npmjs.com](https://www.npmjs.com/). Your NPM module relies on this json file, you can find the documentation
+for this file here: [https://docs.npmjs.com/files/package.json].
 
 * set your package as private
 ```javascript
@@ -178,7 +179,6 @@ console.log('Hello World');
 function component() {
   let element = document.createElement('div');
 
-  // Lodash, currently included via a script, is required for this line to work
   element.innerHTML = ['Hello', 'webpack', 'App'].join('\n\n');
 
   return element;
@@ -388,6 +388,11 @@ module.exports = {
 
 ### Step 3.2 - Welcome view
 * create the welcome view form, containing player name and game size
+* install and import lodash (documentation: [https://lodash.com/docs])
+```sh
+npm install --save lodash
+```
+> ![question] Have a look at your package.json file, what does the "^" mean in front of the versions?
 * add minimal validation, player name: alphanumerical and length between 3 and 20, size: number between 2 and 10
 * link the form to the **game view** passing parameters as get params
 
@@ -598,8 +603,11 @@ export class Card {
 * implement the game logic: flip cards 2 by 2, keep matches flipped, end the game when all cards are flipped
 
 ### Step 3.4 - End view
-> Date, ...
-* retrieve the results from get parameters and print them on your end.html
+topics: Date, browser storage
+
+* retrieve the results from get parameters and print them on the end view
+* save the result of the game in the browser using web storage [https://developer.mozilla.org/fr/docs/Web/API/Web_Storage_API]
+     sessionStorage and localStorage
 
 ### Checklist
  - [ ] I know how to modularize a webpack app
