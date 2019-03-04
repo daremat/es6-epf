@@ -20,6 +20,15 @@ In this milestone, we will focus on using Javascript modern development tools wi
 >Although we asked our selves if we should have you implement your custom React library we finally
 decided to go for an easy local game application exercise implementation.
 
+Let's define a bit more what we are talking about:
+* Ecmascript: standardized and versioned version of what is commonly called "Javascript"
+* Browsers: I know it's sad but there are more browsers than Chrome and you will need to check for compatibility
+* ES next: ES7 + ES8 + ES9 and more
+
+![ecmascript-support]
+
+> Source: [kangax.github.io/compat-table/es5](http://kangax.github.io/compat-table/es5/)
+
 #### Some useful references you should consider :
 
 - [TODO add external resources]
@@ -34,7 +43,7 @@ decided to go for an easy local game application exercise implementation.
 ![lodash]
 
 #### Prerequisites
-> ![tip] __Pro tip__: NVM is a very usefull tool if you want to manage different versions of node at the same time,
+> ![tip] __Pro tip__: NVM is a very useful tool if you want to manage different versions of node at the same time,
 you might want to check: [github.com/creationix/nvm](github.com/creationix/nvm)
  - have **nodejs** and **npm** installed (NodeJS 6+)
  ```sh
@@ -393,7 +402,10 @@ module.exports = {
 
 ### Step 3.2 - Welcome view
 * create the welcome view form, containing player name and game size
-* install and import lodash (documentation: [https://lodash.com/docs])
+* install and import lodash (documentation: [lodash.com/docs](https://lodash.com/docs))
+> ![info] Lodash is a utility library covering a lot of use cases, although we will not need to use it that much 
+in this project. Indeed we will emphasize on ES next features that actually include a lot of lodash functions (but this 
+a good sign) we encourage you to check useful functions like: _.clone, _.assign, _.partial, _.curry...
 ```sh
 npm install --save lodash
 ```
@@ -611,9 +623,54 @@ export class Card {
 ### Step 3.4 - End view
 topics: Date, browser storage
 
-* retrieve the results from get parameters and print them on the end view
-* save the result of the game in the browser using web storage [https://developer.mozilla.org/fr/docs/Web/API/Web_Storage_API]
+* display a congratulation message to the user with his last performance
+* store the game history using the web storage [developer.mozilla.org/fr/docs/Web/API/Web_Storage_API](https://developer.mozilla.org/fr/docs/Web/API/Web_Storage_API)
      sessionStorage and localStorage
+> ![question] What is the main difference between the two? Check what happens if you close, the current tab or the browser.
+* also store the game history in indexedDB: [developer.mozilla.org/fr/docs/Web/API/API_IndexedDB/Using_IndexedDB](https://developer.mozilla.org/fr/docs/Web/API/API_IndexedDB/Using_IndexedDB),
+[developers.google.com/web/ilt/pwa/working-with-indexeddb](https://developers.google.com/web/ilt/pwa/working-with-indexeddb) 
+using the following *Storage* class should be very easy
+```javascript
+//utils.js
+export class Storage {
+
+    constructor() {
+        if (!('indexedDB' in window)) {
+            console.log('This browser doesn\'t support IndexedDB');
+            return;
+        }
+        let idb = indexedDB.open('memory', 1);
+        this._idb = idb;
+
+        idb.onupgradeneeded = e => {
+            if (!e.target.result.objectStoreNames.contains('game')) {
+                e.target.result.createObjectStore('game',{keyPath: 'id', autoIncrement: true});
+            }
+        };
+    }
+
+    write(data) {
+        const tx = this._idb.result.transaction('game', 'readwrite');
+        const gameStore = tx.objectStore('game');
+        gameStore.add(data);
+        return new Promise((resolve, reject) => {
+            tx.oncomplete = resolve;
+            tx.onerror = reject;
+        });
+    }
+
+    readAll() {
+        const tx = this._idb.result.transaction('game', 'readonly');
+        const gameStore = tx.objectStore('game');
+        const get = gameStore.getAll();
+        return new Promise((resolve, reject) => {
+            get.onsuccess = e => resolve(e.target.result);
+            get.onerror = reject;
+        });
+    }
+}
+```
+> ![question] What is the difference between localStorage and indexedDB?
 
 ### Checklist
  - [ ] I know how to modularize a webpack app
@@ -982,6 +1039,7 @@ As a reminder, here are the points you should check to ensure your `README.md` i
 [lodash]: .README/icons/lodash.png
 
 [mock]: .README/meme-ory-mock.png
+[ecmascript-support]: .README/ecmascript-support.png
 
 [info]: .README/info.png
 [warning]: .README/warning.png
