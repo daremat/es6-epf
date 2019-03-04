@@ -536,7 +536,7 @@ into javascript realtime machinery, but this is a very good habit.
 we used jsfiddle here but other like: [plnkr.co](https://plnkr.co/) or [jsbin.com](https://jsbin.com) will do. And the best interpreter will 
 be directly your browser console.
 
-##### How to handle with the dom
+##### How to handle this with the dom
 * create multiple flippable cards
 ```html
 <template id="card-template">
@@ -964,7 +964,7 @@ COPY dist /usr/share/nginx/html
 
 Congrats, you now have a working ![heart] Meme-ory app ![heart] !
 
-Check your achievements with the [following test](https://TODO_link_to_google_form_test)
+Check your achievements with the [following test](https://docs.google.com/forms/d/148VIT0oWVhnTkZtKMCVFfQL3o6IF_gVckTa99R5TUas)
 
 ##### \>>>>>  ![error] TODO remove form link
 https://docs.google.com/forms/d/1LV_mTVtP4LwDzwN1LawQDYi-Jk9rBvRWjEc19QqwfI8/edit
