@@ -812,7 +812,7 @@ You will see these problems if you run like it
 >The 'mode' option has not been set, webpack will fallback to 'production' for this value. Set 'mode' option to 'development' or 'production' to enable defaults for each environment.
 >```
 
-> ![troubleshoot] PhantomJS don't understand the ES6 syntax
+> ![troubleshoot] PhantomJS doesn't understand the ES6 syntax
 >```sh
 >PhantomJS 2.1.1 (Windows 8.0.0) ERROR
 >  {
@@ -848,7 +848,9 @@ module.exports = {
 };
 ```
 
-As you see, we define the mode for webpack, and the [babel rule to transpile our code to ES5](https://babeljs.io/docs/en/babel-preset-env) for PhantomJS. Add other configurations here if necessary
+As you see, we define the mode for webpack, and the 
+[babel rule to transpile our code to ES5](https://babeljs.io/docs/en/babel-preset-env) for PhantomJS. 
+Add other configurations here if necessary
 
 * Put the webpack config into the Karma config
 ```javascript
@@ -888,7 +890,7 @@ npm run test
 ## Step 5 - Memory management
 topics: web storage usage, cookies
 
-In this session we will improve the end view by displaying the last performance of the user in a table.
+In this section we will improve the end view by displaying the last performance of the user in a table.
 
 * store the game history using the web storage [developer.mozilla.org/fr/docs/Web/API/Web_Storage_API](https://developer.mozilla.org/fr/docs/Web/API/Web_Storage_API)
      sessionStorage and localStorage
@@ -941,6 +943,11 @@ export class Storage {
 > ![info] The cookie interface is quite similar to the one we used although it has a different lifecycle, have a look at:
 (developer.mozilla.org/fr/docs/Mozilla/Add-ons/WebExtensions/API/cookies)[https://developer.mozilla.org/fr/docs/Mozilla/Add-ons/WebExtensions/API/cookies]
 
+### Checklist
+ - [ ] I stored the user game history in sessionStorage, localStorage and indexedDB
+ - [ ] I mapped proper Promise from indexedDB and resolve/reject it
+ - [ ] I know how to use web storage and differences between APIs
+
 ## Step 6 - Bonus: Production deployment
 
 Deploy the built application in a nginx docker image for a production ready meme-ory client.
@@ -955,7 +962,7 @@ COPY dist /usr/share/nginx/html
 
 ## The end
 
-Congrats, you now have a working Meme-ory app !
+Congrats, you now have a working ![heart] Meme-ory app ![heart] !
 
 Check your achievements with the [following test](https://TODO_link_to_google_form_test)
 
@@ -967,28 +974,7 @@ Ready to follow up? Get started for [![Next Milestone angular]](https://master3.
 
 ## Troubleshoot
 
-##### \>>>>>  ![error] TODO complete troubleshoot
-The troubleshot section is very important.
-It is opened for merge requests, and allow trainees to save time on common errors,
-mistakes, or bugs that trainees usually do and that just consume time
-
-Please write some initial troubleshoots here.
-##### \<<<<<
-
-## Troubleshoot 1
-
-- > ![troubleshoot] I encounter [TODO problem troubleshot 1] !
-  > - double check that **.....**
-
-- > ![troubleshoot] XXX does not work [TODO troubleshot 1]
-  > - please make sure that **........ is properly setup**
-
-- > ![troubleshoot] I got this error : [TODO error troubleshot 1]
-  > - May be caused because **.........**
-
-## Troubleshoot 2
-
-- > ![troubleshoot] [TODO troubleshot 1]
+Any specific troubles? Keep us updated and we will add those here.
 
 # Contributors
  - Logan LEPAGE <[llepage@takima.fr](mailto://llepage@takima.fr)>
@@ -1006,35 +992,10 @@ Please write some initial troubleshoots here.
 # Checklist `README.md`
 As a reminder, here are the points you should check to ensure your `README.md` is compliant:
 
-- [ ] uses a milestone or module badge
-    - [ ] have proper milestone icon
-    - [ ] have non null credits training
 - [ ] have a *Bill of Modules* section
 - [ ] starts with a valid URL to the course on Google
-- [ ] list required skills
-    - [ ] with badges
-- [ ] list involved tools / technologies
-    - [ ] with icons
-- [ ] have an abstract section, that
-    - [ ] reminds the context
-    - [ ] explain goals, what is about to be done
-- [ ] introduce tools & libraries
-- [ ] show an architecture diagram / schema if required
-- [ ] uses no schema copy pasted on the internet
-- [ ] is structured as a tutorial, with steps
-- [ ] uses one step by concern, that
-    - [ ] starts with some keywords
-    - [ ] plainly explain the step's purpose, what is it going to achieve
-    - [ ] uses **pro-tips**, **danger** **question** or **info** notices
-    - [ ] links toward the troubleshoot
-    - [ ] shows a commit reminder
-    - [ ] ends with a list of produced files
-    - [ ] ends with the step's checklist
-- [ ] starts with have a `setup` step
 - [ ] ends with the milestone's checklist
 - [ ] links to the google form test
-- [ ] links to the next milestone
-- [ ] list contributors & mentor
 - [ ] links to any file located within `resources/`
 - [ ] uses the copyright notice
 - [ ] have a CHEATSHEET.md
