@@ -1,8 +1,8 @@
-# Initiation to ESNext ![Module: 0 credits]
+# Initiation to ESNext ![Module: 10 credits]
 
 [![milestone-status]](https://master3-assistant.takima.io?milestoneId=40&redirectUri=https%3A%2F%2Fmaster3.takima.io%2Fmaster3%2Fes6-01)
 
-> read estimate : **TODO 30 minutes**.
+> read estimate : **30 minutes**.
 
 ![SKILL javascript]
 
@@ -31,7 +31,7 @@ Let's define a bit more what we are talking about:
 
 #### Some useful references you should consider :
 
-- [TODO add external resources]
+- ...
 - the [cheatsheet.md](./CHEATSHEET.md)
 
 #### Involved technologies
@@ -65,7 +65,7 @@ As it has been said, the goal of this module is to discover modern Javascript to
  described here.
 
 The application will be composed of 3 views:
-* the welcome view, containing a simple form allowing the user to enter is name, the game size and 
+* the welcome view, containing a simple form allowing the user to enter his name, the game size and 
 a start button to launch the game
 * the game view allowing the user to play the memory game, flipping cards 2 by 2 until all the cards are turned upwards
 * the end view, congratulating the user, allowing to start a new game and showing him is performance time
@@ -86,7 +86,6 @@ why we will guide you trough the configuration and some parts of the implementat
 ## Step 1 - NPM & webpack setup
 topics: NPM, webpack
 
-##### \>>>>>  ![error] TODO introduce chapter goal
 This step is about setting up a standard npm module containing a webpack application, this will be the project skeleton.
 
 **Why ?** Have a standardized NPM module and an easily runnable webpack application.
@@ -107,7 +106,7 @@ package.json
 
 > ![info] You just created a NPM module, that is not different from any module in the central registry at
 [www.npmjs.com](https://www.npmjs.com/). Your NPM module relies on this json file, you can find the documentation
-for this file here: [https://docs.npmjs.com/files/package.json].
+for this file here: [docs.npmjs.com/files/package.json](https://docs.npmjs.com/files/package.json).
 
 * set your package as private
 ```javascript
@@ -270,6 +269,12 @@ Check the dist/ folder on build and inspect how the file is built, can you find 
 ## Step 2 - Style the application
 topics: semantic-ui, webpack loader, sass
 
+This step is about adding some styling to the application: semantic-ui and sass support.
+
+**Why ?** Have some initial styling and support compiled css.
+
+**At the end, we should have a semantic-ui app embedding sass custom styling.**
+
 * add webpack static loaders to the project
 ```sh
 npm install --save-dev style-loader css-loader url-loader file-loader
@@ -317,9 +322,13 @@ module: {
  - [ ] I know what sass is
 
 ## Step 3 - Implement memory game
-topics: ES6 features, lodash, Promise, async/await, debugger
+topics: ES Next features, lodash, Promise, async/await, debugger
 
-The game should have three parts : **welcome** , **game**, **end**.
+In this step you will implement the memory game logic using ES Next features and more.
+
+**Why ?** Get to write modern Javascript code and use modern front-end development tools.
+
+At the end, the user should be able to play the memory game.
 
 ### Step 3.1 - 3 views structure
 
@@ -621,56 +630,10 @@ export class Card {
 * implement the game logic: flip cards 2 by 2, keep matches flipped, end the game when all cards are flipped
 
 ### Step 3.4 - End view
-topics: Date, browser storage
 
 * display a congratulation message to the user with his last performance
-* store the game history using the web storage [developer.mozilla.org/fr/docs/Web/API/Web_Storage_API](https://developer.mozilla.org/fr/docs/Web/API/Web_Storage_API)
-     sessionStorage and localStorage
-> ![question] What is the main difference between the two? Check what happens if you close, the current tab or the browser.
-* also store the game history in indexedDB: [developer.mozilla.org/fr/docs/Web/API/API_IndexedDB/Using_IndexedDB](https://developer.mozilla.org/fr/docs/Web/API/API_IndexedDB/Using_IndexedDB),
-[developers.google.com/web/ilt/pwa/working-with-indexeddb](https://developers.google.com/web/ilt/pwa/working-with-indexeddb) 
-using the following *Storage* class should be very easy
-```javascript
-//utils.js
-export class Storage {
 
-    constructor() {
-        if (!('indexedDB' in window)) {
-            console.log('This browser doesn\'t support IndexedDB');
-            return;
-        }
-        let idb = indexedDB.open('memory', 1);
-        this._idb = idb;
-
-        idb.onupgradeneeded = e => {
-            if (!e.target.result.objectStoreNames.contains('game')) {
-                e.target.result.createObjectStore('game',{keyPath: 'id', autoIncrement: true});
-            }
-        };
-    }
-
-    write(data) {
-        const tx = this._idb.result.transaction('game', 'readwrite');
-        const gameStore = tx.objectStore('game');
-        gameStore.add(data);
-        return new Promise((resolve, reject) => {
-            tx.oncomplete = resolve;
-            tx.onerror = reject;
-        });
-    }
-
-    readAll() {
-        const tx = this._idb.result.transaction('game', 'readonly');
-        const gameStore = tx.objectStore('game');
-        const get = gameStore.getAll();
-        return new Promise((resolve, reject) => {
-            get.onsuccess = e => resolve(e.target.result);
-            get.onerror = reject;
-        });
-    }
-}
-```
-> ![question] What is the difference between localStorage and indexedDB?
+> This view is very simple we will improve it in the section 
 
 ### Checklist
  - [ ] I know how to modularize a webpack app
@@ -683,6 +646,12 @@ export class Storage {
 
 ## Step 4 - Unit testing and browser support
 topics: Unit test, jasmine, phantomJS
+
+This step is about setting up a proper front-end testing environment.
+
+**Why ?** Have a good idea on how to unit test Javascript code.
+
+**At the end, we should have a proper unit test set and a task to run it.**
 
 ### Step 4.1 - Jasmine
 
@@ -917,24 +886,76 @@ npm run test
  - [ ] I am able to choose other reporters and browsers for Karma
 
 ## Step 5 - Memory management
-topics: storage usage, cookies
+topics: web storage usage, cookies
 
-## Step 6 - Bonus: Offline/dynamic and production deploy
-topics: websockects, webworkers, nginx docker
+In this session we will improve the end view by displaying the last performance of the user in a table.
 
-## Check up
+* store the game history using the web storage [developer.mozilla.org/fr/docs/Web/API/Web_Storage_API](https://developer.mozilla.org/fr/docs/Web/API/Web_Storage_API)
+     sessionStorage and localStorage
+> ![question] What is the main difference between the two? Check what happens if you close, the current tab or the browser.
+* also store the game history in indexedDB: [developer.mozilla.org/fr/docs/Web/API/API_IndexedDB/Using_IndexedDB](https://developer.mozilla.org/fr/docs/Web/API/API_IndexedDB/Using_IndexedDB),
+[developers.google.com/web/ilt/pwa/working-with-indexeddb](https://developers.google.com/web/ilt/pwa/working-with-indexeddb) 
+using the following *Storage* class should be very easy
+```javascript
+//utils.js
+export class Storage {
 
-### Checklist
- - [ ] My **[TODO working feature]** works
- - [ ] I understand **..........**
- - [ ] I know **..........**
- - [ ] I will never **..........** again
- - [ ] I am able to choose whenever **..........**
- - [ ] I am confident with **..........**
- - [ ] I know how to use **..........**
- - [ ] ...
+    constructor() {
+        if (!('indexedDB' in window)) {
+            console.log('This browser doesn\'t support IndexedDB');
+            return;
+        }
+        let idb = indexedDB.open('memory', 1);
+        this._idb = idb;
 
-Congrats, you now have a working [TODO topic]
+        idb.onupgradeneeded = e => {
+            if (!e.target.result.objectStoreNames.contains('game')) {
+                e.target.result.createObjectStore('game',{keyPath: 'id', autoIncrement: true});
+            }
+        };
+    }
+
+    write(data) {
+        const tx = this._idb.result.transaction('game', 'readwrite');
+        const gameStore = tx.objectStore('game');
+        gameStore.add(data);
+        return new Promise((resolve, reject) => {
+            tx.oncomplete = resolve;
+            tx.onerror = reject;
+        });
+    }
+
+    readAll() {
+        const tx = this._idb.result.transaction('game', 'readonly');
+        const gameStore = tx.objectStore('game');
+        const get = gameStore.getAll();
+        return new Promise((resolve, reject) => {
+            get.onsuccess = e => resolve(e.target.result);
+            get.onerror = reject;
+        });
+    }
+}
+```
+> ![question] What is the difference between localStorage and indexedDB?
+
+> ![info] The cookie interface is quite similar to the one we used although it has a different lifecycle, have a look at:
+(developer.mozilla.org/fr/docs/Mozilla/Add-ons/WebExtensions/API/cookies)[https://developer.mozilla.org/fr/docs/Mozilla/Add-ons/WebExtensions/API/cookies]
+
+## Step 6 - Bonus: Production deployment
+
+Deploy the built application in a nginx docker image for a production ready meme-ory client.
+We will use this image: (hub.docker.com/_/nginx)[https://hub.docker.com/_/nginx]
+
+```dockerfile
+FROM nginx
+COPY dist /usr/share/nginx/html
+```
+
+> ![info] Do not forget to build the app with webpack before building the docker container (*npm run build*)
+
+## The end
+
+Congrats, you now have a working Meme-ory app !
 
 Check your achievements with the [following test](https://TODO_link_to_google_form_test)
 
