@@ -108,6 +108,9 @@ package.json
 [www.npmjs.com](https://www.npmjs.com/). Your NPM module relies on this json file, you can find the documentation
 for this file here: [docs.npmjs.com/files/package.json](https://docs.npmjs.com/files/package.json).
 
+> ![info] There are alternatives to npm, yarn for example is quite notorious and has very good performance:
+[yarnpkg.com](https://yarnpkg.com/en/).
+
 * set your package as private
 ```javascript
 //package.json
