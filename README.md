@@ -10,7 +10,6 @@
 
  - you know how to code in javascript
  - you want to start on Angular, React or other recent framework
- - You have basic knowledge in **ES6 or newer**
 
 ## Abstract
 
@@ -31,7 +30,6 @@ Let's define a bit more what we are talking about:
 
 #### Some useful references you should consider :
 
-- ...
 - the [cheatsheet.md](./CHEATSHEET.md)
 
 #### Involved technologies
@@ -44,7 +42,7 @@ Let's define a bit more what we are talking about:
 
 #### Prerequisites
 > ![tip] __Pro tip__: NVM is a very useful tool if you want to manage different versions of node at the same time,
-you might want to check: [github.com/creationix/nvm](github.com/creationix/nvm)
+you might want to check: [github.com/creationix/nvm](https://github.com/creationix/nvm)
  - have **nodejs** and **npm** installed (NodeJS 6+)
  ```sh
 $ node -v
@@ -84,7 +82,7 @@ why we will guide you trough the configuration and some parts of the implementat
 * The game implementation will use the following: classes, Promise, acync/await, lodash, ...
 
 ## Step 1 - NPM & webpack setup
-topics: NPM, webpack
+> NPM, webpack
 
 This step is about setting up a standard npm module containing a webpack application, this will be the project skeleton.
 
@@ -267,10 +265,10 @@ Check the dist/ folder on build and inspect how the file is built, can you find 
  - [ ] I know npm package basis
  - [ ] I know webpack basic setup and commands
 
-[troubleshoot](#troubleshoot-1)
+[troubleshoot](#troubleshoot)
 
 ## Step 2 - Style the application
-topics: semantic-ui, webpack loader, sass
+> semantic-ui, webpack loader, sass
 
 This step is about adding some styling to the application: semantic-ui and sass support.
 
@@ -325,7 +323,7 @@ module: {
  - [ ] I know what sass is
 
 ## Step 3 - Implement memory game
-topics: ES Next features, lodash, Promise, async/await, debugger
+> ES Next features, lodash, Promise, async/await, debugger
 
 In this step you will implement the memory game logic using ES Next features and more.
 
@@ -416,7 +414,7 @@ module.exports = {
 * create the welcome view form, containing player name and game size
 * install and import lodash (documentation: [lodash.com/docs](https://lodash.com/docs))
 > ![info] Lodash is a utility library covering a lot of use cases, although we will not need to use it that much 
-in this project. Indeed we will emphasize on ES next features that actually include a lot of lodash functions (but this 
+in this project. Indeed we will emphasize on ES next features that actually include a lot of lodash functions (which is 
 a good sign) we encourage you to check useful functions like: _.clone, _.assign, _.partial, _.curry...
 ```sh
 npm install --save lodash
@@ -535,8 +533,8 @@ document.getElementById('my-card-img').src = Back;
 > ![tip] __Pro tip__: Use your browser debugger as often as you can, this can be tricky and sometimes confusing to go
 into javascript realtime machinery, but this is a very good habit.
 
-> ![tip] __Pro tip__: Using Javascript online runners can be very useful to isolate a bug and get help from the community 
-we used jsfiddle here but other like: [plnkr.co](https://plnkr.co/) or [jsbin.com](https://jsbin.com) will do. And the best interpreter will 
+> ![tip] __Pro tip__: Using Javascript online runners can be very useful to isolate a bug and get help from the community.
+We used jsfiddle here but other like: [plnkr.co](https://plnkr.co/) or [jsbin.com](https://jsbin.com) will do. And the best interpreter will 
 be directly your browser console.
 
 ##### How to handle this with the dom
@@ -580,7 +578,7 @@ The server return a ID list : ?nb=5&size=2 will return {ids: [0, 4, 3, 4, 0, 3]}
 
 #### 3.3.2 - Implementation
 
-* initialize the game with n cards, using 2 classes: *Board* and *Card*
+* initialize the game with *n* cards, using 2 classes: *Board* and *Card*
 ```javascript
 //board.js
 //note: the board contains an array of Cards
@@ -648,7 +646,7 @@ export class Card {
  - [ ] I know the basis of debugging in a browser
 
 ## Step 4 - Unit testing and browser support
-topics: Unit test, jasmine, phantomJS
+> Unit test, jasmine, phantomJS
 
 This step is about setting up a proper front-end testing environment.
 
@@ -697,21 +695,21 @@ Jasmine does not run in a browser and our user probably will. That's why we will
 
 #### 4.2.1 - Preparation
 
-You can drop the _./spec/support/jasmine.json_ file, it's unused with Karma.
+You can drop the `./spec/support/jasmine.json` file, it's unused with Karma.
 
 #### 4.2.2 - Installation
 
-We will use these plugins to our project :
+We will use these plugins in our project :
 
-[karma-webpack](https://www.npmjs.com/package/karma-webpack) to generates a webpack bundle for each test _(and allow to jasmine to understand the ESNext syntax)_
+[karma-webpack](https://www.npmjs.com/package/karma-webpack) will generates a webpack bundle for each test _(and allow jasmine to understand the ESNext syntax)_
 
-[karma-jasmine](https://www.npmjs.com/package/karma-jasmine) an adapter to Jasmine
+[karma-jasmine](https://www.npmjs.com/package/karma-jasmine) will provide in an adapter for Jasmine
 
-[karma-mocha-reporter](https://www.npmjs.com/package/karma-mocha-reporter) use the [Mocha](https://mochajs.org/) style logging for the cli report
+[karma-mocha-reporter](https://www.npmjs.com/package/karma-mocha-reporter) will use the [Mocha](https://mochajs.org/) style logging for the cli report
 
-[karma-jasmine-html-reporter](https://www.npmjs.com/package/karma-jasmine-html-reporter) to dynamically shows our tests results on the debug.html page
+[karma-jasmine-html-reporter](https://www.npmjs.com/package/karma-jasmine-html-reporter) will dynamically shows our tests results on the debug.html page
 
-[karma-phantomjs-launcher](https://www.npmjs.com/package/karma-phantomjs-launcher) to run our tests on a headless browser
+[karma-phantomjs-launcher](https://www.npmjs.com/package/karma-phantomjs-launcher) will run our tests on a headless browser
 
 * Install Karma
 ```sh
@@ -722,14 +720,30 @@ npm install karma karma-jasmine jasmine-core ^
             karma-phantomjs-launcher --save-dev
 ```
 
-* Init Karma _(Windows users : powershell)_
+* Init Karma
 ```sh
-karma init
-| Which testing framework do you want to use : jasmine
-| Do you want to use Require.js : no
-| Do you want to capture any browsers automatically : PhantomJS
-| What is the location of your source and test files : spec/**/*.spec.js
+$karma init
+Which testing framework do you want to use ?
+Press tab to list possible options. Enter to move to the next question.
+> jasmine
+
+Do you want to use Require.js ?
+This will add Require.js plugin.
+Press tab to list possible options. Enter to move to the next question.
+> no
+
+Do you want to capture any browsers automatically ?
+Press tab to list possible options. Enter empty string to move to the next question.
+> PhantomJS
+> 
+
+What is the location of your source and test files ?
+You can use glob patterns, eg. "js/*.js" or "test/**/*Spec.js".
+Enter empty string to move to the next question.
+> spec/**/*.spec.js
 ```
+
+> ![tip] in order to use Karma as a CLI, we need to globally install Karma-cli using ̀̀̀`npm install -g karma-cli`
 
 * Add the plugins _(optional)_
 > ![info] Karma adds the plugins automatically for you if the plugins array does not exist
@@ -891,7 +905,7 @@ npm run test
  - [ ] I am able to choose other reporters and browsers for Karma
 
 ## Step 5 - Memory management
-topics: web storage usage, cookies
+> web storage usage, cookies
 
 In this section we will improve the end view by displaying the last performance of the user in a table.
 
@@ -954,7 +968,7 @@ export class Storage {
 ## Step 6 - Bonus: Production deployment
 
 Deploy the built application in a nginx docker image for a production ready meme-ory client.
-We will use this image: (hub.docker.com/_/nginx)[https://hub.docker.com/_/nginx]
+We will use this image: (nginx)[https://hub.docker.com/_/nginx]
 
 ```dockerfile
 FROM nginx
@@ -982,6 +996,7 @@ Any specific troubles? Keep us updated and we will add those here.
 # Contributors
  - Logan LEPAGE <[llepage@takima.fr](mailto://llepage@takima.fr)>
  - Alexandre NUNESSE <[anunesse@takima.fr](mailto://anunesse@takima.fr)>
+ - Pierre-Quentin Warlot <[pqwarlot@takima.fr](mailto://pqwarlot@takima.fr)>
 
 ### Mentors
  - Logan LEPAGE <[llepage@takima.fr](mailto://llepage@takima.fr)>
