@@ -81,6 +81,44 @@ why we will guide you trough the configuration and some parts of the implementat
 * The styling will be done using preprocessed css: sass
 * The game implementation will use the following: classes, Promise, acync/await, lodash, ...
 
+This tutorial was written with the dependencies version below. Du to fast update cycles, installing new version of this dependencies could create troubles.
+If you found one, please update the code to the next version or downgrade the dependency version concerned to the following.
+
+```
+"devDependencies": {
+    "@babel/core": "^7.3.3",
+    "@babel/preset-env": "^7.3.1",
+    "babel-loader": "^8.0.5",
+    "clean-webpack-plugin": "^2.0.1",
+    "css-loader": "^2.1.0",
+    "file-loader": "^3.0.1",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "jasmine": "^3.3.1",
+    "jasmine-core": "^3.3.0",
+    "karma": "^4.0.0",
+    "karma-jasmine": "^2.0.1",
+    "karma-jasmine-html-reporter": "^1.4.0",
+    "karma-mocha-reporter": "^2.2.5",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-webpack": "^3.0.5",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.0"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.2.5",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
+    "semantic-ui-css": "^2.4.1",
+    "uuid": "^3.3.2"
+  }
+```
+
 ## Step 1 - NPM & webpack setup
 > NPM, webpack
 
