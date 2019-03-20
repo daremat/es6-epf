@@ -12,7 +12,7 @@ module.exports = {
     end: './src/app/modules/end/end.js'
   },
   plugins: [
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       files: {
         chunks: {
