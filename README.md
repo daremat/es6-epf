@@ -206,7 +206,7 @@ module.exports = {
   watch: false,
   entry: './src/app/index.js',
   plugins: [
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './src/index.html'
