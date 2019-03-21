@@ -198,11 +198,18 @@ meme-ory
 // .babelrc
 {
     "presets": [
-      ["@babel/preset-env", { "useBuiltIns": "usage" }]
+      ["@babel/preset-env", { "useBuiltIns": "usage", "corejs": 3 }]
     ],
     "plugins": []
 }
 ```
+
+> ![troubleshoot] ES6 object.defineProperty caused by some wrong dependencies
+>```sh
+>Module not found: Error: Can't resolve 'core-js/modules/es6.object.define-property' 
+>```
+>Check your version against the ones provided, clean your node_modules/ and reinstall.
+>The preset-env may also need the corejs version to be defined: corejs: 3
 
 > ![tip] __Pro tip__: You can check how babel actually process javascript easily there: [babeljs.io/repl](https://babeljs.io/repl)
 
@@ -860,7 +867,7 @@ preprocessors: {
 // ...
 ```
 
-You will see these problems if you run like it
+You will see these problems if you run like so
 > ![troubleshoot] We use webpack without specifying the 'mode' option (production or development)
 >```sh
 >WARNING in configuration
@@ -1021,10 +1028,6 @@ Congrats, you now have a working ![heart] Meme-ory app ![heart] !
 
 Check your achievements with the [following test](https://docs.google.com/forms/d/148VIT0oWVhnTkZtKMCVFfQL3o6IF_gVckTa99R5TUas)
 
-##### \>>>>>  ![error] TODO remove form link
-https://docs.google.com/forms/d/1LV_mTVtP4LwDzwN1LawQDYi-Jk9rBvRWjEc19QqwfI8/edit
-##### \<<<<<
-
 Ready to follow up? Get started for [![Next Milestone angular]](https://master3.takima.io/master3/angular-01)  
 
 ## Troubleshoot
@@ -1043,22 +1046,6 @@ Any specific troubles? Keep us updated and we will add those here.
 
 | <sub>contact us: <[formation@takima.io](mailto://formation@takima.io)></sub> | <sub>© Takima 2019</sub> |
 | --- | ---:|
-
-##### \>>>>>  ![error] TODO remove checklist
-# Checklist `README.md`
-As a reminder, here are the points you should check to ensure your `README.md` is compliant:
-
-- [ ] have a *Bill of Modules* section
-- [ ] starts with a valid URL to the course on Google
-- [ ] ends with the milestone's checklist
-- [ ] links to the google form test
-- [ ] links to any file located within `resources/`
-- [ ] uses the copyright notice
-- [ ] have a CHEATSHEET.md
-- [ ] have a trainers/questions.md
-- [ ] have a trainers/CR.md
-
-##### \<<<<<
 
 [TODO Milestone : 0 credits]: https://img.shields.io/badge/TODO_milestone_name-0_credits-red.svg?longCache=true&style=for-the-badge&logoColor=ffffff&colorA=cd1c68&colorB=db9ab5&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABmJLR0QA0AB8AKD7i/b6AAAACXBIWXMAACE4AAAhOAFFljFgAAAAB3RJTUUH4gsbFCYzALEYOAAAAzNJREFUSMedlltoz2EYx7+/zchspuXY/iShnAljYiaUQ4gLSty4kFwosXKhkEtalMMds5mSRORGcmou0HJMccHmEDk1bMM2Pm6enx5vv//+/3nq7Xd4Dt/3eZ/D+0gZqCG16e87UACMB/YB94EWW4+AKmAykK//oQBoGLALuEtmugpMC21kCzQcOA900j36DZR1CRozgGJgLXCjC4MfgHt2rO+7kJuRCawMeJph95uAEqCfrRSwHHieINsAFCV6CcxOUPBH2QosSBcKoAdwzo7T06Ik4TKgIxB8CTS67yonnwcsAEoTbG0N7NT/E0sgH7geCLUCGwMPc02+v8Wt09YTYLAPD1AZeDrS72hKwlFWAkuc0jMn/zhNbGcFntY43lnP2B8o3rD/yxxgvZPvANqAE1ZzMTUCA10C5gJ3jPcFGBozHgSApfZ/iDvSJgdYC8xz39VOd3eQ9XOAdtv45vjnV6fQBAx0xk46XrGr01wnM89trCOIZQ5wy3jXgFyZuzHdBQrN0Epgh+NVp6nduUFyVQSxXO14w2QdwwOWA58SkuInsDow1hc4HcjtTCiVduMdlHX+mJptpaM24DKwBziaJmPPJPTkY8Z7JWBCFwC/gO/AjwztrtnJ3HZAQ+25JBbMkfRCUkNCt2qXVClpoqTpkqokdRrvjaS3kp5LqpM0X1Iv4/VwNqYCPb39nCiKWiRdSgA8HEVRlaQJklZEUbRNUo3xHkoaJ2lyFEXrJPmif+3ex0jqa5tvlvQhxxjHJBEAvrHnO0l7gUmSLkr6LWmmpKIoir6ZzHand9O9l0rqLemXpFZJF3x6nwri8tGKOq6jFLDG4kp8qwOrgr5Z7GL4GRhho0kTMDasqSOW/p1mJE6aVcav870TKAzGjrMObKm1wVEmdwDISyrklO16C7A+7jx28cbetVt21wY3zDgHeNN52BMYntUwBfQBLjkwrDGEN7y/L8fYSTUCJZkAUqZQDhwMgNJRfdBDD9n/K0BBJsCKbk5oV4E+Tn+0DWAbgEFZjYjA4izBHsfN3gEWJY2c2YAuBG6nAXoP7A11/DMrsITjLbRL9LgNVS8tewd0ywtHfwA7LOPX/9An6gAAAABJRU5ErkJggg== "TODO Milestone name"
 [milestone-status]: https://master3.takima.io/.assistant/badges/milestone-status?milestoneId=40
