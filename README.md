@@ -604,7 +604,7 @@ htmlCards.appendChild(clonedHtmlCard);
 ```
 
 ##### Shuffle your cards
-We will use the server inside your /resources folder to handle the shuffle, 
+We will use the server inside `/resources` ̀folder on this Git repository to handle the shuffle, 
 * install and run the server
 ```sh
 cd ../resources/server
