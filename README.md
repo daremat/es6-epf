@@ -305,6 +305,103 @@ npm run dev -- -p
 > ![question] Have a look at the console output when building with production (-p) or development (-d) options, noticing any difference?
 Check the dist/ folder on build and inspect how the file is built, can you find your javascript code?
 
+### Step 1.4 - How Source Map ?
+
+First of all we'll see how this simple piece of code comes with when map-sources are disabled.
+
+```javascript
+//webpack.config.js
+  ...
+  module.exports = {
+      ...
+      devtool:false,
+      ...
+  },
+  ...
+```
+
+* what is the difference in the javascript console?
+* In which .js file and which line is the console.log ('Hello World'); ? 
+
+When we want to debug, it will quickly be a problem. 
+
+
+**The solution: Map sources**
+
+However in production we will not debug and of course we want to keep the big advantage of bundle.js of webpack (saving time because less opening file ...).
+For this we need to know in the webpack configuration file, when we are in development or production.
+
+**Environment variable webpack**
+
+see : https://webpack.js.org/guides/environment-variables/
+
+
+* In the node scripts, from the package.json file, add a Webpack environment variable that will give us information:
+
+```javascript
+// package.json
+{
+  ...
+  "scripts": {
+      "build": "webpack --config webpack.config.js --env.NODE_ENV=prod",
+      "dev": "webpack-dev-server --env.NODE_ENV=dev"
+  },
+  ...
+}
+```
+
+
+
+* By retrieving the NodeJs process we can retrieve our environment variable to limit the source map to the dev environment.
+
+
+see https://webpack.js.org/configuration/devtool/
+
+
+* In the table of **devtools** at the previous link we chose: cheap-module-eval-source-map. Quick to rebuild and shows us the original code.
+
+
+```javascript
+//webpack.config.js
+const path = require('path');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+
+module.exports = env => {
+
+  return {
+    watch: true,
+    devtool: env.NODE_ENV === "dev" ? "cheap-module-eval-source-map" : "source-map",
+    //devtool: "cheap-module-eval-source-map",
+    entry: './src/app/index.js',
+    plugins: [
+      new CleanWebpackPlugin(),
+      new HtmlWebpackPlugin({
+        filename: 'index.html',
+        template: './src/index.html'
+      })
+    ],
+    output: {
+      filename: 'bundle.js',
+      path: path.resolve(__dirname, 'dist')
+    },
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          use: 'babel-loader',
+          exclude: /node_modules/
+        }
+      ]
+    }
+  }
+};
+
+```
+
+
+
 ### Checklist
  - [ ] I know how to setup a npm module
  - [ ] I know npm package basis
