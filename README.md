@@ -373,7 +373,6 @@ module.exports = env => {
   return {
     watch: true,
     devtool: env.NODE_ENV === "dev" ? "cheap-module-eval-source-map" : "source-map",
-    //devtool: "cheap-module-eval-source-map",
     entry: './src/app/index.js',
     plugins: [
       new CleanWebpackPlugin(),
@@ -708,6 +707,47 @@ cd ../resources/server
 npm install
 node server.js
 ```
+
+![server-detail]
+
+
+**Fetch API or Ajax with promise ?**
+
+![asynchronous-communication]
+
+We will use the Fetch API because it is lighter to code it.
+
+```javascript
+//AJAX
+          const req = new XMLHttpRequest();
+
+          req.onreadystatechange = function(event) {
+              if (this.readyState === XMLHttpRequest.DONE) {
+                  if (this.status === 200) {
+                    ...
+                  } else {
+                    ...
+                  }
+              }
+          };
+
+          req.open('GET', 'http://domain/service', true);
+```
+*  That's already heavy without even mentioning the sending of the header
+
+**adopted solution?**
+
+
+```javascript
+//Fetch API
+  const myPromise = fetch('http://domain/service',{method: 'GET'})
+                      .then( response => response.json() )
+                      .catch( error => console.error('error:', error) );
+
+  (await myPromise) ...
+```
+
+
 * use the fetch api to call the server (localhost:8081/ with **nb** and **size** as get parameters)
 
 For the parameters, **nb** is the number of the image you have and **size** the number of pairs you want to guess.
@@ -1162,6 +1202,10 @@ Any specific troubles? Keep us updated and we will add those here.
 
 [mock]: .README/meme-ory-mock.png
 [ecmascript-support]: .README/ecmascript-support.png
+
+[server-detail]: .README/server-detail.png
+
+[asynchronous-communication]: .README/asynchronous-communication.png
 
 [info]: .README/info.png
 [warning]: .README/warning.png
