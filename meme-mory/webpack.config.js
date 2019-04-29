@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   watch: false, //watch changes to rebuild automatically ; otherwise you can use webpack-dev-server ('npm run dev' then localhost:8080)
   // mode: 'production',
+  devtool: 'cheap-module-eval-source-map',
   mode: 'development',
   entry: {
     welcome: './src/app/modules/welcome/welcome.js',

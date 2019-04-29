@@ -6,6 +6,7 @@ import { capitalize } from 'lodash';
 import { findGetParameter, Storage } from '../../utils/utils';
 import {Card} from "./card";
 import {Board} from "./board";
+import localforage from "localforage";
 
 const queryString = location.search;
 const name = capitalize(findGetParameter(queryString, 'name')) || 'empty';
@@ -26,9 +27,19 @@ async function gameOver() {
   sessionGames.push({date: now, name, size, time: timeElapsedInSeconds});
   sessionStorage.setItem('games', JSON.stringify(sessionGames));
 
-  const localGames = JSON.parse(localStorage.getItem('games') || '[]');
-  localGames.push({date: now, name, size, time: timeElapsedInSeconds});
-  localStorage.setItem('games', JSON.stringify(localGames));
+  localforage.getItem("games")
+      .then((result) => {
+              let dataArray = [];
+
+              if (Array.isArray(result)){
+                dataArray = result;
+              }else if (result !== null) {
+                dataArray.push(result)
+              }
+              dataArray.push({date: now, name, size, time: timeElapsedInSeconds});
+
+              localforage.setItem("games", dataArray);
+      });
 
   await storage.write({date: now, name, size, time: timeElapsedInSeconds});
 

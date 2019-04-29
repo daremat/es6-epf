@@ -4,6 +4,7 @@ import './end.scss';
 import moment from 'moment';
 import { capitalize } from 'lodash';
 import { findGetParameter, Storage } from "../../utils/utils";
+import localforage from "localforage";
 
 const name = capitalize(findGetParameter(location.search,'name')) || 'empty';
 const size = parseInt(findGetParameter(location.search,'size')) || 9;
@@ -16,9 +17,8 @@ document.getElementById('time').innerText = time;
 JSON.parse(sessionStorage.getItem('games') || '[]')
     .forEach(d => writeTableColumn('history-session', d));
 
-
-JSON.parse(localStorage.getItem('games') || '[]')
-    .forEach(d => writeTableColumn('history-local', d));
+localforage.getItem('games')
+     .then(data => data.forEach(d=> writeTableColumn('history-local', d)));
 
 const indexedDBStorage = new Storage();
 indexedDBStorage._idb.onsuccess = () => {
