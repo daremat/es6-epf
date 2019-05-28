@@ -1,13 +1,17 @@
+import './card.scss'
+
+function getTemplate() {
+    if (!Card.__template) {
+        Card.__template = document.getElementById('card-template').content;
+    }
+    if (!Card.__template) {
+      throw new Error('cannot load card template. Maybe you tried to create a card in te wrong view ?')
+    }
+
+    return Card.__template.cloneNode(true).firstElementChild;
+}
+
 export class Card {
-
-  static set template(template) {
-    Card._template = template;
-  }
-
-  static set backImg(backImg) {
-    Card._backImg = backImg;
-  }
-
   get elt() {
     return this._elt;
   }
@@ -16,20 +20,22 @@ export class Card {
     return this._flipped;
   }
 
-  get img() {
-    return this._img;
+  get id() {
+    return this._id;
   }
 
-  constructor(img, board) {
-    this._flipped = false;
+  constructor(id, board) {
+
+      this._flipped = false;
     this.matched = false;
-    this._img = img;
+    this._id = id;
     this._board = board;
 
-    this._elt = Card._template.cloneNode(true).firstElementChild;
+    this._elt = getTemplate();
     this._imageElt = this._elt.querySelector('.image');
-    this._imageElt.querySelector('img.front-face').src = img;
-    this._imageElt.querySelector('img.back-face').src = Card._backImg;
+      this._imageElt.querySelector('img.front-face').src = `src/assets/cards/card-${id}.png`;
+//      this._imageElt.querySelector('img.front-face').id = `mo-card-${id}`;
+    this._imageElt.querySelector('img.back-face').src = 'src/assets/cards/back.png';
     this._imageElt.addEventListener('click', () => this.flip());
   }
 
@@ -42,6 +48,6 @@ export class Card {
   }
 
   equals(card) {
-    return card.img === this._img;
+    return card.id === this._id;
   }
 }

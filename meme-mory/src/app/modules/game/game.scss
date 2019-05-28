@@ -14,43 +14,5 @@
   .cards {
     perspective: 1000px;
   }
-
-  .card {
-    box-shadow: none;
-    background: none;
-    width: 14%;
-
-    .image {
-      position: relative;
-      transform: scale(1);
-      transform-style: preserve-3d;
-      transition: transform .5s;
-      :hover {
-        cursor: pointer;
-      }
-      :active {
-        transform: scale(0.97);
-        transition: transform .2s;
-      }
-
-      .front-face, .back-face {
-        background: #1C7CCC;
-        backface-visibility: hidden;
-        box-shadow: 1px 1px 1px rgba(0,0,0,.3);
-      }
-      .front-face {
-        transform: rotateY(180deg);
-      }
-      .back-face {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top:0;
-      }
-    }
-    .image.flip {
-      transform: rotateY(180deg);
-    }
-  }
 }
 

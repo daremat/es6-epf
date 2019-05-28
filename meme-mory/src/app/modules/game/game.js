@@ -1,10 +1,8 @@
 import 'semantic-ui-css/semantic.min.css';
 import 'Styles/style.scss';
 import './game.scss';
-import Back from '../../../assets/back.png';
 import { capitalize } from 'lodash';
 import { findGetParameter, Storage } from '../../utils/utils';
-import {Card} from "./card";
 import {Board} from "./board";
 import localforage from "localforage";
 
@@ -12,9 +10,6 @@ const queryString = location.search;
 const name = capitalize(findGetParameter(queryString, 'name')) || 'empty';
 const size = parseInt(findGetParameter(queryString, 'size')) || 9;
 document.getElementById('player-name').innerHTML = name;
-
-Card.template = document.getElementById('card-template').content;
-Card.backImg = Back;
 
 const board = new Board(size);
 const storage = new Storage();
