@@ -7,12 +7,11 @@ module.exports = {
     // mode: 'production',
     devtool: 'cheap-module-eval-source-map',
     mode: 'development',
-    entry: './src/main.js',
-    // entry: {
-    //     welcome: './src/app/modules/welcome/welcome.js',
-    //     // game: './src/app/modules/game/game.js',
-    //     // end: './src/app/modules/end/end.js'
-    // },
+    entry: {
+        welcome: './src/app/modules/welcome/welcome.js',
+        game: './src/app/modules/game/game.js',
+        end: './src/app/modules/end/end.js'
+    },
     plugins: [
         new CleanWebpackPlugin(),
         // new HtmlWebpackPlugin({
@@ -28,17 +27,13 @@ module.exports = {
         //         entry: './src/app/modules/end/end.js'
         //       }
         //     }
-        //   }s
+        //   }
         // }),
         // new HtmlWebpackPlugin({
         //   filename: 'index.html',
         //   template: './src/app/modules/welcome/welcome.html',
         //   chunks: ['welcome']
         // }),
-        new HtmlWebpackPlugin({
-            filename: 'index.html',
-            template: './src/index.html'
-        }),
         // new HtmlWebpackPlugin({
         //   filename: 'game.html',
         //   template: './src/app/modules/game/game.html',
@@ -52,15 +47,15 @@ module.exports = {
     ],
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js'
+        filename: '[name].[chunkhash:8].js'
     },
-    // resolve: {
-    //     alias: {
-    //         App: path.resolve(__dirname, 'src/app/'),
-    //         Assets: path.resolve(__dirname, 'src/assets/'),
-    //         Styles: path.resolve(__dirname, 'src/styles/')
-    //     }
-    // },
+    resolve: {
+        alias: {
+            App: path.resolve(__dirname, 'src/app/'),
+            Assets: path.resolve(__dirname, 'src/assets/'),
+            Styles: path.resolve(__dirname, 'src/styles/')
+        }
+    },
     module: {
         rules: [
             {
@@ -90,12 +85,6 @@ module.exports = {
                 test: /\.js?$/,
                 exclude: [path.resolve(__dirname, 'node_modules')],
                 loader: 'babel-loader',
-            },
-            {
-                test: /\.(woff|woff2|eot|ttf|otf)$/,
-                use: [
-                    'file-loader'
-                ]
             },
             // {
             //     test: /\.js$/,

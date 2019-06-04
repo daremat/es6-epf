@@ -1,0 +1,60 @@
+@import '../../../styles/colors';
+
+gameover {
+  display: block;
+  background: $brown-100-color;
+
+  .vertical.segment {
+    border: none;
+  }
+
+  .logo {
+    cursor: pointer;
+  }
+
+  .two.column {
+    :first-child {
+      width: 60%;
+    }
+    :last-child {
+      width: 40%;
+    }
+  }
+
+  .congrats {
+    font-size: 5em;
+  }
+
+  .size {
+    font-size: 1.5em;
+  }
+
+  .time {
+    font-size: 3em;
+    font-style: italic;
+  }
+
+  img.happy:hover  {
+    /* Start the shake animation and make the animation last for 0.5 seconds */
+    animation: shake 0.5s;
+
+    /* When the animation is finished, start again */
+    animation-iteration-count: infinite;
+  }
+}
+
+
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-3deg); }
+  20% { transform: translate(-3px, 0px) rotate(3deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(3deg); }
+  50% { transform: translate(-1px, 2px) rotate(-3deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-3deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-3deg); }
+}

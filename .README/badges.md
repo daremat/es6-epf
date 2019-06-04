@@ -87,6 +87,26 @@ Generate your own badges with [shields.io](https://shields.io/#/)
 ![angular master]
 
 
+# React
+[react milestone: 0 credits]: https://img.shields.io/badge/react-0_credits-react.svg?longCache=true&style=for-the-badge&logoColor=ffffff&colorA=cd1c68&colorB=db9ab5&logo=react "react milestone"
+![react milestone: 0 credits]
+
+[react module: 0 credits]: https://img.shields.io/badge/react-0_credits-react.svg?longCache=true&style=for-the-badge&logoColor=ffffff&colorA=0e6dc5&colorB=59a5ec&logo=react "react module"
+![react module: 0 credits]
+
+[react discover]: https://img.shields.io/badge/react-%E2%98%85%20%20%20-green.svg?longCache=true&style=for-the-badge&logoColor=ffffff&logo=react "react discover"
+![react discover]
+
+[react basics]: https://img.shields.io/badge/react-%E2%98%85%E2%98%85%20%20-yellow.svg?longCache=true&style=for-the-badge&logoColor=ffffff&logo=react "react basics"
+![react basics]
+
+[react advanced]: https://img.shields.io/badge/react-%E2%98%85%E2%98%85%E2%98%85-orange.svg?longCache=true&style=for-the-badge&logoColor=ffffff&logo=react "react advanced"
+![react advanced]
+
+[react master]: https://img.shields.io/badge/react-%E2%98%85%E2%98%85%E2%98%85%E2%98%85-red.svg?longCache=true&style=for-the-badge&logoColor=ffffff&logo=react "react master"
+![react master]
+
+
 # Android
 [android milestone: 0]: https://img.shields.io/badge/android-0_credits-android.svg?longCache=true&style=for-the-badge&logoColor=ffffff&colorA=cd1c68&colorB=db9ab5&logo=android "android milestone"
 ![android milestone: 0]

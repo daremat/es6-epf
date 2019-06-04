@@ -89,3 +89,4 @@ fabric.properties
 # Master: don't commit corrections
 ma-store
 ma-store/target
+node_modules

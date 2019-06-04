@@ -40,7 +40,6 @@
     "@babel/polyfill": "^7.2.5",
     "localforage": "^1.7.3",
     "lodash": "^4.17.11",
-    "moment": "^2.24.0",
     "semantic-ui-css": "^2.4.1",
     "uuid": "^3.3.2"
   }

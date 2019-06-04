@@ -6,9 +6,11 @@ please do not spoil yourself the happy ending of this course :)
 
 ##### \>>>>>  ![error] TODO list questions
 
-# TODO Topic 1
-- what is **TODO question 1** ?
-- what is **TODO question 2** ?
+# General knowledge
+- Is your application an SPA? Why?
+- Give the name of a nodeJS library to run servers
+- what is the difference between `import * as _ from lodash` & `import {clone} from lodash` ? Why is this important ?
+- what is the difference between `import MyComponent from 'src/app/my-component.component.js'` & `import MyComponent from './src/app/my-component.component.js'` 
 
 # TODO Topic 2
 - what is **TODO question 1** ?
@@ -18,3 +20,4 @@ please do not spoil yourself the happy ending of this course :)
 
 | <sub>contact us: <[formation@takima.io](mailto://formation@takima.io)></sub> | <sub>© Takima 2019</sub> |
 | --- | ---:|
+

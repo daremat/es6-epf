@@ -1,32 +1,44 @@
-# Initiation to ESNext ![Module: 10 credits]
+> ![info] In javascript we can use quotes (') and double quotes ("") independently, though using simple quote is far more widespread 
+
+# Initiation to modern web & ESNext ![Web 01: 10 credits]
 
 [![milestone-status]](https://master3-assistant.takima.io?milestoneId=40&redirectUri=https%3A%2F%2Fmaster3.takima.io%2Fmaster3%2Fes6-01)
 
-> read estimate : **30 minutes**.
+> Estimated reading time: **30 minutes**.
 
-![SKILL javascript]
+![javascript advanced]
+
+##### Show me the slides
+ - [Web 00 - The origins](https://docs.google.com/presentation/d/1P3ZGCCFOjCrn3035aQfsTejd65QA2m8VBGtKWnl5oGg/edit?usp=sharing)
+ - [Web 01 - bundlers & modules](https://docs.google.com/presentation/d/19xq68gSw8oVmMhH03kzQo9-gQSSVbsxjgXKwwBseSf8/edit?usp=sharing)
+ - [Web 02 - ESNext](https://docs.google.com/presentation/d/1uNeFVkYbIlvv0FV6tVs5SIgBs9vl5bM67QuqjTsS8c8/edit?usp=sharing)
+ - [Tools & Frameworks](https://docs.google.com/presentation/d/1ADPASia_Cj3B5UoUnvGEHuMV5e8l9Mr1lxpM0gHK2NE/edit?usp=sharing)
+ - [Fill in the talk survey (thank you ![heart])](https://docs.google.com/forms/d/1Lzkzv_7Mzt047OgtbkeWdDAvmESQ4UqbUnqYGc0LSD4/edit)
 
 #### You are here because
 
- - you know how to code in javascript
+ - you roughly know how to code with javascript
  - you want to start on Angular, React or other recent framework
 
 ## Abstract
 
-In this milestone, we will focus on using Javascript modern development tools without using any frameworks.
- The tools, patterns, and features used in this module will be a common ground for any Javascript project.
+In this module, we will learn how to do modern web development, 
+using only javascript and a modern webpack stack, with no other JS framework.
+The tools, patterns, and features used in this module will be a common ground for any Javascript project, 
+and gives you all the basics you need to master more complex frameworks.
 
->Although we asked our selves if we should have you implement your custom React library we finally
-decided to go for an easy local game application exercise implementation.
+In this module, we will cover the following topics:
+* **Ecmascript**: standardized and versioned version of what is commonly called "Javascript".
+* **Browsers compatibility**: I know it's sad but there are more browsers than just Chrome, and you will have to deal with compatibility issues
+* **ES next**: ES7 + ES8 + ES9 and more
 
-Let's define a bit more what we are talking about:
-* Ecmascript: standardized and versioned version of what is commonly called "Javascript"
-* Browsers: I know it's sad but there are more browsers than Chrome and you will need to check for compatibility
-* ES next: ES7 + ES8 + ES9 and more
+##### ![TODO] move this away >>>>>>>>>>
 
 ![ecmascript-support]
 
 > Source: [kangax.github.io/compat-table/es5](http://kangax.github.io/compat-table/es5/)
+
+##### <<<<<<<<<<
 
 #### Some useful references you should consider :
 
@@ -41,83 +53,65 @@ Let's define a bit more what we are talking about:
 ![lodash]
 
 #### Prerequisites
-> ![tip] __Pro tip__: NVM is a very useful tool if you want to manage different versions of node at the same time,
-you might want to check: [github.com/creationix/nvm](https://github.com/creationix/nvm)
- - have **nodejs** and **npm** installed (NodeJS 6+)
- ```sh
-$ node -v
-v10.15.1
-$ npm -v
-6.4.1
-```
+
+ - have both **nodejs** and **npm** installed (NodeJS 6+)
+    ```sh
+   $ node -v
+   v9.11.0 ### at least
+   
+   $ npm -v
+   6.3.0 ### at least
+   ```
+   > ![tip] __Pro tip__: NVM is a very useful tool if you want to manage different versions of node at the same time.
+Check it out at [github.com/creationix/nvm](https://github.com/creationix/nvm)
 
 ## Setup
 
-No specific setup is required. As stated before having nodejs and also a modern browser might be useful.
+- Copy up all files from [`resources/setup`](resources/setup) to your working directory
+
+Our web application will work together with a server. Set it up right now:
+ - install the dependencies 
+   ```bash
+   cd server;
+   npm install
+   npm start
+   ```
+   > ![info] Have a look on [`resources/setup/server/server.js`](resources/setup/server/server.js), to see how far NodeJS shares similarities with JavScript.
+ - Ensure the server is up and running: Connect to [http://localhost:8081/api-docs/](http://localhost:8081/api-docs/) and check the documentation is alive.
 
 ## Get started
 
-### Specification
-As it has been said, the goal of this module is to discover modern Javascript tools while developing a 
- simple memory game. We will guide you through the implementation but the features of the application will be 
- described here.
+Nobody now uses bare javascript. The 
 
-The application will be composed of 3 views:
-* the welcome view, containing a simple form allowing the user to enter his name, the game size and 
+However, there are numerous popular javascript frameworks nowadays, 
+and picking up the "good one" is for the most part a matter of hype and fashion.
+The competition is rude, and the "killer JS framework" is never the same from one year to another
+![frameworks_battle]
+
+> ![info] Takima master3 training has modules to discover both Angular and React: [![react module 01]](https://master3.takima.io/master3/react-01) & [![angular module 01]](https://master3.takima.io/master3/angular-01)
+
+Anyway, all those frameworks are built on top some common basics. For now on, 
+just let them fight forever and let's discover what is on the roots of what makes a modern web application. 
+
+> ![tip] __pro tip__: At any point of your web developer carrier, 
+just ditch all articles and StackOverflow posts you may find on the internet that are more than 2 years old... They are all outdated.  
+
+### Functional spec
+
+This tutorial will guide you through the implementation of a simple memory game, that is mainly made of 3 views:
+* **the welcome view**, containing a simple form allowing the user to enter his name, the game size and 
 a start button to launch the game
-* the game view allowing the user to play the memory game, flipping cards 2 by 2 until all the cards are turned upwards
-* the end view, congratulating the user, allowing to start a new game and showing him is performance time
+* **the game view allowing** the user to play the memory game, flipping cards 2 by 2 until all the cards are turned upwards
+* **the score view**, congratulating the user, allowing to start a new game and showing him is performance time
 
-![mock]
+![game mockup]
 
-Concerning the theming and what's behind the cards feel free to give it your own touch 
-(let's obviously keep everything safe for work).
+Easy right? Well, the application will have to contain quite some ES6 features and use appropriate tools,
+that's why we will guide you trough the configuration and some parts of the implementation. Ready? Set... GO!!!.
 
-Easy right? Well, the application will have to contain quite some ES6 features and use appropriate tools that's
-why we will guide you trough the configuration and some parts of the implementation. Let's do this.
+## Step 0 - Hello JS
 
-### Technical spec
-* The 3 distinct views will be independently served, this will be done using the appropriate webpack configuration
-* The styling will be done using preprocessed css: sass
-* The game implementation will use the following: classes, Promise, acync/await, lodash, ...
-
-This tutorial was written with the dependencies version below. Du to fast update cycles, installing new version of this dependencies could create troubles.
-If you found one, please update the code to the next version or downgrade the dependency version concerned to the following.
-
-```
-"devDependencies": {
-    "@babel/core": "^7.3.3",
-    "@babel/preset-env": "^7.3.1",
-    "babel-loader": "^8.0.5",
-    "clean-webpack-plugin": "^2.0.1",
-    "css-loader": "^2.1.0",
-    "file-loader": "^3.0.1",
-    "html-loader": "^0.5.5",
-    "html-webpack-plugin": "^3.2.0",
-    "jasmine": "^3.3.1",
-    "jasmine-core": "^3.3.0",
-    "karma": "^4.0.0",
-    "karma-jasmine": "^2.0.1",
-    "karma-jasmine-html-reporter": "^1.4.0",
-    "karma-mocha-reporter": "^2.2.5",
-    "karma-phantomjs-launcher": "^1.0.4",
-    "karma-webpack": "^3.0.5",
-    "node-sass": "^4.11.0",
-    "sass-loader": "^7.1.0",
-    "style-loader": "^0.23.1",
-    "url-loader": "^1.1.2",
-    "webpack": "^4.29.5",
-    "webpack-cli": "^3.2.3",
-    "webpack-dev-server": "^3.2.0"
-  },
-  "dependencies": {
-    "@babel/polyfill": "^7.2.5",
-    "lodash": "^4.17.11",
-    "moment": "^2.24.0",
-    "semantic-ui-css": "^2.4.1",
-    "uuid": "^3.3.2"
-  }
-```
+Now that your game server is ready, time to crank up the front-end "as is", to check that everything works as intended
 
 ## Step 1 - NPM & webpack setup
 > NPM, webpack
@@ -487,15 +481,15 @@ es6-01
         └── app/
             └── modules/
                 ├── welcome/
-                │   ├── welcome.js
+                │   ├── welcome.component.js
                 │   ├── welcome.html
                 │   └── welcome.scss
                 ├── game/
-                │   ├── game.js
+                │   ├── game.component.js
                 │   ├── game.html
                 │   └── game.scss
                 └── end/
-                    ├── end.js
+                    ├── game-over.component.js
                     ├── end.html
                     └── end.scss
 ```
@@ -505,9 +499,9 @@ es6-01
 module.exports = {
     // ...
       entry: {
-        app: './src/app/modules/welcome/welcome.js',
-        game: './src/app/modules/game/game.js',
-        end: './src/app/modules/end/end.js'
+        app: './src/app/modules/welcome/welcome.component.js',
+        game: './src/app/modules/game/game.component.js',
+        end: './src/app/modules/end/game-over.component.js'
       },
       plugins: [
         new CleanWebpackPlugin(['dist']),
@@ -515,13 +509,13 @@ module.exports = {
           files: {
             chunks: {
               app: {
-                entry: './src/app/modules/welcome/welcome.js'
+                entry: './src/app/modules/welcome/welcome.component.js'
               },
               game: {
-                entry: './src/app/modules/game/game.js'
+                entry: './src/app/modules/game/game.component.js'
               },
               end: {
-                entry: './src/app/modules/end/end.js'
+                entry: './src/app/modules/end/game-over.component.js'
               }
             }
           }
@@ -566,7 +560,7 @@ npm install --save lodash
 
 To help you here are a couple code snippets:
 ```javascript
-//welcome.js
+//welcome.component.js
 import 'semantic-ui-css/semantic.min.css';
 //...
 
@@ -640,9 +634,9 @@ es6-01
     └── modules/
         ├── welcome/
         ├── game/
-        │   ├── card.js
+        │   ├── card.component.js
         │   ├── board.js
-        │   ├── game.js
+        │   ├── game.component.js
         │   ├── game.html
         │   └── game.scss
         └── end/
@@ -760,11 +754,11 @@ The server return a ID list : ?nb=5&size=2 will return {ids: [0, 4, 3, 4, 0, 3]}
 
 #### 3.3.2 - Implementation
 
-* initialize the game with *n* cards, using 2 classes: *Board* and *Card*
+* initialize the game with *n* cards, using 2 classes: *Board* and *CardComponent*
 ```javascript
 //board.js
 //note: the board contains an array of Cards
-import {Card} from "./card";
+import {CardComponent} from "./card";
 
 export class Board {
 
@@ -777,7 +771,7 @@ export class Board {
   init() {
       //...
       for (let i = 0; i < this._size; i++) {
-        this._cards.push(new Card());
+        this._cards.push(new CardComponent());
       }
   }
   
@@ -786,9 +780,9 @@ export class Board {
 }
 ```
 ```javascript
-//card.js
+//card.component.js
 //the card is bound to an element and holds 2 flags: flipped and matched
-export class Card {
+export class CardComponent {
   //...
 
   constructor(img) {
@@ -1165,7 +1159,7 @@ Congrats, you now have a working ![heart] Meme-ory app ![heart] !
 
 Check your achievements with the [following test](https://docs.google.com/forms/d/e/1FAIpQLScjhXdaYV48uRRaVG_5ZYOFlWhLjGzIty3SCZJRe0ApnUpe9A/viewform?usp=sf_link)
 
-Ready to follow up? Get started for [![Next Milestone angular]](https://master3.takima.io/master3/angular-01)  
+Ready to follow up? Get started for next [![angular 01]](https://master3.takima.io/master3/angular-01) module.  
 
 ## Troubleshoot
 
@@ -1184,15 +1178,13 @@ Any specific troubles? Keep us updated and we will add those here.
 | <sub>contact us: <[formation@takima.io](mailto://formation@takima.io)></sub> | <sub>© Takima 2019</sub> |
 | --- | ---:|
 
-[TODO Milestone : 0 credits]: https://img.shields.io/badge/TODO_milestone_name-0_credits-red.svg?longCache=true&style=for-the-badge&logoColor=ffffff&colorA=cd1c68&colorB=db9ab5&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABmJLR0QA0AB8AKD7i/b6AAAACXBIWXMAACE4AAAhOAFFljFgAAAAB3RJTUUH4gsbFCYzALEYOAAAAzNJREFUSMedlltoz2EYx7+/zchspuXY/iShnAljYiaUQ4gLSty4kFwosXKhkEtalMMds5mSRORGcmou0HJMccHmEDk1bMM2Pm6enx5vv//+/3nq7Xd4Dt/3eZ/D+0gZqCG16e87UACMB/YB94EWW4+AKmAykK//oQBoGLALuEtmugpMC21kCzQcOA900j36DZR1CRozgGJgLXCjC4MfgHt2rO+7kJuRCawMeJph95uAEqCfrRSwHHieINsAFCV6CcxOUPBH2QosSBcKoAdwzo7T06Ik4TKgIxB8CTS67yonnwcsAEoTbG0N7NT/E0sgH7geCLUCGwMPc02+v8Wt09YTYLAPD1AZeDrS72hKwlFWAkuc0jMn/zhNbGcFntY43lnP2B8o3rD/yxxgvZPvANqAE1ZzMTUCA10C5gJ3jPcFGBozHgSApfZ/iDvSJgdYC8xz39VOd3eQ9XOAdtv45vjnV6fQBAx0xk46XrGr01wnM89trCOIZQ5wy3jXgFyZuzHdBQrN0Epgh+NVp6nduUFyVQSxXO14w2QdwwOWA58SkuInsDow1hc4HcjtTCiVduMdlHX+mJptpaM24DKwBziaJmPPJPTkY8Z7JWBCFwC/gO/AjwztrtnJ3HZAQ+25JBbMkfRCUkNCt2qXVClpoqTpkqokdRrvjaS3kp5LqpM0X1Iv4/VwNqYCPb39nCiKWiRdSgA8HEVRlaQJklZEUbRNUo3xHkoaJ2lyFEXrJPmif+3ex0jqa5tvlvQhxxjHJBEAvrHnO0l7gUmSLkr6LWmmpKIoir6ZzHand9O9l0rqLemXpFZJF3x6nwri8tGKOq6jFLDG4kp8qwOrgr5Z7GL4GRhho0kTMDasqSOW/p1mJE6aVcav870TKAzGjrMObKm1wVEmdwDISyrklO16C7A+7jx28cbetVt21wY3zDgHeNN52BMYntUwBfQBLjkwrDGEN7y/L8fYSTUCJZkAUqZQDhwMgNJRfdBDD9n/K0BBJsCKbk5oV4E+Tn+0DWAbgEFZjYjA4izBHsfN3gEWJY2c2YAuBG6nAXoP7A11/DMrsITjLbRL9LgNVS8tewd0ywtHfwA7LOPX/9An6gAAAABJRU5ErkJggg== "TODO Milestone name"
 [milestone-status]: https://master3.takima.io/.assistant/badges/milestone-status?milestoneId=40
-[Module: 0 credits]: https://img.shields.io/badge/ES6-0_credits-red.svg?longCache=true&style=for-the-badge&logoColor=ffffff&colorA=0e6dc5&colorB=59a5ec&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABmJLR0QA0AB8AKD7i/b6AAAACXBIWXMAACE4AAAhOAFFljFgAAAAB3RJTUUH4gsbFCYzALEYOAAAAzNJREFUSMedlltoz2EYx7+/zchspuXY/iShnAljYiaUQ4gLSty4kFwosXKhkEtalMMds5mSRORGcmou0HJMccHmEDk1bMM2Pm6enx5vv//+/3nq7Xd4Dt/3eZ/D+0gZqCG16e87UACMB/YB94EWW4+AKmAykK//oQBoGLALuEtmugpMC21kCzQcOA900j36DZR1CRozgGJgLXCjC4MfgHt2rO+7kJuRCawMeJph95uAEqCfrRSwHHieINsAFCV6CcxOUPBH2QosSBcKoAdwzo7T06Ik4TKgIxB8CTS67yonnwcsAEoTbG0N7NT/E0sgH7geCLUCGwMPc02+v8Wt09YTYLAPD1AZeDrS72hKwlFWAkuc0jMn/zhNbGcFntY43lnP2B8o3rD/yxxgvZPvANqAE1ZzMTUCA10C5gJ3jPcFGBozHgSApfZ/iDvSJgdYC8xz39VOd3eQ9XOAdtv45vjnV6fQBAx0xk46XrGr01wnM89trCOIZQ5wy3jXgFyZuzHdBQrN0Epgh+NVp6nduUFyVQSxXO14w2QdwwOWA58SkuInsDow1hc4HcjtTCiVduMdlHX+mJptpaM24DKwBziaJmPPJPTkY8Z7JWBCFwC/gO/AjwztrtnJ3HZAQ+25JBbMkfRCUkNCt2qXVClpoqTpkqokdRrvjaS3kp5LqpM0X1Iv4/VwNqYCPb39nCiKWiRdSgA8HEVRlaQJklZEUbRNUo3xHkoaJ2lyFEXrJPmif+3ex0jqa5tvlvQhxxjHJBEAvrHnO0l7gUmSLkr6LWmmpKIoir6ZzHand9O9l0rqLemXpFZJF3x6nwri8tGKOq6jFLDG4kp8qwOrgr5Z7GL4GRhho0kTMDasqSOW/p1mJE6aVcav870TKAzGjrMObKm1wVEmdwDISyrklO16C7A+7jx28cbetVt21wY3zDgHeNN52BMYntUwBfQBLjkwrDGEN7y/L8fYSTUCJZkAUqZQDhwMgNJRfdBDD9n/K0BBJsCKbk5oV4E+Tn+0DWAbgEFZjYjA4izBHsfN3gEWJY2c2YAuBG6nAXoP7A11/DMrsITjLbRL9LgNVS8tewd0ywtHfwA7LOPX/9An6gAAAABJRU5ErkJggg== "ES6"
+[Web 01: 10 credits]: https://img.shields.io/badge/web_01-10_credits-red.svg?longCache=true&style=for-the-badge&logoColor=ffffff&colorA=0e6dc5&colorB=59a5ec&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABmJLR0QA0AB8AKD7i/b6AAAACXBIWXMAACE4AAAhOAFFljFgAAAAB3RJTUUH4gsbFCYzALEYOAAAAzNJREFUSMedlltoz2EYx7+/zchspuXY/iShnAljYiaUQ4gLSty4kFwosXKhkEtalMMds5mSRORGcmou0HJMccHmEDk1bMM2Pm6enx5vv//+/3nq7Xd4Dt/3eZ/D+0gZqCG16e87UACMB/YB94EWW4+AKmAykK//oQBoGLALuEtmugpMC21kCzQcOA900j36DZR1CRozgGJgLXCjC4MfgHt2rO+7kJuRCawMeJph95uAEqCfrRSwHHieINsAFCV6CcxOUPBH2QosSBcKoAdwzo7T06Ik4TKgIxB8CTS67yonnwcsAEoTbG0N7NT/E0sgH7geCLUCGwMPc02+v8Wt09YTYLAPD1AZeDrS72hKwlFWAkuc0jMn/zhNbGcFntY43lnP2B8o3rD/yxxgvZPvANqAE1ZzMTUCA10C5gJ3jPcFGBozHgSApfZ/iDvSJgdYC8xz39VOd3eQ9XOAdtv45vjnV6fQBAx0xk46XrGr01wnM89trCOIZQ5wy3jXgFyZuzHdBQrN0Epgh+NVp6nduUFyVQSxXO14w2QdwwOWA58SkuInsDow1hc4HcjtTCiVduMdlHX+mJptpaM24DKwBziaJmPPJPTkY8Z7JWBCFwC/gO/AjwztrtnJ3HZAQ+25JBbMkfRCUkNCt2qXVClpoqTpkqokdRrvjaS3kp5LqpM0X1Iv4/VwNqYCPb39nCiKWiRdSgA8HEVRlaQJklZEUbRNUo3xHkoaJ2lyFEXrJPmif+3ex0jqa5tvlvQhxxjHJBEAvrHnO0l7gUmSLkr6LWmmpKIoir6ZzHand9O9l0rqLemXpFZJF3x6nwri8tGKOq6jFLDG4kp8qwOrgr5Z7GL4GRhho0kTMDasqSOW/p1mJE6aVcav870TKAzGjrMObKm1wVEmdwDISyrklO16C7A+7jx28cbetVt21wY3zDgHeNN52BMYntUwBfQBLjkwrDGEN7y/L8fYSTUCJZkAUqZQDhwMgNJRfdBDD9n/K0BBJsCKbk5oV4E+Tn+0DWAbgEFZjYjA4izBHsfN3gEWJY2c2YAuBG6nAXoP7A11/DMrsITjLbRL9LgNVS8tewd0ywtHfwA7LOPX/9An6gAAAABJRU5ErkJggg== "Web 01"
+[react module 01]: https://img.shields.io/badge/react_01--react.svg?longCache=true&style=for-the-badge&logoColor=ffffff&colorA=0e6dc5&colorB=59a5ec&logo=react "react module 01"
+[angular module 01]: https://img.shields.io/badge/angular_01--angular.svg?longCache=true&style=for-the-badge&logoColor=ffffff&colorA=0e6dc5&colorB=59a5ec&logo=angular "angular module 01"
 
-[SKILL javascript]: https://img.shields.io/badge/JS-%E2%98%85%E2%98%85%20%20-yellow.svg?longCache=true&style=for-the-badge&logoColor=ffffff&logo=javascript
-[Milestone mmm]: https://img.shields.io/badge/maven_multi_module--red.svg?longCache=true&style=for-the-badge&logoColor=ffffff&colorA=0e6dc5&colorB=59a5ec
-[TODO Extra Module X]: https://img.shields.io/badge/TODO_Extra_Module_x--red.svg?longCache=true&style=for-the-badge&logoColor=ffffff&colorA=0e6dc5&colorB=59a5ec&logo=java
-[TODO Extra Milestone Y]: https://img.shields.io/badge/TODO_Extra_Milestone_y--red.svg?longCache=true&style=for-the-badge&logoColor=ffffff&colorA=cd1c68&colorB=db9ab5&logo=java
-[Next Milestone angular]: https://img.shields.io/badge/next_Module_angular--red.svg?longCache=true&style=for-the-badge&logoColor=ffffff&colorA=0e6dc5&colorB=59a5ec&logo=angular
+[javascript advanced]: https://img.shields.io/badge/JS-%E2%98%85%E2%98%85%20%20-yellow.svg?longCache=true&style=for-the-badge&logoColor=ffffff&logo=javascript
+[angular 01]: https://img.shields.io/badge/angular_01--red.svg?longCache=true&style=for-the-badge&logoColor=ffffff&colorA=0e6dc5&colorB=59a5ec&logo=angular
 
 [es6]: .README/icons/es6.png
 [babel]: .README/icons/babel.png
@@ -1200,7 +1192,7 @@ Any specific troubles? Keep us updated and we will add those here.
 [sass]: .README/icons/sass.png
 [lodash]: .README/icons/lodash.png
 
-[mock]: .README/meme-ory-mock.png
+[game mockup]: .README/mockup.png
 [ecmascript-support]: .README/ecmascript-support.png
 
 [server-detail]: .README/server-detail.png
@@ -1212,10 +1204,12 @@ Any specific troubles? Keep us updated and we will add those here.
 [tip]: .README/success.png
 [danger]: .README/danger.png
 [error]: .README/error.png
+[TODO]: .README/error.png
 [question]: .README/question.png
 [troubleshoot]: .README/error.png
 [commit]: .README/commit.png
 
+[frameworks_battle]: .README/frameworks_battle.jpg
 [unknown-card-img]: .README/cards-miniatures/back-card.png
 [takima-card-img]: .README/cards-miniatures/takima-card.png
 [jawg-card-img]: .README/cards-miniatures/jawg-card.png
