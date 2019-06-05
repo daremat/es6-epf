@@ -1,6 +1,6 @@
-// import { findGetParameter } from '../src/app/utils/utils';
+// import {UrlParser} from '../src/app/utils/utils';
 //
-// describe("Utils", function() {
+// describe(`UrlParser`, function() {
 //
 //   const name = 'Jacques';
 //   const size = 7;

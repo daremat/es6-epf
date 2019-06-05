@@ -18,16 +18,3 @@ export class UrlParser {
         return this._parse(this._url.href.split('?')[1] || '', '&');
     }
 }
-
-export class Validator {
-
-  constructor(rule) {
-    this._rule = rule;
-  }
-
-  validate(value, callback = isValid => {}) {
-    const isValid = this._rule(value);
-    callback(isValid);
-    return isValid;
-  }
-}

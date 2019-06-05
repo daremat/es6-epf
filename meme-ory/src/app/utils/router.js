@@ -5,7 +5,6 @@ export class Router {
 
     constructor(outlet) {
         this._routesUrl = {};
-        this._routesName = {};
         this._outlet =  outlet;
 
         window.addEventListener('beforeunload', event => this._onLocationChanged(event.newURL));
@@ -13,7 +12,6 @@ export class Router {
     }
 
     navigate(route) {
-        const url = this._routesName[route];
         const componentCtor = this._routesUrl[url];
 
         if (!componentCtor) {
@@ -33,7 +31,7 @@ export class Router {
         return this._renderComponent(component);
     }
 
-    register(url, componentCtor, route) {
+    register(url, componentCtor) {
         if (!componentCtor || !isFunction((componentCtor.prototype || {}).getTemplate)) {
             throw new TypeError(`provided arg should be a Component. Got: ${get(componentCtor, 'prototype.constructor.name', componentCtor)}`);
         }
@@ -44,12 +42,6 @@ export class Router {
             this._routesUrl[_getPath(url)] = componentCtor;
         }
 
-        if (route && !isString(route)) {
-            throw new TypeError(`provided route should be a string. Got: ${route}`);
-        } else {
-            this._routesName[route] = url;
-        }
-
         if (_getPath(window.location.href) === _getPath(url)) {
             this._renderComponent(componentCtor);
         }
@@ -57,29 +49,32 @@ export class Router {
         return this;
     }
 
-    _renderComponent(componentCtor) {
+    async _renderComponent(componentCtor) {
         const oldRenderId = getRenderId();
         const component = new componentCtor();
+
+        if (isFunction(component.init)) {
+            await component.init();
+        }
 
         component.render(this._outlet);
         if (oldRenderId === getRenderId()) {
             throw new Error(`Error while navigating to route ${route}: Component.render() not called. Did you forgot to call super.render()?`)
         }
-
-        if (isFunction(component.init)) {
-            component.init();
-        }
     }
 
     _onLocationChanged(loc) {
+        if (!loc) {
+            return;
+        }
+
         const path = _getPath(loc);
         const component = this._routesUrl[path];
 
         if (component) {
             this._renderComponent(component)
         } else if (loc.startsWith(window.location.origin)) {
-
-
+            console.warn(`navigated to "${loc}, but no component was registered at this address"`)
         }
     }
 }
@@ -107,4 +102,3 @@ function _removeTrailingSlash(str) {
 
     return str;
 }
-

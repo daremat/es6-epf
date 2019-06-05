@@ -5,7 +5,10 @@ export function getRenderId() {
 }
 
 export class Component {
-
+    /**
+     *
+     * @param name the name of component tag. ie: This component will be inserted as <name> within the DOM.
+     */
     constructor(name) {
         if (!name) {
             throw new TypeError('you should give a name to components');
@@ -15,10 +18,18 @@ export class Component {
         this._elt.innerHTML = this.getTemplate();
     }
 
+    /**
+     * Automatically called by the router just after the constructor is called.
+     * This lifecycle hook is for you to do some - possibly asynchronous - work, before the component is rendered (eg: component.render() is called).
+     * @returns {Component}
+     */
     init() {
         return this;
     }
 
+    /**
+     * Called by
+     */
     getTemplate() {
         throw new Error('you should override "Component.getTemplate()"');
     }
