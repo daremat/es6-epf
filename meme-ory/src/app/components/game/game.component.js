@@ -1,10 +1,9 @@
-import './game.component.scss';
 import template from './game.component.html';
-import { capitalize } from 'lodash';
-import { UrlParser } from '../../utils/utils';
+import { parseUrl } from '../../utils/utils';
 import { Component } from '../../utils/component';
 import { CardComponent } from './card/card.component';
 import { environment } from '../../../environment/environment';
+import {capitalize} from "lodash";
 
 export class GameComponent extends Component {
 
@@ -13,32 +12,29 @@ export class GameComponent extends Component {
         super('game');
 
         // gather parameters from URL
-        const params = new UrlParser().search;
+        const params = parseUrl();
 
         // save player name & game ize
-        this._name = params.name || 'empty';
+        this._name = capitalize(params.name);
         this._size = parseInt(params.size) || 9;
         this._flippedCard = null;
         this._matchedPairs = 0;
     }
 
-    render(outlet) {
+    async render(outlet) {
         super.render(outlet);
 
+        // fetch the cards configuration from the server
+        this._config = await this.fetchConfig();
+        this._cards = this._config.ids.map(id => new CardComponent(id, this));
+
+        this.start();
         this._boardElement = document.querySelector('.cards');
         this._cards.forEach(card => {
             this._boardElement.appendChild(card.getElement());
             card.getElement().addEventListener('click', () => this._flipCard(card));
 
         });
-    }
-
-    async init() {
-        // fetch the cards configuration from the server
-        this._config = await this.fetchConfig();
-        this._cards = this._config.ids.map(id => new CardComponent(id, this));
-
-        this.start();
     }
 
     start() {

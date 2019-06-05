@@ -65,9 +65,14 @@ In this module, we will cover the following topics:
    > ![tip] __Pro tip__: NVM is a very useful tool if you want to manage different versions of node at the same time.
 Check it out at [github.com/creationix/nvm](https://github.com/creationix/nvm)
 
+ - have a web browser that offers good tools for web developpers
+ 
+ > ![tip] __Pro tip__: Both Google Chrome and [Chromium](https://download-chromium.appspot.com/) surpasses Firefox & other web browsers in term of debugging capabilities (HTML, js, css, ...).
+ I recommend to install one of those right now, and prefer using it whenever you have to develop web applications.  
 ## Setup
 
-- Copy up all files from [`resources/setup`](resources/setup) to your working directory
+- Copy up all files from [`resources/setup`](resources/setup) to your working directory.
+This folder contains sources for both the server and the front-end that composes our application.
 
 Our web application will work together with a server. Set it up right now:
  - install the dependencies 
@@ -81,9 +86,10 @@ Our web application will work together with a server. Set it up right now:
 
 ## Get started
 
-Nobody now uses bare javascript. The 
+Nowadays, nobody now uses bare javascript. Every modern application on the web make use of framework, 
+built on top of javascript, that make the code cleaner, more performant and much more easy to mantain.
 
-However, there are numerous popular javascript frameworks nowadays, 
+However, there are countless number of popular javascript frameworks, 
 and picking up the "good one" is for the most part a matter of hype and fashion.
 The competition is rude, and the "killer JS framework" is never the same from one year to another
 ![frameworks_battle]
@@ -111,7 +117,24 @@ that's why we will guide you trough the configuration and some parts of the impl
 
 ## Step 0 - Hello JS
 
-Now that your game server is ready, time to crank up the front-end "as is", to check that everything works as intended
+Now that your game server is ready, time to crank up the front-end "as is", to check that everything works as intended.
+On your local disk, open up the `client` folder you just copied, and double click on `meme-ory/src/cindex.html`. 
+This should get you to the welcome view.
+
+![TODO wwelcome screenshot] 
+
+#### Files produced:
+```
+meme-ory/src/app/scripts/...
+meme-ory/src/app/styles/...
+meme-ory/src/app/views/...
+```
+
+
+## Step 1 - the component architecture
+
+
+
 
 ## Step 1 - NPM & webpack setup
 > NPM, webpack

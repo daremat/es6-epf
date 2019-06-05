@@ -1,39 +1,6 @@
-@import '../../../styles/colors';
+@import '../../styles/colors';
 
 gameover {
-  display: block;
-  background: $brown-100-color;
-
-  .vertical.segment {
-    border: none;
-  }
-
-  .logo {
-    cursor: pointer;
-  }
-
-  .two.column {
-    :first-child {
-      width: 60%;
-    }
-    :last-child {
-      width: 40%;
-    }
-  }
-
-  .congrats {
-    font-size: 5em;
-  }
-
-  .size {
-    font-size: 1.5em;
-  }
-
-  .time {
-    font-size: 3em;
-    font-style: italic;
-  }
-
   img.happy:hover  {
     /* Start the shake animation and make the animation last for 0.5 seconds */
     animation: shake 0.5s;

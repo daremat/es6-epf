@@ -1,20 +1,14 @@
-export class UrlParser {
-    constructor() {
-        this._url = window.location;
-    }
+export function parseUrl() {
+    const url = window.location;
+    const query = url.href.split('?')[1] || '';
+    const delimiter = '&';
+    const result = {};
 
-    _parse(string, delimiter) {
-        const result = {};
-        string
-            .split(delimiter)
-            .map(item => item.split('='))  // split on '='
-            .forEach(function (kv) {
-                result[kv[0]] = kv[1];
-            });
-        return result;
-    }
-
-    get search() {
-        return this._parse(this._url.href.split('?')[1] || '', '&');
-    }
+    query
+        .split(delimiter)
+        .map(item => item.split('='))  // split on '='
+        .forEach(function (kv) {
+            result[kv[0]] = kv[1];
+        });
+    return result;
 }

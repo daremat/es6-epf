@@ -53,10 +53,6 @@ export class Router {
         const oldRenderId = getRenderId();
         const component = new componentCtor();
 
-        if (isFunction(component.init)) {
-            await component.init();
-        }
-
         component.render(this._outlet);
         if (oldRenderId === getRenderId()) {
             throw new Error(`Error while navigating to route ${route}: Component.render() not called. Did you forgot to call super.render()?`)

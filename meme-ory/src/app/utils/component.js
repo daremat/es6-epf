@@ -19,21 +19,17 @@ export class Component {
     }
 
     /**
-     * Automatically called by the router just after the constructor is called.
-     * This lifecycle hook is for you to do some - possibly asynchronous - work, before the component is rendered (eg: component.render() is called).
-     * @returns {Component}
-     */
-    init() {
-        return this;
-    }
-
-    /**
-     * Called by
+     * Called by the Component constructr to create an element out of the component's HTML.
+     * You MUST override this method in your component subclasses
      */
     getTemplate() {
         throw new Error('you should override "Component.getTemplate()"');
     }
 
+    /**
+     * returns the HTML element that was created for this component out of getTemplate()
+     * @returns {HTMLElement}
+     */
     getElement() {
         return this._elt;
     }
