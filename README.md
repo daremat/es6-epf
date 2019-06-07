@@ -23,14 +23,12 @@
 ## Abstract
 
 In this module, we will learn how to do modern web development, 
-using only javascript and a modern webpack stack, with no other JS framework.
+using only javascript and a modern webpack stack, without any JS framework.
 The tools, patterns, and features used in this module will be a common ground for any Javascript project, 
-and gives you all the basics you need to master more complex frameworks.
+and give you all the basics you need to master more complex frameworks.
 
 In this module, we will cover the following topics:
 * **Ecmascript**: standardized and versioned version of what is commonly called "Javascript".
-* **Browsers compatibility**: I know it's sad but there are more browsers than just Chrome, and you will have to deal with compatibility issues
-* **ES next**: ES7 + ES8 + ES9 and more
 
 #### Some useful references you should consider :
 
@@ -51,7 +49,7 @@ In this module, we will cover the following topics:
 
 #### Prerequisites
 
- - have both **nodejs** and **npm** installed (NodeJS 6+)
+ - **nodejs** and **npm** installed (NodeJS 6+)
     ```sh
    $ node -v
    v9.11.0 ### at least
@@ -61,11 +59,11 @@ In this module, we will cover the following topics:
    ```
    > ![tip] __Pro tip__: NVM is a very useful tool if you want to manage different versions of node at the same time.
 Check it out at [github.com/creationix/nvm](https://github.com/creationix/nvm)
- - have a web browser that offers good tools for web developers
+ - web browser that offers good tools for web developers
  
-   > ![tip] __Pro tip__: Both Google Chrome and [Chromium](https://download-chromium.appspot.com/) surpasses Firefox & other web browsers in term of debugging capabilities (HTML, js, css, ...).
+   > ![tip] __Pro tip__: Both Google Chrome and [Chromium](https://download-chromium.appspot.com/) surpasses Firefox & other web browsers in term of debugging capabilities (HTML, JS, CSS, ...).
    I recommend to install one of those right now, and prefer using it whenever you have to develop web applications.  
- - have [`npx`](https://www.npmjs.com/package/npx) installed globally
+ - [`npx`](https://www.npmjs.com/package/npx) installed globally
  ```sh
  npm install -g npx
  ```
@@ -78,7 +76,7 @@ Check it out at [github.com/creationix/nvm](https://github.com/creationix/nvm)
 ## Setup
 
 - Copy up all files from [`resources/setup`](resources/setup) to your working directory.
-This folder contains sources for both the server and the front-end that composes our application.
+This folder contains sources for the back-end and the front-end that compose our web application.
 
 Our web application will work together with a server. Set it up right now:
  - install the dependencies 
@@ -92,29 +90,27 @@ Our web application will work together with a server. Set it up right now:
 
 ## Get started
 
-Nowadays, nobody now uses bare javascript. Every modern application on the web make use of framework, 
-built on top of javascript, that make the code cleaner, more performant and much more easy to maintain.
+Nowadays, nobody uses bare javascript. Every modern application on the web make use of framework, 
+built on top of javascript, that makes the code cleaner, more performant and much more easier to maintain.
 
 However, there are countless number of popular javascript frameworks, 
 and picking up the "good one" is for the most part a matter of hype and fashion.
-The competition is rude, and the "killer JS framework" is never the same from one year to another
+The competition is rude, and the "killer JS framework" is never the same from one year to another.  
 ![frameworks_battle]
 
 > ![info] Takima master3 training has modules to discover both Angular and React: [![react module 01]](https://master3.takima.io/master3/react-01) & [![angular module 01]](https://master3.takima.io/master3/angular-01)
 
-Anyway, all those frameworks are built on top some common basics. For now on, 
+Anyway, all those frameworks are built on top of some common basics. For now on, 
 just let them fight forever and let's discover what is on the roots of what makes a modern web application. 
 
-> ![tip] __pro tip__: At any point of your web developer carrier, 
-just ditch all articles and StackOverflow posts you may find on the internet that are more than 2 years old... They are all outdated.  
+> ![tip] __pro tip__: At any point of your web developer carrier, consider as outated any articles or StackOverflow post you may find on the internet. Do not use it, unless you have to mantain some legacy code.
 
 ### Functional spec
 
 This tutorial will guide you through the implementation of a simple memory game, that is mainly made of 3 views:
-* **the welcome view** (WelcomeComponent), containing a simple form allowing the user to enter his name, the game size and 
-a start button to launch the game.
-* **the game view allowing** (GameComponent) the user to play the memory game, flipping cards 2 by 2 until all the cards are turned upwards
-* **the score view** (ScoreComponent), congratulating the user, allowing to start a new game and showing him is performance time
+* **the welcome view** (WelcomeComponent), containing a simple form allowing the user to enter his name, the game size and one start button to launch the game.
+* **the game view allowing** (GameComponent) the user to play, flipping cards 2 by 2 until all the cards are turned upwards.
+* **the score view** (ScoreComponent), congratulating the user, allowing him to start a new game and showing him is performance time.
 
 ![game mockup]
 
@@ -123,11 +119,9 @@ that's why we will guide you trough the configuration and some parts of the impl
 
 ## Step 0 - Hello JS
 
-topics: **HTTP server**.
-
-Now that your game server is ready, time to crank up the front-end "as is", to check that everything works as intended.
+Now that your game server is ready, it's time to crank up the front-end "as it is", to check that everything works as intended.
 On your local disk, open up the `client` folder you just copied, and double click on `meme-ory/src/index.html`. 
-This should get you to the welcome view (`WelcomeComponent`).
+It should get you to the welcome view (`WelcomeComponent`).
 
 ![welcome screenshot]
 
@@ -419,7 +413,6 @@ This is not true. Do not forget: ES6 `class` is just syntactic sugar over `proto
  - [ ] I know what get/set properties are
  - [ ] I left no unresolved `// TODO Step 2.1` on my code
 
-**![commit] commit step**
 
 The code seems much more clean and concise with classes, isn't it? Let's continue our refactor in the next step.  
 
