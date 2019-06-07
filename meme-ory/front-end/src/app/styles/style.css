@@ -1,0 +1,44 @@
+/*****
+ * GLOBAL STYLE
+ */
+
+body {
+    background-color: #F5F5F5;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.navbar-brand img {
+    height: 50px;
+}
+
+body > main {
+    overflow: auto;
+}
+
+/* global style */
+.bg-primary * {
+    color: #cb2468;
+}
+
+.bg-dark * {
+    color: #FCFCFC;
+}
+
+/*****
+ * Welcome Component
+ */
+
+/* welcome { ... } */
+.welcome-cmp .form-group.has-error .form-text.text-muted {
+    display: none;
+}
+
+.welcome-cmp .form-signin {
+    width: 100%;
+    max-width: 480px;
+    padding: 15px;
+    margin: auto;
+}

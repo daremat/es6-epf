@@ -46,11 +46,16 @@ In this module, we will cover the following topics:
 
 #### Involved technologies
 ![es6]
-![babel]
-![webpack]
-
-![sass]
 ![lodash]
+
+![npm]
+![yarn]
+
+![webpack]
+![babel]
+
+![bootstrap]
+![sass]
 
 #### Prerequisites
 
@@ -64,11 +69,20 @@ In this module, we will cover the following topics:
    ```
    > ![tip] __Pro tip__: NVM is a very useful tool if you want to manage different versions of node at the same time.
 Check it out at [github.com/creationix/nvm](https://github.com/creationix/nvm)
-
- - have a web browser that offers good tools for web developpers
+ - have a web browser that offers good tools for web developers
  
- > ![tip] __Pro tip__: Both Google Chrome and [Chromium](https://download-chromium.appspot.com/) surpasses Firefox & other web browsers in term of debugging capabilities (HTML, js, css, ...).
- I recommend to install one of those right now, and prefer using it whenever you have to develop web applications.  
+   > ![tip] __Pro tip__: Both Google Chrome and [Chromium](https://download-chromium.appspot.com/) surpasses Firefox & other web browsers in term of debugging capabilities (HTML, js, css, ...).
+   I recommend to install one of those right now, and prefer using it whenever you have to develop web applications.  
+ - have [`npx`](https://www.npmjs.com/package/npx) installed globally
+ ```sh
+ npm install -g npx
+ ```
+ > ![info] the `-g` parameter is to install a dependency **globally**. This way, the dependency will be available system-wide.
+ 
+ > ![danger] By default on linux system, installing a dependency globally **requires root privileges**. 
+ > However, I recommend to **NEVER EVER use `sudo npm install ...`**.  
+ > What you can do instead, is to [configure NPM prefix](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally) to an accessible path, so that you never need to have root access.
+
 ## Setup
 
 - Copy up all files from [`resources/setup`](resources/setup) to your working directory.
@@ -87,7 +101,7 @@ Our web application will work together with a server. Set it up right now:
 ## Get started
 
 Nowadays, nobody now uses bare javascript. Every modern application on the web make use of framework, 
-built on top of javascript, that make the code cleaner, more performant and much more easy to mantain.
+built on top of javascript, that make the code cleaner, more performant and much more easy to maintain.
 
 However, there are countless number of popular javascript frameworks, 
 and picking up the "good one" is for the most part a matter of hype and fashion.
@@ -105,10 +119,10 @@ just ditch all articles and StackOverflow posts you may find on the internet tha
 ### Functional spec
 
 This tutorial will guide you through the implementation of a simple memory game, that is mainly made of 3 views:
-* **the welcome view**, containing a simple form allowing the user to enter his name, the game size and 
-a start button to launch the game
-* **the game view allowing** the user to play the memory game, flipping cards 2 by 2 until all the cards are turned upwards
-* **the score view**, congratulating the user, allowing to start a new game and showing him is performance time
+* **the welcome view** (WelcomeComponent), containing a simple form allowing the user to enter his name, the game size and 
+a start button to launch the game.
+* **the game view allowing** (GameComponent) the user to play the memory game, flipping cards 2 by 2 until all the cards are turned upwards
+* **the score view** (ScoreComponent), congratulating the user, allowing to start a new game and showing him is performance time
 
 ![game mockup]
 
@@ -118,10 +132,32 @@ that's why we will guide you trough the configuration and some parts of the impl
 ## Step 0 - Hello JS
 
 Now that your game server is ready, time to crank up the front-end "as is", to check that everything works as intended.
-On your local disk, open up the `client` folder you just copied, and double click on `meme-ory/src/cindex.html`. 
-This should get you to the welcome view.
+On your local disk, open up the `client` folder you just copied, and double click on `meme-ory/src/index.html`. 
+This should get you to the welcome view (`WelcomeComponent`).
 
-![TODO wwelcome screenshot] 
+![welcome screenshot]
+
+##### Your first mission: 
+Ensure everything works as intended: 
+ - Start a new game, with **size=2** (`WelcomeComponent`), 
+ - play (`GameComponent`), win.
+ - get redirected to see you score (`ScoreComponent`).
+
+> ![info] As you can see, we do not need anything other than a web browser to run a simple JS application... No tool, no compiler, etc.
+
+Ok, let's get a little more serious. In real life, web pages are not accessed locally, 
+they are instead served by an HTTP server (eg: [`nginx`](https://www.nginx.com/) or [`apache2`](`https://httpd.apache.org/`) over the network.
+
+For this exercise, keep it simple and just crank-up the standalone nodeJS [`http-server`](https://www.npmjs.com/package/http-server):
+```bash
+>$ cd meme-ory/front-end
+>$ npx http-server src -c-1
+``` 
+Now, navigate to [localhost:8080](http://localhost:8080): this should serve your application like for real!
+
+> ![tip] **Did you know**? Your web browser can tell you a lot on what happens behind the scene (javascript execution, stack-traces, networking, errors, ...). Press F12 (firefox / chrome / chromium) to access the developper tools. You will need it all this tutorial long.
+
+> ![question] While going through the 3 views of the application, how many files did your browser download in total? What was the total loading time? 
 
 #### Files produced:
 ```
@@ -130,8 +166,195 @@ meme-ory/src/app/styles/...
 meme-ory/src/app/views/...
 ```
 
+### Checklist
+- [ ] I can play meme-ory; The application looks 'OK' and works.
+- [ ] My application is served at `localhost` with `http-server`
 
-## Step 1 - the component architecture
+**![commit] commit step**
+
+## Step 1 - The component architecture
+
+Great, everything works. It is now time to dive into the code.
+ 
+At the moment, your project structure look like the following: 
+
+![mvc-architecture]
+
+This file structure is a very common practise.... if you are stuck in the 2000's.
+If you want your application to be maintainable, you want it to be **component oriented**, 
+and promote **separation of concern** rather than **separation of technologies**.
+
+> ![question] Component-oriented programming for the web is considered **more maintainable**. Why?
+
+![component-architecture]
+
+In this step, your job is to refactor your current architecture to match the **component-oriented** architecture above.
+
+At the end, our application have a total of 4 components: 
+ - `welcome.component`
+ - `game.component`
+ - `card.component`
+ - `score.component`
+
+For the beginning, let's start together with `WelcomeComponent`:
+ - create a folder named `components/welcome`
+ - move **[`scripts/welcome.js`](resources/setup/client/src/app/scripts/welcome.js) => `components/welcome.component.js`**
+ - move **[`views/welcome.html`](resources/setup/client/src/app/views/welcome.html) => `components/welcome.component.html`**
+ - from **[`styles/style.css`](resources/setup/client/src/app/styles/style.css)**, move all the styles for `WelcomeComponent` to **`components/welcome.component.css`**
+ - open `components/welcome.component.html`, and update links toward CSS & JS:
+ ```html
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>MÈME ory</title>
+     <link rel="stylesheet" href="./welcome.component.css"> <!-- <=== HERE -->
+     <link rel="stylesheet" href="../../styles/style.css"> <!-- <=== HERE -->
+     <link rel="stylesheet" href="../../styles/bootstrap.css"> <!-- <=== HERE -->
+ </head>
+ 
+ <body class="...">
+ <nav class="...">
+     <a class="..." href="#">
+         <img class="..." src="../../../assets/logo_take_my_money.png" alt="logo"> <!-- <=== HERE -->
+         <span class="...">MÈME ory</span>
+     </a>
+     <span class="..."></span>
+ </nav>
+     <!-- ... -->
+ 
+ <!-- link to welcome controller -->
+ <script src="./welcome.component.js"></script> <!-- <=== HERE -->
+ <script>
+     // execute the controller
+     var wc = new WelcomeComponent().render();
+ </script>
+ 
+ </html>
+ 
+```
+ - open `components/welcome.component.js`, and replace link toward `GameComponent`:
+ ```javascript
+ window.location = './game.html?name=' + name + '&size=' + size;
+ ```
+ by its new future location:
+ ```javascript
+ window.location = '../game/game.component.html?name=' + name + '&size=' + size;
+ ```
+ - navigate to [http://localhost:8080/app/components/welcome/welcome.component.html](http://localhost:8080/app/components/welcome/welcome.component.html): The welcome page should look and behave as usual.
+
+> ![info] Component oriented architecture is not only about file structure. 
+The most important part is: a component should be **contained** (all required code at the same place), **standalone** (little to no external dependency) and **reusable**. 
+
+Easy enough, isn't it? Now, go ahead and do the same by yourself for the other `GameComponent`, `CardComponent`, and `ScoreComponent`. 
+You can search for text `TODO Step 1` to find out all the lines of code you need to change.  
+
+> ![info] Do not search for `card.html`. At the moment, its content is a `<template></template` inside [`views/game.html.js`](resources/setup/client/src/app/views/game.html#L35). 
+In other words, `CardComponent` does not have a `card.component.html`. 
+
+> ![warning] Do not forget to also move assets to the best appropriate components
+
+#### Files produced:
+```
+src/app/components/game/card/assets/*.png
+src/app/components/game/card/card.component.js
+src/app/components/game/card/card.component.css
+src/app/components/game/game.component.html
+src/app/components/game/game.component.js
+src/app/components/score/happy_homer.jpg
+src/app/components/score/score.component.css
+src/app/components/score/score.component.html
+src/app/components/score/score.component.js
+src/app/components/welcome/welcome.component.css
+src/app/components/welcome/welcome.component.html
+src/app/components/welcome/welcome.component.js
+```
+
+> ![question] If you look at the source code, all JS file wraps its code into a **closure**: 
+> ```javascript
+> // card.component.js
+> (function() {   // TODO remove closure
+>     // source code here
+>     // ...
+> })();
+> ```
+> Try to remove the 2 closures from both `card.component.js` & `game.component.js`. What happens? Why?
+
+> ![tip] Do not forget to use your web browser's development tools!
+
+### Checklist
+ - [ ] the 3 views of my application behaves as usual
+ - [ ] `scripts/` folder is empty and can be deleted
+ - [ ] `views/` folder is empty and can be deleted
+ - [ ] `styles/` folder contains a single `styles.css` file
+ - [ ] `styles.css` defines no more that global styles (eg: style applied to `<body>`)
+ - [ ] I understand why **component-oriented architecture** might be of some help
+ - [ ] I left no more `TODO Step 1` in my code 
+ - [ ] I understand why closure are needed 
+
+**![commit] commit step**
+
+Great, this is a little step toward proper component-oriented architecture, 
+but there is still a lot of work to make the code more modern.
+
+## Step 2 - ESNext
+
+Right now, our javascript code follows [ES5 specifications](https://www.w3schools.com/js/js_es5.asp). 
+As you can see, ES5 was released in 2009, and appears a bit outdated now. 
+Time has come to refactor all that mess with new [ESNext bells and whistles](https://github.com/tc39/proposals/blob/master/finished-proposals.md), starting with [ES6 classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes) 
+
+### Step 2.1 - ES6 classes
+
+At the moment, your legacy code already use classes. 
+If you look carefully at the `render()` method of [`game.component.js`](resources/setup/client/src/app/scripts/game.js#L45), you can see the following: 
+```javascript
+for (var i in this._config.ids) {
+    this._cards[i] = new CardComponent(this._config.ids[i]);
+} //               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+```
+
+That's true, `GameComponent`, `WelcomeComponent`, `CardComponent` & `ScoreComponent`, they are all classes already, using **`prototye`**.
+
+> ![tip] Think of **`XXX.protoype`** as a place to put anything (typically, any function), that will be a member of the `XXX` class. 
+A `new XXX()` then inherits from everything placed in the prototype.  
+
+In this step, we get ride of all those vintage ES5-style `prototype`, and replace them by the `class` keyword.
+ 
+Let's take `CardComponent` first as an example. Please follow those steps carefully:
+ - open `card.component.js`
+ - create a class `CardComponent`: 
+  ```javascript
+  (function() {
+      class CardComponent {
+            // [1]
+      }
+      // [2]
+  })();
+  ```
+  we are gonna move all the code from place **\[1]** to place **\[2]**
+  
+
+
+> ![warning] As a java developer, it might look like Java classes and Javascript classes behaves the same. 
+This is not true. Do not forget: ES6 `class` is just syntactic sugar over `prototype`, and might produce some edge-cases.
+
+
+
+
+### Step - classes
+### Step - arrow functions, streams, Function.bind
+
+## Step - babel
+
+All all things all good, our code start to look as something clean and modern... 
+However, there is still a major drawback: While virtually [all browsers can run ES5 code](http://kangax.github.io/compat-table/es5/),
+ [not all web browser are compatible with ES6](http://kangax.github.io/compat-table/es6/) / ESNext (looking at you, Internet explorer...)  
+(looking at you, IE 11)  
+
+### Step - PhantomJS
+test parseUrl with arrow functions => crash!
+
+## Step - import
 
 
 
@@ -296,6 +519,9 @@ module.exports = {
 [www.jetbrains.com/help/idea/using-webpack.html](https://www.jetbrains.com/help/idea/using-webpack.html).
 
 ### Step 1.3 - run webpack
+
+###### > ![warning] Do not forget to put the `node_modules` directory within `.gitignore`.
+
 Now let's configure how we run our application using webpack by defining 2 npm scripts:
 ```javascript
 // package.json
@@ -512,7 +738,7 @@ es6-01
                 │   ├── game.html
                 │   └── game.scss
                 └── end/
-                    ├── game-over.component.js
+                    ├── score.component.js
                     ├── end.html
                     └── end.scss
 ```
@@ -524,7 +750,7 @@ module.exports = {
       entry: {
         app: './src/app/modules/welcome/welcome.component.js',
         game: './src/app/modules/game/game.component.js',
-        end: './src/app/modules/end/game-over.component.js'
+        end: './src/app/modules/end/score.component.js'
       },
       plugins: [
         new CleanWebpackPlugin(['dist']),
@@ -538,7 +764,7 @@ module.exports = {
                 entry: './src/app/modules/game/game.component.js'
               },
               end: {
-                entry: './src/app/modules/end/game-over.component.js'
+                entry: './src/app/modules/end/score.component.js'
               }
             }
           }
@@ -1214,10 +1440,15 @@ Any specific troubles? Keep us updated and we will add those here.
 [webpack]: .README/icons/webpack.png
 [sass]: .README/icons/sass.png
 [lodash]: .README/icons/lodash.png
+[bootstrap]: .README/icons/bootstrap-64x64.png
+[npm]: .README/icons/npm-64x64.png
+[yarn]: .README/icons/yarn-64x64.png
 
 [game mockup]: .README/mockup.png
 [ecmascript-support]: .README/ecmascript-support.png
-
+[welcome screenshot]: .README/meme-ory-1.png
+[mvc-architecture]: .README/mvc-architecture.png
+[component-architecture]: .README/component-architecture.png
 [server-detail]: .README/server-detail.png
 
 [asynchronous-communication]: .README/asynchronous-communication.png

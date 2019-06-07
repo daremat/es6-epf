@@ -9,7 +9,7 @@ render(outlet) {
 	super(outlet);
 }
 
-replace css classes (.game, .card, .game-over, .welcome) by they component names (game, card, game-over, welcome)
+replace css classes (.game, .card, .score, .welcome) by they component names (game, card, score, welcome)
 
 WelcomeComponent
 ================
