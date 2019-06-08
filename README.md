@@ -234,9 +234,9 @@ For the beginning, let's start together with `WelcomeComponent`:
  - navigate to [http://localhost:8080/app/components/welcome/welcome.component.html](http://localhost:8080/app/components/welcome/welcome.component.html): The welcome page should look and behave as usual.
 
 > ![info] Component oriented architecture is not only about file structure. 
-The most important part is: a component should be **contained** (all required code at the same place), **standalone** (little to no external dependency) and **reusable**. 
+The most important part is: a component should be **contained** (all required code at the same place), **standalone** (few or no external dependencies) and **reusable**. 
 
-Easy enough, isn't it? Now, go ahead and do the same by yourself for the other `GameComponent`, `CardComponent`, and `ScoreComponent`. 
+Easy enough, isn't it? Now, go ahead and do the same by yourself for the other `GameComponent`, `CardComponent` and `ScoreComponent`. 
 You can search for text `TODO Step 1` to find out all the lines of code you need to change.  
 
 > ![info] Do not search for `card.html`. At the moment, its content is a `<template></template` inside [`views/game.html.js`](resources/setup/font-end/src/app/views/game.html#L35). 
@@ -311,7 +311,7 @@ for (var i in this._config.ids) {
 
 That's true, `GameComponent`, `WelcomeComponent`, `CardComponent` & `ScoreComponent`, they are all classes already, using **`prototye`**.
 
-> ![tip] Think of **`XXX.protoype`** as a place to put anything (typically, any function), that will be a member of the `XXX` class. 
+> ![tip] Think of **`XXX.protoype`** as a place to put anything (typically, any field and function), that will be a member of the `XXX` class. 
 A `new XXX()` then inherits from everything placed in the prototype.  
 
 In this step, we get ride of all those vintage ES5-style `prototype`, and replace them by the `class` keyword.
