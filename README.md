@@ -380,8 +380,8 @@ Let's take `CardComponent` first as an example, and follow those steps carefully
    }
    ```
  
-    > ![info] set/set properties are like casual getters / setters that are called through a property access.  
-    In other words, do not write: 
+    > ![info] `get area()` `set area()` are like casual getters / setters that are called through a property access.  
+    In other words, it's better to use `get area()` format: 
     > 
     > ```javascript
     > class Shape {
@@ -402,12 +402,12 @@ Let's take `CardComponent` first as an example, and follow those steps carefully
 
 - Leave as is all the stuff that does not belong to `CardComponent.prototype`.
 
-Test your application. Does the game still run? Great. Now, refactor all other components so they all use ES6 classes as well.
+Test your application. Does the game still run? Great. Now, refactor all other components to ES6 classes as well.
 
-> ![warning] As a java developer, it might look like Java classes and Javascript classes behaves the same. 
+> ![warning] As a java developer, it might look like Java classes and Javascript classes behave the same. 
 This is not true. Do not forget: ES6 `class` is just syntactic sugar over `prototype`, and might produce some edge-cases.
 
-> ![question] Can you think of at least 2 things that are possible with java classes, but cannot be done with ES6 classes? 
+> ![question] Can you think of at least 2 things that are possible with Java classes, but cannot be done with ES6 classes? 
 
 ### Checklist
  - [ ] I know how to define ES6 classes
