@@ -62,6 +62,6 @@
         }
     });
 
-    // put component in global scope, tu be runnable right from the HTML. TODO remove in step XXX
+    // put component in global scope, to be runnable right from the HTML. TODO remove in step XXX
     window.CardComponent = CardComponent;
 })();

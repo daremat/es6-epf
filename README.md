@@ -29,6 +29,8 @@ and give you all the basics you need to master more complex frameworks.
 
 In this module, we will cover the following topics:
 * **Ecmascript**: standardized and versioned version of what is commonly called "Javascript".
+* **Browsers compatibility**: I know it's sad but some company and people are still using old browsers, and you will have to deal with compatibility issues.
+* **ES next**: ES7 + ES8 + ES9 and more.
 
 #### Some useful references you should consider :
 
@@ -129,7 +131,7 @@ It should get you to the welcome view (`WelcomeComponent`).
 Ensure everything works as intended: 
  - Start a new game, with **size=2** (`WelcomeComponent`), 
  - play (`GameComponent`), win.
- - get redirected to see you score (`ScoreComponent`).
+ - get redirected to see your score (`ScoreComponent`).
 
 > ![info] As you can see, we do not need anything other than a web browser to run a simple JS application... No tool, no compiler, etc.
 
@@ -143,7 +145,7 @@ For this exercise, keep it simple and just crank-up the standalone nodeJS [`http
 ``` 
 Now, navigate to [localhost:8080](http://localhost:8080): this should serve your application like for real!
 
-> ![tip] **Did you know**? Your web browser can tell you a lot on what happens behind the scene (javascript execution, stack-traces, networking, errors, ...). Press F12 (firefox / chrome / chromium) to access the developper tools. You will need it all this tutorial long.
+> ![tip] **Did you know**? Your web browser can tell you a lot on what happens behind the scene (javascript execution, stack-traces, network, errors, ...). Press F12 (firefox, chrome, chromium) to access the developper tools. You will need it all this tutorial long.
 
 > ![question] While going through the 3 views of the application, how many files did your browser download in total? What was the total loading time? 
 
@@ -169,7 +171,7 @@ At the moment, your project structure look like the following:
 
 ![mvc-architecture]
 
-This file structure is a very common practise.... if you are stuck in the 2000's.
+The previous file structure is a very common practise.... if you are stuck in the 2000's.
 If you want your application to be maintainable, you want it to be **component oriented**, 
 and promote **separation of concern** rather than **separation of technologies**.
 
@@ -189,7 +191,7 @@ For the beginning, let's start together with `WelcomeComponent`:
  - create a folder named `components/welcome`
  - move **[`scripts/welcome.js`](resources/setup/font-end/src/app/scripts/welcome.js) => `components/welcome.component.js`**
  - move **[`views/welcome.html`](resources/setup/font-end/src/app/views/welcome.html) => `components/welcome.component.html`**
- - from **[`styles/style.css`](resources/setup/font-end/src/app/styles/style.css)**, move all the styles for `WelcomeComponent` to **`components/welcome.component.css`**
+ - from **[`styles/style.css`](resources/setup/font-end/src/app/styles/style.css)**, move all needed classes for `WelcomeComponent` to **`components/welcome.component.css`**
  - open `components/welcome.component.html`, and update links toward CSS & JS:
    ```html
    <!DOCTYPE html>
