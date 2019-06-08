@@ -471,13 +471,59 @@ topics: **map**, **
 
 Last but not least, let's refactor our code with one of the most useful and awaited feature that came with ES6: was the **Arrow functions**
 
+## Step - NPM
+
+Before going further, we gonna convert our project to a npm one.
+It will be easier to manage packages for instance we have `css boostrap`, but to use it we just copy paste the Javascript file within our folder.
+Just imagine if you want to update it, add a new library, etc. It's gonna be hardcore to maintain.
+
+First command to run is `npm init`, it gonna ask you a lot of things, you can answer as you like.
+Let's decrypt the generate package.json together:
+``` json
+{
+  "name": "Mem",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "directories": {},
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Takima",
+  "license": "MIT"
+}
+```
+`dependencies` and `devDependencies`, this is where the new packages will be set up when you install a new one.
+You can also see the `test` label into the `scripts` path. It's a shortcut to all developper to run the test, they just have to run
+`npm run **test**` from the command line and the `echo \"Error: no test specified\" && exit 1` will be run. We gonna see later how to
+implement some test.
+First we can add the `start` shortcut to take back our npx command.
+
+> ![info] This is kinda a web standards to have a `npm run start` as command to run the front-end throw.
+
+So in the future you just have to `npm run start` to start your front-end.
+
 
 ## Step - babel
 
 All all things all good, our code start to look as something clean and modern... 
 However, there is still a major drawback: While virtually [all browsers can run ES5 code](http://kangax.github.io/compat-table/es5/),
- [not all web browser are compatible with ES6](http://kangax.github.io/compat-table/es6/) / ESNext (looking at you, Internet explorer...)  
-(looking at you, IE 11)  
+ [not all web browser are compatible with ES6](http://kangax.github.io/compat-table/es6/) / ESNext (looking at you, Internet explorer and the other one).
+ So we gonna add a famous compiler to build our code into one file and be able to deliver it to all the browsers !
+
+ Let's start with [Babel](https://babeljs.io/)
+
+Do you remeber the NPM command we use before to install npx ? We gonna do the same with Babel.
+
+> ![info] You can find any library nowadays in NPM repository.
+
+First command to run:
+`npm install --save-dev @babel/core @babel/cli`
+
+As you can see there is many things here, first we have `--save-dev` 
+
 
 ### Step - PhantomJS
 test parseUrl with arrow functions => crash!
