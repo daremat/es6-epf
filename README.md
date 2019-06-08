@@ -437,7 +437,7 @@ Here is a bit of work to do:
  - Since ES6 introduced `let` and `const`, usage of `var` is deprecated. Here, you need to replace both `var` by `const`.
    > ![question] What are the differences between `var` and `let`;
 
- - Concatenate strings is not something we should enjoy in any language. Fortunately, ES6 offers an alternative for that, namely **template litterals**.  
+ - Concatenate strings is not something we should enjoy in any language. Fortunately, ES6 offers an alternative for that, named **template litterals**.  
    **Instead of this:** 
    ```javascript
     window.location = '../score/score.component.html?name=' + this._name + '&size=' + this._size + '&time=' + timeElapsedInSeconds;
@@ -447,7 +447,7 @@ Here is a bit of work to do:
     window.location = `../score/score.component.html?name=${this._name }&size=${this._size}&time=${timeElapsedInSeconds}`;
    ```
  - Did you see that callback passed to `setTimeout()`?  
-   With ES6's new **Arrow functions**, it become much more easy to write anonymous functions or callback functions. 
+   With ES6's new **Arrow functions**, it becomes much more easier to write anonymous functions or callback functions. 
    Rewrite this with the `() => { ... }` syntax.
    > ![question] What is the `.bind(this)` stuff? What does happen if you remove it? Use your web browser's debugger to guess what happens.
  
@@ -462,7 +462,7 @@ Here is a bit of work to do:
 
 Now, go ahead over all the code, and modernize every `var`, every `function() {}` and every string concatenation you can found.
 
-> ![info] You can search for `// TODO Step 2.2` to find out all the places you need to rewrite code.
+> ![info] You can search for `// TODO Step 2.2` to find out all the places you need to rewrite functions.
 
 ### Step 2.3 - Functionnal programming
 
