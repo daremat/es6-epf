@@ -11,7 +11,8 @@ please do not spoil yourself the happy ending of this course :)
 - Give the name of a nodeJS library to run servers
 - what is the difference between `import * as _ from lodash` & `import {clone} from lodash` ? Why is this important ?
 - what is the difference between `import MyComponent from 'src/app/my-component.component.js'` & `import MyComponent from './src/app/my-component.component.js'` 
-
+- What is typescript? Give at least 2 differences with javascript.
+ 
 # esNext
 - what is the purpose of `async` keyword ? What is the purpose of `await` keyword?
 

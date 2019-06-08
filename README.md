@@ -32,14 +32,6 @@ In this module, we will cover the following topics:
 * **Browsers compatibility**: I know it's sad but there are more browsers than just Chrome, and you will have to deal with compatibility issues
 * **ES next**: ES7 + ES8 + ES9 and more
 
-##### ![TODO] move this away >>>>>>>>>>
-
-![ecmascript-support]
-
-> Source: [kangax.github.io/compat-table/es5](http://kangax.github.io/compat-table/es5/)
-
-##### <<<<<<<<<<
-
 #### Some useful references you should consider :
 
 - the [cheatsheet.md](./CHEATSHEET.md)
@@ -95,7 +87,7 @@ Our web application will work together with a server. Set it up right now:
    npm install
    npm start
    ```
-   > ![info] Have a look on [`resources/setup/server/server.js`](resources/setup/server/server.js), to see how far NodeJS shares similarities with JavScript.
+   > ![info] Have a look on [`resources/setup/server/server.js`](resources/setup/back-end), to see how far NodeJS shares similarities with JavScript.
  - Ensure the server is up and running: Connect to [http://localhost:8081/api-docs/](http://localhost:8081/api-docs/) and check the documentation is alive.
 
 ## Get started
@@ -130,6 +122,8 @@ Easy right? Well, the application will have to contain quite some ES6 features a
 that's why we will guide you trough the configuration and some parts of the implementation. Ready? Set... GO!!!.
 
 ## Step 0 - Hello JS
+
+topics: **HTTP server**.
 
 Now that your game server is ready, time to crank up the front-end "as is", to check that everything works as intended.
 On your local disk, open up the `client` folder you just copied, and double click on `meme-ory/src/index.html`. 
@@ -174,6 +168,7 @@ meme-ory/src/app/views/...
 
 ## Step 1 - The component architecture
 
+topics: **components**, **closures**
 Great, everything works. It is now time to dive into the code.
  
 At the moment, your project structure look like the following: 
@@ -198,49 +193,48 @@ At the end, our application have a total of 4 components:
 
 For the beginning, let's start together with `WelcomeComponent`:
  - create a folder named `components/welcome`
- - move **[`scripts/welcome.js`](resources/setup/client/src/app/scripts/welcome.js) => `components/welcome.component.js`**
- - move **[`views/welcome.html`](resources/setup/client/src/app/views/welcome.html) => `components/welcome.component.html`**
- - from **[`styles/style.css`](resources/setup/client/src/app/styles/style.css)**, move all the styles for `WelcomeComponent` to **`components/welcome.component.css`**
+ - move **[`scripts/welcome.js`](resources/setup/font-end/src/app/scripts/welcome.js) => `components/welcome.component.js`**
+ - move **[`views/welcome.html`](resources/setup/font-end/src/app/views/welcome.html) => `components/welcome.component.html`**
+ - from **[`styles/style.css`](resources/setup/font-end/src/app/styles/style.css)**, move all the styles for `WelcomeComponent` to **`components/welcome.component.css`**
  - open `components/welcome.component.html`, and update links toward CSS & JS:
- ```html
- <!DOCTYPE html>
- <html lang="en">
- <head>
-     <meta charset="UTF-8">
-     <title>MÈME ory</title>
-     <link rel="stylesheet" href="./welcome.component.css"> <!-- <=== HERE -->
-     <link rel="stylesheet" href="../../styles/style.css"> <!-- <=== HERE -->
-     <link rel="stylesheet" href="../../styles/bootstrap.css"> <!-- <=== HERE -->
- </head>
- 
- <body class="...">
- <nav class="...">
-     <a class="..." href="#">
-         <img class="..." src="../../../assets/logo_take_my_money.png" alt="logo"> <!-- <=== HERE -->
-         <span class="...">MÈME ory</span>
-     </a>
-     <span class="..."></span>
- </nav>
-     <!-- ... -->
- 
- <!-- link to welcome controller -->
- <script src="./welcome.component.js"></script> <!-- <=== HERE -->
- <script>
-     // execute the controller
-     var wc = new WelcomeComponent().render();
- </script>
- 
- </html>
- 
-```
+   ```html
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <title>MÈME ory</title>
+       <link rel="stylesheet" href="./welcome.component.css"> <!-- <=== HERE -->
+       <link rel="stylesheet" href="../../styles/style.css"> <!-- <=== HERE -->
+       <link rel="stylesheet" href="../../styles/bootstrap.css"> <!-- <=== HERE -->
+   </head>
+   
+   <body class="...">
+   <nav class="...">
+       <a class="..." href="#">
+           <img class="..." src="../../../assets/logo_take_my_money.png" alt="logo"> <!-- <=== HERE -->
+           <span class="...">MÈME ory</span>
+       </a>
+       <span class="..."></span>
+   </nav>
+       <!-- ... -->
+   
+   <!-- link to welcome controller -->
+   <script src="./welcome.component.js"></script> <!-- <=== HERE -->
+   <script>
+       // execute the controller
+       var wc = new WelcomeComponent().render();
+   </script>
+   </html>
+   ```
+
  - open `components/welcome.component.js`, and replace link toward `GameComponent`:
- ```javascript
- window.location = './game.html?name=' + name + '&size=' + size;
- ```
- by its new future location:
- ```javascript
- window.location = '../game/game.component.html?name=' + name + '&size=' + size;
- ```
+   ```javascript
+   window.location = './game.html?name=' + name + '&size=' + size;
+   ```
+   by its new future location:
+   ```javascript
+   window.location = '../game/game.component.html?name=' + name + '&size=' + size;
+   ```
  - navigate to [http://localhost:8080/app/components/welcome/welcome.component.html](http://localhost:8080/app/components/welcome/welcome.component.html): The welcome page should look and behave as usual.
 
 > ![info] Component oriented architecture is not only about file structure. 
@@ -249,12 +243,13 @@ The most important part is: a component should be **contained** (all required co
 Easy enough, isn't it? Now, go ahead and do the same by yourself for the other `GameComponent`, `CardComponent`, and `ScoreComponent`. 
 You can search for text `TODO Step 1` to find out all the lines of code you need to change.  
 
-> ![info] Do not search for `card.html`. At the moment, its content is a `<template></template` inside [`views/game.html.js`](resources/setup/client/src/app/views/game.html#L35). 
+> ![info] Do not search for `card.html`. At the moment, its content is a `<template></template` inside [`views/game.html.js`](resources/setup/font-end/src/app/views/game.html#L35). 
 In other words, `CardComponent` does not have a `card.component.html`. 
 
 > ![warning] Do not forget to also move assets to the best appropriate components
 
 #### Files produced:
+
 ```
 src/app/components/game/card/assets/*.png
 src/app/components/game/card/card.component.js
@@ -278,7 +273,8 @@ src/app/components/welcome/welcome.component.js
 >     // ...
 > })();
 > ```
-> Try to remove the 2 closures from both `card.component.js` & `game.component.js`. What happens? Why?
+> Try to remove the 2 closures from both `card.component.js` & `game.component.js`. What happens? Why?  
+> Once figured out, you can just remove that useless malicious code.
 
 > ![tip] Do not forget to use your web browser's development tools!
 
@@ -289,8 +285,8 @@ src/app/components/welcome/welcome.component.js
  - [ ] `styles/` folder contains a single `styles.css` file
  - [ ] `styles.css` defines no more that global styles (eg: style applied to `<body>`)
  - [ ] I understand why **component-oriented architecture** might be of some help
- - [ ] I left no more `TODO Step 1` in my code 
  - [ ] I understand why closure are needed 
+ - [ ] There is no `TODO Step 1` in my code anymore 
 
 **![commit] commit step**
 
@@ -303,10 +299,14 @@ Right now, our javascript code follows [ES5 specifications](https://www.w3school
 As you can see, ES5 was released in 2009, and appears a bit outdated now. 
 Time has come to refactor all that mess with new [ESNext bells and whistles](https://github.com/tc39/proposals/blob/master/finished-proposals.md), starting with [ES6 classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes) 
 
+> ![tip] Step 2.xxx are only about javascript. There is nothing to change is HTML or CSS files.
+
 ### Step 2.1 - ES6 classes
 
+topics: **classes**
+
 At the moment, your legacy code already use classes. 
-If you look carefully at the `render()` method of [`game.component.js`](resources/setup/client/src/app/scripts/game.js#L45), you can see the following: 
+If you look carefully at the `render()` method of [`game.component.js`](resources/setup/font-end/src/app/scripts/game.js#L45), you can see the following: 
 ```javascript
 for (var i in this._config.ids) {
     this._cards[i] = new CardComponent(this._config.ids[i]);
@@ -320,29 +320,162 @@ A `new XXX()` then inherits from everything placed in the prototype.
 
 In this step, we get ride of all those vintage ES5-style `prototype`, and replace them by the `class` keyword.
  
-Let's take `CardComponent` first as an example. Please follow those steps carefully:
+Let's take `CardComponent` first as an example, and follow those steps carefully:
  - open `card.component.js`
- - create a class `CardComponent`: 
-  ```javascript
-  (function() {
-      class CardComponent {
-            // [1]
-      }
-      // [2]
-  })();
-  ```
-  we are gonna move all the code from place **\[1]** to place **\[2]**
-  
+ - Rewrite function `CardComponent() {...}` to a class `CardComponent`: Replace `function` by `class`, and put function body inside a `constructor() {...}`.
+    ```javascript
+    // card.component.js // before
+    function CardComponent(id) {
+        this._flipped = false;
+         // [1]
+         // ...
+    }
+    // [2]
+    // ...
+    ```
+    
+    ```javascript
+    // card.component.js // after
+    (function() {
+        class CardComponent {   
+            constructor(id) {
+                 this._flipped = false;
+                // [1]
+                // ...
+            }
+        }
+        // [2]
+        // ...
+    })();
+    ```
+    > ![info] Unlike classes in other languages, javascript offers no encapsulation (`private` / `protected` members). 
+    If you want encapsulation, you should consider using [**Typescript**](https://www.typescriptlang.org/) instead of *Javascript* 
+    
+    > ![tip] Notice that some attributes are prefixed with a underscore. (`this._****`). 
+    This is a widespread convention to tell that this property should be considered private. 
 
+ - create the methods: Whenever you see `CardComponent.prototype.XXX = ...`, move the function body inside the class, in a method called `XXX() {}`:
+   ```javascript
+   class CardComponent {
+       constructor(id) {
+            // [1]
+            // ...
+       }
+
+       getElement() {
+           return this._elt;
+       }
+
+       flip() {
+           this._imageElt.classList.toggle('flip');
+           this._flipped = !this._flipped;
+       }
+
+       equals(card) {
+           return card._id === this._id;
+       }
+   }
+   ``` 
+ - create the `get` and `set` properties: 
+   Whenever you see `Object.defineProperties(CardComponent.prototype, { XXX: { get: ..., set: ... } })`, move the function body inside the class, in a get / set property
+   ```java
+   get flipped() {
+       return this._flipped;
+   }
+   ```
+ 
+    > ![info] set/set properties are like casual getters / setters that are called through a property access.  
+    In other words, do not write: 
+    > 
+    > ```javascript
+    > class Shape {
+    >     // getters / setters
+    >     getArea() { return this._area; }
+    >     setArea(area) { this._area = area; }
+    >     
+    >     // get/set properties
+    >     get area() { return this._area; }
+    >     set area(area) { this._area = area; }
+    > }
+    > const s = new Shape();
+    > 
+    > // the two are equivalent.
+    > s.setArea(s.getArea() * 2);  
+    > s.area = s.area * 2;
+    > ```
+
+- Leave as is all the stuff that does not belong to `CardComponent.prototype`.
+
+Test your application. Does the game still run? Great. Now, refactor all other components so they all use ES6 classes as well.
 
 > ![warning] As a java developer, it might look like Java classes and Javascript classes behaves the same. 
 This is not true. Do not forget: ES6 `class` is just syntactic sugar over `prototype`, and might produce some edge-cases.
 
+> ![question] Can you think of at least 2 things that are possible with java classes, but cannot be done with ES6 classes? 
+
+### Checklist
+ - [ ] I know how to define ES6 classes
+ - [ ] I know they are still `prototypes` under the hood 
+ - [ ] I know what get/set properties are
+ - [ ] I left no unresolved `// TODO Step 2.1` on my code
+
+**![commit] commit step**
+
+The code seems much more clean and concise with classes, isn't it? Let's continue our refactor in the next step.  
+
+### Step 2.2 - ES6 refactor
+
+topics: **`Function.bind()`**, **arrow functions**, **template literals**
+Open `game.component.js`, and look at the `gotoScore()` method:
+```javascript
+function gotoScore() {
+    var now = Date.now();
+    var timeElapsedInSeconds = Math.floor((now - this._startTime ) / 1000);
+
+    setTimeout(function() {
+            window.location = '../score/score.component.html?name=' + this._name + '&size=' + this._size + '&time=' + timeElapsedInSeconds;
+        }.bind(this), 750);
+    }
+```
+This methods waits 750ms before redirecting to the `ScoreComponent`.
+Here is a bit of work to do: 
+ - Since ES6 introduced `let` and `const`, usage of `var` is deprecated. Here, you need to replace both `var` by `const`.
+   > ![question] What are the differences between `var` and `let`;
+
+ - Concatenate strings is not something we should enjoy in any language. Fortunately, ES6 offers an alternative for that, namely **template litterals**.  
+   **Instead of this:** 
+   ```javascript
+    window.location = '../score/score.component.html?name=' + this._name + '&size=' + this._size + '&time=' + timeElapsedInSeconds;
+   ```
+   you'd better write this:
+   ```javascript
+    window.location = `../score/score.component.html?name=${this._name }&size=${this._size}&time=${timeElapsedInSeconds}`;
+   ```
+ - Did you see that callback passed to `setTimeout()`?  
+   With ES6's new **Arrow functions**, it become much more easy to write anonymous functions or callback functions. 
+   Rewrite this with the `() => { ... }` syntax.
+   > ![question] What is the `.bind(this)` stuff? What does happen if you remove it? Use your web browser's debugger to guess what happens.
+ 
+   > ![question] The shorten syntax aside, what is the difference between?
+   > ```javascript
+   > setTimeout(function() { console.log(this._name); }, 750);
+   > ```
+   > and 
+   > ```javascript
+   > setTimeout(() => console.log(this._name));
+   > ```
+
+Now, go ahead over all the code, and modernize every `var`, every `function() {}` and every string concatenation you can found.
+
+> ![info] You can search for `// TODO Step 2.2` to find out all the places you need to rewrite code.
+
+### Step 2.3 - Functionnal programming
+
+topics: **map**, **
 
 
+Last but not least, let's refactor our code with one of the most useful and awaited feature that came with ES6: was the **Arrow functions**
 
-### Step - classes
-### Step - arrow functions, streams, Function.bind
 
 ## Step - babel
 

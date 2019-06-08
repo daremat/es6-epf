@@ -1,7 +1,7 @@
-(function() { // TODO remove closure
+(function() {
 
+    // TODO Step 2.1 create a class
     /* class WelcomeComponent constructor  */
-    // TODO create a class
     function WelcomeComponent() {
     }
 
@@ -11,13 +11,13 @@
     function render() {
         var form = document.querySelector('form.form-signin');
 
-        form.addEventListener('submit', function(event) {
+        form.addEventListener('submit', function(event) {     // TODO Step 2.2: use arrow function
+
             event.preventDefault();
             if (form.checkValidity() === false) {
                 event.stopPropagation();
                 form.classList.add('was-validated');
             } else {
-
                 var name = event.srcElement.querySelector('#nickname').value;
                 var size = parseInt(event.srcElement.querySelector('#size').value);
 
@@ -29,6 +29,7 @@
     }
 
     function _startGame(name, size) {
+        // TODO Step 2.2: use template literals
         window.location = './game.html?name=' + name + '&size=' + size;
     }
 

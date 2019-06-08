@@ -28,8 +28,8 @@
     /* method GameComponent.fetchConfig */
     GameComponent.prototype.fetchConfig = fetchConfig;
 
-    /* method GameComponent.score */
-    GameComponent.prototype.score = score;
+    /* method GameComponent.gotoScore */
+    GameComponent.prototype.gotoScore = gotoScore;
 
     /* method GameComponent._flipCard */
     GameComponent.prototype._flipCard = _flipCard;
@@ -72,9 +72,9 @@
         // build a card for each config.ids
     }
 
-    function score() {
-        const now = Date.now();
-        const timeElapsedInSeconds = Math.floor((now - this._startTime )/1000);
+    function gotoScore() {
+        var now = Date.now();
+        var timeElapsedInSeconds = Math.floor((now - this._startTime )/1000);
 
         setTimeout(function() {  // TODO use arrow function.
             window.location = '../score/score.component.html?name=' + this._name + '&size=' + this._size + '&time=' + timeElapsedInSeconds;
@@ -134,7 +134,7 @@
                 this._flippedCard = null;
 
                 if (this._matchedPairs === this._size) {
-                    this.score();
+                    this.gotoScore();
                 }
             } else {
                 this._busy = true;

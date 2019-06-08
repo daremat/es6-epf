@@ -1,7 +1,7 @@
-(function() {   // TODO remove closure
+(function() {
 
+    // TODO Step 2.1 create a class
     /* class ScoreComponent constructor */
-    // TODO create a class
     function ScoreComponent() {
         var params = parseUrl();
         this.name = params.name;

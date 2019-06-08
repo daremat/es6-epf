@@ -1,12 +1,12 @@
-(function() {   // TODO remove closure
+(function() {
     var environment = {
         api: {
             host: 'http://localhost:8081'
         }
     };
 
+    // TODO Step 2.1 create a class
     /* class GameComponent constructor */
-    // TODO create a class
     function GameComponent() {
         // gather parameters from URL
         var params = parseUrl();
@@ -27,16 +27,15 @@
     /* method GameComponent.fetchConfig */
     GameComponent.prototype.fetchConfig = fetchConfig;
 
-    /* method GameComponent.score */
-    GameComponent.prototype.score = score;
+    /* method GameComponent.gotoScore */
+    GameComponent.prototype.gotoScore = gotoScore;
 
     /* method GameComponent._flipCard */
     GameComponent.prototype._flipCard = _flipCard;
 
     function render() {
         // fetch the cards configuration from the server
-        this.fetchConfig((function(config) {
-            // TODO replace this function with an arrow function
+        this.fetchConfig((function(config) { // TODO Step 2.2: use arrow function
             this._config = config;
 
             // create a card out of the config
@@ -52,7 +51,7 @@
                     var card = this._cards[i];
                     this._boardElement.appendChild(card.getElement());
                     card.getElement().addEventListener('click', function() {this._flipCard(card) }.bind(this)); // TODO use arrow function.
-                }).bind(this)();    // TODO Why bind(this)?
+                }).bind(this)();
             }
 
             this.start();
@@ -62,21 +61,24 @@
     function start() {
         this._startTime = Date.now();
         var seconds = 0;
+        // TODO Step 2.2: use template literals
         document.querySelector('nav .navbar-title').textContent = 'Player: ' + this._name + '. Elapsed time: ' + seconds++;
 
-        setInterval(function() { // TODO replace with arrow function. Why '.bind(this)' ?
+        setInterval(function() { // TODO Step 2.2: use arrow function
+            // TODO Step 2.2: use template literals
             document.querySelector('nav .navbar-title').textContent = 'Player: ' + this._name + '. Elapsed time: ' + seconds++;
         }.bind(this), 1000);
 
         // build a card for each config.ids
     }
 
-    function score() {
+    function gotoScore() {
         var now = Date.now();
         var timeElapsedInSeconds = Math.floor((now - this._startTime )/1000);
 
-        setTimeout(function() {  // TODO use arrow function.
+        setTimeout(function() {  // TODO Step 2.2: use arrow function.
             // TODO Step 1: replace with score.component location
+            // TODO Step 2.2: use template literals
             window.location = 'score.html?name=' + this._name + '&size=' + this._size + '&time=' + timeElapsedInSeconds;
         }.bind(this), 750);    // TODO Why bind(this)?
     }
@@ -86,7 +88,10 @@
             ? new XMLHttpRequest()
             : new ActiveXObject('Microsoft.XMLHTTP');
 
+        // TODO Step 2.2 use template literals
         xhr.open('get', environment.api.host + '/board?size=' + this._size, true);
+
+        // TODO Step 2.2 use arrow function
         xhr.onreadystatechange = function() {
             var status;
             var data;
@@ -134,24 +139,23 @@
                 this._flippedCard = null;
 
                 if (this._matchedPairs === this._size) {
-                    this.score();
+                    this.gotoScore();
                 }
             } else {
                 this._busy = true;
 
                 // cards did not match
                 // wait a short amount of time before hiding both cards
-                var _this = this;   // TODO why _this?
-                setTimeout(function() { // TODO use arrow function
-
+                // TODO Step 2.2 use arrow function
+                setTimeout(function() {
                     // hide the cards
-                    _this._flippedCard.flip();
+                    this._flippedCard.flip();
                     card.flip();
-                    _this._busy = false;
+                    this._busy = false;
 
                     // reset flipped card for the next turn.
-                    _this._flippedCard = null;
-                }, 500);
+                    this._flippedCard = null;
+                }.bind(this), 500);
             }
         }
     }
