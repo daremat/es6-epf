@@ -473,7 +473,10 @@ Last but not least, let's refactor our code with one of the most useful and awai
 
 ## Step - NPM
 
-Before going further, we gonna convert our project to a npm one.
+This step is about setting up a standard npm module containing a webpack application, this will be the project skeleton.
+
+**Why ?** Have a standardized NPM module and an easily runnable webpack application
+
 It will be easier to manage packages for instance we have `css boostrap`, but to use it we just copy paste the Javascript file within our folder.
 Just imagine if you want to update it, add a new library, etc. It's gonna be hardcore to maintain.
 
@@ -495,7 +498,9 @@ Let's decrypt the generate package.json together:
   "license": "MIT"
 }
 ```
-`dependencies` and `devDependencies`, this is where the new packages will be set up when you install a new one.
+`dependencies` and `devDependencies`, this is where the new packages will be set up when you install a new one, dependencies will be also 
+package in the futur when you will serve a final version for instance, and devDependencies are only save for developpers, like npx might be installed 
+as dev dependencies.
 You can also see the `test` label into the `scripts` path. It's a shortcut to all developper to run the test, they just have to run
 `npm run **test**` from the command line and the `echo \"Error: no test specified\" && exit 1` will be run. We gonna see later how to
 implement some test.
@@ -505,6 +510,25 @@ First we can add the `start` shortcut to take back our npx command.
 
 So in the future you just have to `npm run start` to start your front-end.
 
+> ![info] You just created a NPM module, that is not different from any module in the central registry at
+[www.npmjs.com](https://www.npmjs.com/). Your NPM module relies on this json file, you can find the documentation
+for this file here: [docs.npmjs.com/files/package.json](https://docs.npmjs.com/files/package.json).
+
+> ![info] There are alternatives to npm, yarn for example is quite notorious and has very good performance:
+[yarnpkg.com](https://yarnpkg.com/en/).
+
+* set your package as private
+```javascript
+//package.json
+{
+  ...
+  "private": true,
+  ...
+}
+```
+> ![info] Making it private so we do not accidentally push to the central (you will need to be connected to do so
+
+> ![question] Ok but what about bootstrap ?
 
 ## Step - babel
 
