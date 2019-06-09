@@ -26,8 +26,8 @@
 
         var parts = query
             .split(delimiter);
-
-        for (let i in parts) {
+        // TODO Step 2.3: Use Array.map() & Array.reduce()
+        for (var i in parts) {
             var item = parts[i];
             var kv = item.split('=');
             result[kv[0]] = kv[1];

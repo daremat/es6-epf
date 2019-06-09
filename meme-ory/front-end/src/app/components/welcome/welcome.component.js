@@ -9,7 +9,7 @@
     WelcomeComponent.prototype.render = render;
 
     function render() {
-        var form = document.querySelector('form.form-signin');
+        const form = document.querySelector('form.form-signin');
 
         form.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -18,8 +18,8 @@
                 form.classList.add('was-validated');
             } else {
 
-                var name = event.srcElement.querySelector('#nickname').value;
-                var size = parseInt(event.srcElement.querySelector('#size').value);
+                const name = event.srcElement.querySelector('#nickname').value;
+                const size = parseInt(event.srcElement.querySelector('#size').value);
 
                 _startGame(name, size);
             }

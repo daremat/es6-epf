@@ -1,14 +1,20 @@
-export function parseUrl() {
-    const url = window.location;
-    const query = url.href.split('?')[1] || '';
-    const delimiter = '&';
-    const result = {};
+(function () {
+    function parseUrl(url) {
+        const query = url.split('?')[1] || '';
+        const delimiter = '&';
+        const result = {};
 
-    query
-        .split(delimiter)
-        .map(item => item.split('='))  // split on '='
-        .forEach(function (kv) {
+        const parts = query
+            .split(delimiter);
+
+        for (let i in parts) {
+            const item = parts[i];
+            const kv = item.split('=');
             result[kv[0]] = kv[1];
-        });
-    return result;
-}
+        }
+
+        return result;
+    }
+
+    window.parseUrl = parseUrl;
+})();

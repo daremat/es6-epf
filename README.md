@@ -189,9 +189,9 @@ At the end, our application have a total of 4 components:
 
 For the beginning, let's start together with `WelcomeComponent`:
  - create a folder named `components/welcome`
- - move **[`scripts/welcome.js`](resources/setup/font-end/src/app/scripts/welcome.js) => `components/welcome.component.js`**
- - move **[`views/welcome.html`](resources/setup/font-end/src/app/views/welcome.html) => `components/welcome.component.html`**
- - from **[`styles/style.css`](resources/setup/font-end/src/app/styles/style.css)**, move all needed classes for `WelcomeComponent` to **`components/welcome.component.css`**
+ - move **[`scripts/welcome.js`](resources/setup/front-end/src/app/scripts/welcome.js) => `components/welcome.component.js`**
+ - move **[`views/welcome.html`](resources/setup/front-end/src/app/views/welcome.html) => `components/welcome.component.html`**
+ - from **[`styles/style.css`](resources/setup/front-end/src/app/styles/style.css)**, move all needed classes for `WelcomeComponent` to **`components/welcome.component.css`**
  - open `components/welcome.component.html`, and update links toward CSS & JS:
    ```html
    <!DOCTYPE html>
@@ -239,7 +239,7 @@ The most important part is: a component should be **contained** (all required co
 Easy enough, isn't it? Now, go ahead and do the same by yourself for the other `GameComponent`, `CardComponent` and `ScoreComponent`. 
 You can search for text `TODO Step 1` to find out all the lines of code you need to change.  
 
-> ![info] Do not search for `card.html`. At the moment, its content is a `<template></template` inside [`views/game.html.js`](resources/setup/font-end/src/app/views/game.html#L35). 
+> ![info] Do not search for `card.html`. At the moment, its content is a `<template></template` inside [`views/game.html.js`](resources/setup/front-end/src/app/views/game.html#L35). 
 In other words, `CardComponent` does not have a `card.component.html`. 
 
 > ![warning] Do not forget to also move assets to the best appropriate components
@@ -302,7 +302,7 @@ Time has come to refactor all that mess with new [ESNext bells and whistles](htt
 topics: **classes**
 
 At the moment, your legacy code already use classes. 
-If you look carefully at the `render()` method of [`game.component.js`](resources/setup/font-end/src/app/scripts/game.js#L45), you can see the following: 
+If you look carefully at the `render()` method of [`game.component.js`](resources/setup/front-end/src/app/scripts/game.js#L45), you can see the following: 
 ```javascript
 for (var i in this._config.ids) {
     this._cards[i] = new CardComponent(this._config.ids[i]);
@@ -380,7 +380,7 @@ Let's take `CardComponent` first as an example, and follow those steps carefully
    }
    ```
  
-    > ![info] `get area()` `set area()` are like casual getters / setters that are called through a property access.  
+    > ![info] `get area()` and `set area()` are like casual getters / setters that are called through a property access.  
     In other words, it's better to use `get area()` format: 
     > 
     > ```javascript
@@ -414,9 +414,11 @@ This is not true. Do not forget: ES6 `class` is just syntactic sugar over `proto
  - [ ] I know they are still `prototypes` under the hood 
  - [ ] I know what get/set properties are
  - [ ] I left no unresolved `// TODO Step 2.1` on my code
-
+ - [ ] I tested the application, and it runs runs as usual 
 
 The code seems much more clean and concise with classes, isn't it? Let's continue our refactor in the next step.  
+
+**![commit] commit step**
 
 ### Step 2.2 - ES6 refactor
 
@@ -464,12 +466,58 @@ Now, go ahead over all the code, and modernize every `var`, every `function() {}
 
 > ![info] You can search for `// TODO Step 2.2` to find out all the places you need to rewrite functions.
 
-### Step 2.3 - Functionnal programming
+### Checklist
+ - [ ] I know the differences between `var` and `let`/`const` 
+ - [ ] I know about template literals
+ - [ ] I can write arrow functions
+ - [ ] I know the value of `this` is not always as expected 
+ - [ ] I refactored all `// TODO Step 2.2` that I found
+ - [ ] The application still runs as usual 
 
-topics: **map**, **
+**![commit] commit step**
 
 
-Last but not least, let's refactor our code with one of the most useful and awaited feature that came with ES6: was the **Arrow functions**
+topics: **map**, **forEach**, **filter**, ...
+
+Last but not least, ES6 offers a bunch of capabilities to make your code more *functional*.
+Did you already see that kind of `for -> if`-style loop in your code?
+```javascript
+const dates = ['2010-06-08', '2009-01-04', '2012-08-07', '2004-09-05', /* ... */];
+const oldDates = [];
+const longTimeAgo = new Date('2005-01-01');
+
+for (let d of dates) {
+    d = new Date(d);
+    if (d < longTimeAgo) {
+        oldDates.push(d);
+    }
+}
+
+return oldDates;
+``` 
+
+With ES6, we now have a bunch of operators that apply on arrays, to achieve the same operations in a much more cleaner way:
+```javascript
+const dates = ['2010-06-08', '2009-01-04', '2012-08-07', '2004-09-05', /* ... */];
+const longTimeAgo = new Date('2005-01-01');
+
+return dates
+    .map(d => new Date(d))
+    .filter(d => d < longTimeAgo);
+```
+
+##### Your next mission: 
+- track dow all those ugly `for` loops, and rewrite them with
+[`Array.forEach`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/ForEach),
+ [`Array.map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Map), [`Array.filter`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Filter) and [`Array.reduce`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)
+
+
+### Checklist
+ - [ ] I can do **functional programming** with javascript 
+ - [ ] I refactored all `// TODO Step 2.3` that I found
+
+**![commit] commit step**
+
 
 ## Step - NPM
 
@@ -571,7 +619,6 @@ First command to run:
 > ![question] What means the `@` symbol above?
 
 As you can see there is many things here, first we have `--save-dev` 
-
 
 ### Step - PhantomJS
 test parseUrl with arrow functions => crash!

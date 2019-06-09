@@ -39,14 +39,14 @@
             this._config = config;
 
             // create a card out of the config
-            this._cards = []; // TODO use Array.map()
+            this._cards = []; // TODO Step 2.3: use Array.map()
             for (var i in this._config.ids) {
                 this._cards[i] = new CardComponent(this._config.ids[i]);
             }
 
             this._boardElement = document.querySelector('.cards');
             
-            for (var i in this._cards) {    // TODO use Array.forEach()
+            for (var i in this._cards) { // TODO Step 2.3: use Array.forEach()
                 (function() {
                     var card = this._cards[i];
                     this._boardElement.appendChild(card.getElement());
@@ -55,7 +55,7 @@
             }
 
             this.start();
-        }).bind(this)); // why bind(this) ?
+        }).bind(this));
     }
 
     function start() {
@@ -68,19 +68,16 @@
             // TODO Step 2.2: use template literals
             document.querySelector('nav .navbar-title').textContent = 'Player: ' + this._name + '. Elapsed time: ' + seconds++;
         }.bind(this), 1000);
-
-        // build a card for each config.ids
     }
 
     function gotoScore() {
-        var now = Date.now();
-        var timeElapsedInSeconds = Math.floor((now - this._startTime )/1000);
+        var timeElapsedInSeconds = Math.floor((Date.now() - this._startTime )/1000);
 
         setTimeout(function() {  // TODO Step 2.2: use arrow function.
             // TODO Step 1: replace with score.component location
             // TODO Step 2.2: use template literals
             window.location = 'score.html?name=' + this._name + '&size=' + this._size + '&time=' + timeElapsedInSeconds;
-        }.bind(this), 750);    // TODO Why bind(this)?
+        }.bind(this), 750);    // TODO Step 2.2: Why bind(this)?
     }
 
     function fetchConfig(cb) {
@@ -168,8 +165,8 @@
 
         var parts = query
             .split(delimiter);
-
-        for (let i in parts) {
+        // TODO Step 2.3: Use Array.map() & Array.reduce()
+        for (var i in parts) {
             var item = parts[i];
             var kv = item.split('=');
             result[kv[0]] = kv[1];
