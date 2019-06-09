@@ -141,9 +141,9 @@ they are instead served by an HTTP server (eg: [`nginx`](https://www.nginx.com/)
 For this exercise, keep it simple and just crank-up the standalone nodeJS [`http-server`](https://www.npmjs.com/package/http-server):
 ```bash
 >$ cd meme-ory/front-end
->$ npx http-server src -c-1
+>$ npx http-server -c-1
 ``` 
-Now, navigate to [localhost:8080](http://localhost:8080): this should serve your application like for real!
+Now, navigate to [localhost:8080/src](http://localhost:8080/src): this should serve your application like for real!
 
 > ![tip] **Did you know**? Your web browser can tell you a lot on what happens behind the scene (javascript execution, stack-traces, network, errors, ...). Press F12 (firefox, chrome, chromium) to access the developper tools. You will need it all this tutorial long.
 
@@ -289,15 +289,162 @@ src/app/components/welcome/welcome.component.js
 Great, this is a little step toward proper component-oriented architecture, 
 but there is still a lot of work to make the code more modern.
 
-## Step 2 - ESNext
+## Step 2 - NPM
+
+At the moment, our application uses [Bootstrap 4](https://getbootstrap.com/) as its CSS framework.
+You can find bootstrap file in your project at `meme-ory/front-end/src/app/styles/bootstrap.css`.
+That means, we copy pasted all the bootstrap code within out application to use it.
+
+In this step, we turn our application into an **npm module**, so that we have a better way to deal with dependencies.
+
+> ![info] With a package manager, it comes easier to add new libraries, and update existing ones. 
+
+### Step 2.1 - Install bootstrap
+
+Let's start: 
+ - Create a new NPM module: 
+   ```bash
+   >$ cd meme-ory/front-end/
+   >$ npm init
+   ```
+   Answer all the questions as you like.
+   > ![info] Leave `entry point` blank for the moment. More on that later.
+   
+ - Locate the `package.json` file that just got generated for you:
+    ``` json
+    {
+      "name": "Meme-ory",
+      "version": "1.0.0",
+      "description": "",
+      "dependencies": {},
+      "devDependencies": {},
+      "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+      },
+      "author": "Takima",
+      "license": "MIT"
+    }
+    ```
+    > ![info] You just created a NPM module, that is not different from any module in the central registry at
+    [www.npmjs.com](https://www.npmjs.com/). Your NPM module relies on this json file, you can find the documentation
+    for this file here: [docs.npmjs.com/files/package.json](https://docs.npmjs.com/files/package.json).
+ - set your package as private
+    ```javascript
+    //package.json
+    {
+      ...
+      "private": true,
+      ...
+    }
+    ```
+    > ![info] Making it private so we do not accidentally push it to the central repository.
+
+ - Now that we have a package manager, we can use it to install **bootstrap 4**
+    ```bash
+    >$ npm install bootstrap
+    ```
+    See, your `package.json` have been updated with the following:
+
+    ```json
+    {
+       "dependencies": {
+           "bootstrap": "^4.3.1"
+       }
+    }
+    ```
+    > ![question] By convention, all NPM dependencies use the same 3-digit style version numbers? How is it called? 
+
+    > ![question] What means the `^` symbol next to bootstrap version?
+
+    > ![tip] Never edit `package.json` by yourself. Everytime need to update it, use the `npm` command instead.
+    
+ - In the other hand, NPM created a **`node_modules`** folder, where it put all the downloaded dependencies
+   See by yourself, the `node_modules/bootstrap/` folder, that contains the following content:
+   * `dist`: the compiled (optimized) bootstrap files
+   * `js`:
+       * `dist`: generated bootstrap components. (We won't use it in the tutorial)
+       * `src`: original source files. (We won't use it in the tutorial)
+   * `scss`: [Sass](https://sass-lang.com/) counterpart of the CSS files. We will see this later.
+   
+   > ![warning] Do not forget to put the `node_modules/` directory within your `.gitignore`.
+
+   Update your all of your HTML files, so that it uses the `bootstrap.css` found in the `node_modules` folder.
+   You can then get rid of the old `styles/bootstrap.css`
+    > ![info] you can search for all the `<!-- TODO Step 2.1 -->` left in the code
+
+> ![info] There are alternatives to npm. I recommend using [yarn](https://yarnpkg.com/en/), which is quite notorious and has very good performance:
+
+> ![question] As you can see, `npm install` command also generated a `package-lock.json` file along with `package.json`. What is the purpose of this file? 
+
+### Produced files
+```
+package.json
+package-lock.json
+node_modules/
+```
+
+### Checklist: 
+ - [ ] I deleted the copied `styles/bootstrap.css`
+ - [ ] I know how to init a new NPM module
+ - [ ] I can install an NPM dependency
+ - [ ] My application use bootstrap from `node_modules/`, and still looks as usual
+ - [ ] There is no `TODO Step 2.1` in my code anymore 
+
+**![commit] commit step**
+
+### Step 2.2 - NPM scripts
+
+Let's focus a little more on the `package.json` generated previously by `npm init` command.
+
+**See that `scripts` part?**  
+From here, you can add various scripts available for developers, to build/test/run your applications. 
+At the moment, the only available script is:
+```bash
+>$ npm run test
+``` 
+Of course, this script fails because we did not configure any test suite.
+> ![tip] Scripts are useful to remember what are the commands to manage your application's development cycle. 
+They also serve as a documentation when new developers join your project. Use them wisely.  
+
+##### Your job:
+ - Add a new `start` script, that crank-up the http server: 
+    ```json
+    {
+        "scripts": {
+           "start": "http-server -c-1"
+        }
+    }
+    ``` 
+    This will require you to install the `http-server` dependency as well.
+    ```bash
+    >$ npm install -D http-server
+    ```
+
+    > ![info] the `npm install -D` parameter in `npm install -D` is to install as a **devDependency** rather **dependency**.
+    Look at the "devDepencencies" that have been put in your `package.json`.
+
+    > ![question] What is a `devDependency` exactly? What are the differences with a `depencency`?
+
+    Now, you can just `npm run start` to start your front-end.
+
+    > ![info] It's a very common practise to have a `npm run (start|test)` command, it's helpful because developpers don't have to carry what it's under the hood when they join a projet.
+
+### Checklist: 
+ - [ ] I know what *npm scripts* are
+ - [ ] I can run my application with `npm start` command
+ - [ ] I understand the differences between *dependencies* and *devDependencies*
+
+**![commit] commit step**
+
+## Step 3 - ESNext
 
 Right now, our javascript code follows [ES5 specifications](https://www.w3schools.com/js/js_es5.asp). 
 As you can see, ES5 was released in 2009, and appears a bit outdated now. 
 Time has come to refactor all that mess with new [ESNext bells and whistles](https://github.com/tc39/proposals/blob/master/finished-proposals.md), starting with [ES6 classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes) 
 
-> ![tip] Step 2.xxx are only about javascript. There is nothing to change is HTML or CSS files.
+> ![tip] Step 3.xxx are only about javascript. There is nothing to change is HTML or CSS files.
 
-### Step 2.1 - ES6 classes
+### Step 3.1 - ES6 classes
 
 topics: **classes**
 
@@ -413,14 +560,14 @@ This is not true. Do not forget: ES6 `class` is just syntactic sugar over `proto
  - [ ] I know how to define ES6 classes
  - [ ] I know they are still `prototypes` under the hood 
  - [ ] I know what get/set properties are
- - [ ] I left no unresolved `// TODO Step 2.1` on my code
+ - [ ] I left no unresolved `// TODO Step 3.1` on my code
  - [ ] I tested the application, and it runs runs as usual 
 
 The code seems much more clean and concise with classes, isn't it? Let's continue our refactor in the next step.  
 
 **![commit] commit step**
 
-### Step 2.2 - ES6 refactor
+### Step 3.2 - ES6 refactor
 
 topics: **`Function.bind()`**, **arrow functions**, **template literals**
 Open `game.component.js`, and look at the `gotoScore()` method:
@@ -464,18 +611,17 @@ Here is a bit of work to do:
 
 Now, go ahead over all the code, and modernize every `var`, every `function() {}` and every string concatenation you can found.
 
-> ![info] You can search for `// TODO Step 2.2` to find out all the places you need to rewrite functions.
+> ![info] You can search for `// TODO Step 3.2` to find out all the places you need to rewrite functions.
 
 ### Checklist
  - [ ] I know the differences between `var` and `let`/`const` 
  - [ ] I know about template literals
  - [ ] I can write arrow functions
  - [ ] I know the value of `this` is not always as expected 
- - [ ] I refactored all `// TODO Step 2.2` that I found
+ - [ ] I refactored all `// TODO Step 3.2` that I found
  - [ ] The application still runs as usual 
 
 **![commit] commit step**
-
 
 topics: **map**, **forEach**, **filter**, ...
 
@@ -511,100 +657,16 @@ return dates
 [`Array.forEach`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/ForEach),
  [`Array.map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Map), [`Array.filter`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Filter) and [`Array.reduce`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)
 
-
 ### Checklist
  - [ ] I can do **functional programming** with javascript 
- - [ ] I refactored all `// TODO Step 2.3` that I found
+ - [ ] I refactored all `// TODO Step 3.3` that I found
 
 **![commit] commit step**
 
-
-## Step - NPM
-
-This step is about setting up a standard npm module containing a webpack application, this will be the project skeleton.
-
-**Why ?** Have a standardized NPM module and an easily runnable webpack application
-
-It will be easier to manage packages for instance we have `css boostrap`, but to use it we just copy paste the Javascript file within our folder.
-Just imagine if you want to update it, add a new library, etc. It's gonna be hardcore to maintain.
-
-First command to run is `npm init`, it gonna ask you a lot of things, you can answer as you like.
-Let's decrypt `scripts` part of generated package.json together:
-``` json
-{
-  "name": "Mem",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.html",
-  "directories": {},
-  "dependencies": {},
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Takima",
-  "license": "MIT"
-}
-```
-So what is the `test` label into the `scripts` path? It's a shortcut to all developper to run the test, they just have to run
-`npm run **test**` from the command line and the `echo \"Error: no test specified\" && exit 1` will be run. We gonna see later how to
-implement some test.
-First we can add the `start` shortcut to take back our npx command.
-
-> ![info] This is kinda a web standards to have a `npm run (start|test)` command, it's helpful because developpers don't have to carry what it's under the hood when they join a projet.
-
-So in the future you just have to `npm run start` to start your front-end.
-
-> ![info] You just created a NPM module, that is not different from any module in the central registry at
-[www.npmjs.com](https://www.npmjs.com/). Your NPM module relies on this json file, you can find the documentation
-for this file here: [docs.npmjs.com/files/package.json](https://docs.npmjs.com/files/package.json).
-
-> ![info] There are alternatives to npm, yarn for example is quite notorious and has very good performance:
-[yarnpkg.com](https://yarnpkg.com/en/).
-
-* set your package as private
-```javascript
-//package.json
-{
-  ...
-  "private": true,
-  ...
-}
-```
-> ![info] Making it private so we do not accidentally push to the central even if you need to be connected to it.
-
-Back to bootstrap and install it:
-`npm install bootstrap`
-
-> ![info] Everytime you want to manage your package use the `npm` command, don't edit the package.json yourself.
-
-So what's new into the `package.json` ?
-``` json
-  "dependencies": {
-    "bootstrap": "^4.3.1"
-  }
-```
-
-> ![question] What means the `^` symbol next to bootstrap?
-
-NPM downloaded the latest version and put in your package.json file, and you can discover the bootsrap folder
-within node_modules folder! 
-Within bootstrap folder there are 3 folders:
-* dist: generated bundle files
-* js:
-    * dist: generated bootstrat components
-    * src: source files
-* scss: scss files, we will see this later.
-
-In our case we just need the generated bundle for now,
-so we have to replace the previous bootstrap file to the node_modules one.
-`<link rel="stylesheet" href="../../styles/bootstrap.css" />` --> ` <link rel="stylesheet" href="../../../../node_modules/bootstrap/dist/css/bootstrap.css" />`
-
-So you don't have to carry a file by hand, you can just handle bootsrap with NPM.
+## Step 4 - Babel, transpilation
 
 
-## Step - babel
-
+###### TODO run npx babel
 All all things all good, our code start to look as something clean and modern... 
 However, there is still a major drawback: While virtually [all browsers can run ES5 code](http://kangax.github.io/compat-table/es5/),
  [not all web browser are compatible with ES6](http://kangax.github.io/compat-table/es6/) / ESNext (looking at you, Internet explorer and the other one).
@@ -788,8 +850,6 @@ module.exports = {
 [www.jetbrains.com/help/idea/using-webpack.html](https://www.jetbrains.com/help/idea/using-webpack.html).
 
 ### Step 1.3 - run webpack
-
-###### > ![warning] Do not forget to put the `node_modules` directory within `.gitignore`.
 
 Now let's configure how we run our application using webpack by defining 2 npm scripts:
 ```javascript

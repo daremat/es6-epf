@@ -14,7 +14,7 @@
             constructor() {
 
                 // gather parameters from URL
-                const params = parseUrl(window.location.hr);
+                const params = parseUrl(window.location.href);
 
                 // save player name & game ize
                 this._name = params.name;

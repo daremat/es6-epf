@@ -1,6 +1,6 @@
 (function() {
 
-    // TODO Step 2.1 create a class
+    // TODO Step 3.1 create a class
     /* class CardComponent constructor */
     function CardComponent(id) {
         // is this card flipped ?
@@ -14,7 +14,7 @@
         this._elt = document.getElementById('card-template').content.cloneNode(true).firstElementChild;
         this._imageElt = this._elt.querySelector('.card-wrapper');
         // TODO Step 1: Change images location to ./card/assets/***.png
-        // TODO Step 2.2: use template literals
+        // TODO Step 3.2: use template literals
         this._imageElt.querySelector('img.front-face').src = '../../assets/cards/card-' + this._id + '.png';
         this._imageElt.querySelector('img.back-face').src = '../../assets/cards/back.png';
     }

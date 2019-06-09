@@ -5,7 +5,7 @@
         }
     };
 
-    // TODO Step 2.1 create a class
+    // TODO Step 3.1 create a class
     /* class GameComponent constructor */
     function GameComponent() {
         // gather parameters from URL
@@ -35,18 +35,18 @@
 
     function render() {
         // fetch the cards configuration from the server
-        this.fetchConfig((function(config) { // TODO Step 2.2: use arrow function
+        this.fetchConfig((function(config) { // TODO Step 3.2: use arrow function
             this._config = config;
 
             // create a card out of the config
-            this._cards = []; // TODO Step 2.3: use Array.map()
+            this._cards = []; // TODO Step 3.3: use Array.map()
             for (var i in this._config.ids) {
                 this._cards[i] = new CardComponent(this._config.ids[i]);
             }
 
             this._boardElement = document.querySelector('.cards');
             
-            for (var i in this._cards) { // TODO Step 2.3: use Array.forEach()
+            for (var i in this._cards) { // TODO Step 3.3: use Array.forEach()
                 (function() {
                     var card = this._cards[i];
                     this._boardElement.appendChild(card.getElement());
@@ -61,11 +61,11 @@
     function start() {
         this._startTime = Date.now();
         var seconds = 0;
-        // TODO Step 2.2: use template literals
+        // TODO Step 3.2: use template literals
         document.querySelector('nav .navbar-title').textContent = 'Player: ' + this._name + '. Elapsed time: ' + seconds++;
 
-        setInterval(function() { // TODO Step 2.2: use arrow function
-            // TODO Step 2.2: use template literals
+        setInterval(function() { // TODO Step 3.2: use arrow function
+            // TODO Step 3.2: use template literals
             document.querySelector('nav .navbar-title').textContent = 'Player: ' + this._name + '. Elapsed time: ' + seconds++;
         }.bind(this), 1000);
     }
@@ -73,11 +73,11 @@
     function gotoScore() {
         var timeElapsedInSeconds = Math.floor((Date.now() - this._startTime )/1000);
 
-        setTimeout(function() {  // TODO Step 2.2: use arrow function.
+        setTimeout(function() {  // TODO Step 3.2: use arrow function.
             // TODO Step 1: replace with score.component location
-            // TODO Step 2.2: use template literals
+            // TODO Step 3.2: use template literals
             window.location = 'score.html?name=' + this._name + '&size=' + this._size + '&time=' + timeElapsedInSeconds;
-        }.bind(this), 750);    // TODO Step 2.2: Why bind(this)?
+        }.bind(this), 750);    // TODO Step 3.2: Why bind(this)?
     }
 
     function fetchConfig(cb) {
@@ -85,10 +85,10 @@
             ? new XMLHttpRequest()
             : new ActiveXObject('Microsoft.XMLHTTP');
 
-        // TODO Step 2.2 use template literals
+        // TODO Step 3.2 use template literals
         xhr.open('get', environment.api.host + '/board?size=' + this._size, true);
 
-        // TODO Step 2.2 use arrow function
+        // TODO Step 3.2 use arrow function
         xhr.onreadystatechange = function() {
             var status;
             var data;
@@ -143,7 +143,7 @@
 
                 // cards did not match
                 // wait a short amount of time before hiding both cards
-                // TODO Step 2.2 use arrow function
+                // TODO Step 3.2 use arrow function
                 setTimeout(function() {
                     // hide the cards
                     this._flippedCard.flip();
@@ -165,7 +165,7 @@
 
         var parts = query
             .split(delimiter);
-        // TODO Step 2.3: Use Array.map() & Array.reduce()
+        // TODO Step 3.3: Use Array.map() & Array.reduce()
         for (var i in parts) {
             var item = parts[i];
             var kv = item.split('=');

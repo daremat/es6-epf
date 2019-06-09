@@ -1,6 +1,6 @@
 (function() {
 
-    // TODO Step 2.1 create a class
+    // TODO Step 3.1 create a class
     /* class ScoreComponent constructor */
     function ScoreComponent() {
         var params = parseUrl();
@@ -26,7 +26,7 @@
 
         var parts = query
             .split(delimiter);
-        // TODO Step 2.3: Use Array.map() & Array.reduce()
+        // TODO Step 3.3: Use Array.map() & Array.reduce()
         for (var i in parts) {
             var item = parts[i];
             var kv = item.split('=');

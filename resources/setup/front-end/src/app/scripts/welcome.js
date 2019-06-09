@@ -1,6 +1,6 @@
 (function() {
 
-    // TODO Step 2.1 create a class
+    // TODO Step 3.1 create a class
     /* class WelcomeComponent constructor  */
     function WelcomeComponent() {
     }
@@ -11,7 +11,7 @@
     function render() {
         var form = document.querySelector('form.form-signin');
 
-        form.addEventListener('submit', function(event) {     // TODO Step 2.2: use arrow function
+        form.addEventListener('submit', function(event) {     // TODO Step 3.2: use arrow function
 
             event.preventDefault();
             if (form.checkValidity() === false) {
@@ -29,7 +29,7 @@
     }
 
     function _startGame(name, size) {
-        // TODO Step 2.2: use template literals
+        // TODO Step 3.2: use template literals
         window.location = './game.html?name=' + name + '&size=' + size;
     }
 
