@@ -667,13 +667,13 @@ return dates
 
 All all things all good, our code start to look as something clean and modern... 
 However, there is still a major drawback: While virtually [all browsers can run ES5 code](http://kangax.github.io/compat-table/es5/),
- [not all web browser are compatible with ES6](http://kangax.github.io/compat-table/es6/) / ESNext (looking at you, Internet explorer and the other one).
- So we gonna add a famous compiler to compile our code to ES5 Javascript.
- Let's bring in [babel js](https://babeljs.io) !
+[not all web browser are compatible with ES6](http://kangax.github.io/compat-table/es6/) / ESNext (looking at you, Internet explorer and the other one).
+So we gonna add a famous compiler to compile our code to ES5 Javascript.  
+Let's bring in [babel js](https://babeljs.io) !
 
-We can simply use it with the following command `npx babel src -d lib`
+We can simply use it with the following command `npx babel src -d lib`  
 Analyze together what did this command, first a `dist` folder has been generated and it contains all the Javascript files
-of our project.
+of our project.  
 If we check the `welcome.component.js`:
 ``` js
 (function () {
@@ -684,22 +684,22 @@ If we check the `welcome.component.js`:
   window.WelcomeComponent = class WelcomeComponent {
 ...
 ```
-nothing changes, that's not really inteded, because we still have our classes and old browsers don't know how to deal with it.
-Babel need instruction on how to compile code, so we are going to add a babel config file: `.babelrc` next to `package.json`.
+nothing changes, that's not really inteded, because we still have our classes and old browsers don't know how to deal with it.  
+Babel need instruction on how to compile code, so we are going to add a babel config file: `.babelrc` next to `package.json`.  
 ``` json
 {
   "presets": ["@babel/preset-env"]
 }
 ```
-You need to install the corresponding module to use it:
+You need to install the corresponding module to use it:  
 `npm install @babel/preset-env --save-dev`
 
 > ![question] What means the `@` symbol above?  
 
 > ![info] You can find more about `@babel/preset-env` on https://babeljs.io/docs/en/babel-preset-env
 
-Relaunch the previous command `npx babel src -d lib`.
-Check again the `welcome.component.js`:
+Relaunch the previous command `npx babel src -d lib`.  
+Check again the `welcome.component.js`:  
 ``` js
 "use strict";
 
