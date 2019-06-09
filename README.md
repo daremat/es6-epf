@@ -481,7 +481,7 @@ It will be easier to manage packages for instance we have `css boostrap`, but to
 Just imagine if you want to update it, add a new library, etc. It's gonna be hardcore to maintain.
 
 First command to run is `npm init`, it gonna ask you a lot of things, you can answer as you like.
-Let's decrypt the generate package.json together:
+Let's decrypt `scripts` part of generated package.json together:
 ``` json
 {
   "name": "Mem",
@@ -498,15 +498,12 @@ Let's decrypt the generate package.json together:
   "license": "MIT"
 }
 ```
-`dependencies` and `devDependencies`, this is where the new packages will be set up when you install a new one, dependencies will be also 
-package in the futur when you will serve a final version for instance, and devDependencies are only save for developpers, like npx might be installed 
-as dev dependencies.
-You can also see the `test` label into the `scripts` path. It's a shortcut to all developper to run the test, they just have to run
+So what is the `test` label into the `scripts` path? It's a shortcut to all developper to run the test, they just have to run
 `npm run **test**` from the command line and the `echo \"Error: no test specified\" && exit 1` will be run. We gonna see later how to
 implement some test.
 First we can add the `start` shortcut to take back our npx command.
 
-> ![info] This is kinda a web standards to have a `npm run start` as command to run the front-end throw.
+> ![info] This is kinda a web standards to have a `npm run (start|test)` command, it's helpful because developpers don't have to carry what it's under the hood when they join a projet.
 
 So in the future you just have to `npm run start` to start your front-end.
 
@@ -526,9 +523,37 @@ for this file here: [docs.npmjs.com/files/package.json](https://docs.npmjs.com/f
   ...
 }
 ```
-> ![info] Making it private so we do not accidentally push to the central (you will need to be connected to do so
+> ![info] Making it private so we do not accidentally push to the central even if you need to be connected to it.
 
-> ![question] Ok but what about bootstrap ?
+Back to bootstrap and install it:
+`npm install bootstrap`
+
+> ![info] Everytime you want to manage your package use the `npm` command, don't edit the package.json yourself.
+
+So what's new into the `package.json` ?
+``` json
+  "dependencies": {
+    "bootstrap": "^4.3.1"
+  }
+```
+
+> ![question] What means the `^` symbol next to bootstrap?
+
+NPM downloaded the latest version and put in your package.json file, and you can discover the bootsrap folder
+within node_modules folder! 
+Within bootstrap folder there are 3 folders:
+* dist: generated bundle files
+* js:
+    * dist: generated bootstrat components
+    * src: source files
+* scss: scss files, we will see this later.
+
+In our case we just need the generated bundle for now,
+so we have to replace the previous bootstrap file to the node_modules one.
+`<link rel="stylesheet" href="../../styles/bootstrap.css" />` --> ` <link rel="stylesheet" href="../../../../node_modules/bootstrap/dist/css/bootstrap.css" />`
+
+So you don't have to carry a file by hand, you can just handle bootsrap with NPM.
+
 
 ## Step - babel
 
@@ -537,14 +562,13 @@ However, there is still a major drawback: While virtually [all browsers can run 
  [not all web browser are compatible with ES6](http://kangax.github.io/compat-table/es6/) / ESNext (looking at you, Internet explorer and the other one).
  So we gonna add a famous compiler to build our code into one file and be able to deliver it to all the browsers !
 
- Let's start with [Babel](https://babeljs.io/)
 
-Do you remeber the NPM command we use before to install npx ? We gonna do the same with Babel.
-
-> ![info] You can find any library nowadays in NPM repository.
-
+Let's get back the NPM tool.
 First command to run:
 `npm install --save-dev @babel/core @babel/cli`
+
+
+> ![question] What means the `@` symbol above?
 
 As you can see there is many things here, first we have `--save-dev` 
 
