@@ -665,22 +665,91 @@ return dates
 
 ## Step 4 - Babel, transpilation
 
-
-###### TODO run npx babel
 All all things all good, our code start to look as something clean and modern... 
 However, there is still a major drawback: While virtually [all browsers can run ES5 code](http://kangax.github.io/compat-table/es5/),
  [not all web browser are compatible with ES6](http://kangax.github.io/compat-table/es6/) / ESNext (looking at you, Internet explorer and the other one).
- So we gonna add a famous compiler to build our code into one file and be able to deliver it to all the browsers !
+ So we gonna add a famous compiler to compile our code to ES5 Javascript.
+ Let's bring in [babel js](https://babeljs.io) !
 
+We can simply use it with the following command `npx babel src -d lib`
+Analyze together what did this command, first a `dist` folder has been generated and it contains all the Javascript files
+of our project.
+If we check the `welcome.component.js`:
+``` js
+(function () {
+  function _startGame(name, size) {
+    window.location = "../game/game.component.html?name=" + name + "&size=" + size;
+  }
 
-Let's get back the NPM tool.
-First command to run:
-`npm install --save-dev @babel/core @babel/cli`
+  window.WelcomeComponent = class WelcomeComponent {
+...
+```
+nothing changes, that's not really inteded, because we still have our classes and old browsers don't know how to deal with it.
+Babel need instruction on how to compile code, so we are going to add a babel config file: `.babelrc` next to `package.json`.
+``` json
+{
+  "presets": ["@babel/preset-env"]
+}
+```
+You need to install the corresponding module to use it:
+`npm install @babel/preset-env --save-dev`
 
+> ![question] What means the `@` symbol above?  
 
-> ![question] What means the `@` symbol above?
+> ![info] You can find more about `@babel/preset-env` on https://babeljs.io/docs/en/babel-preset-env
 
-As you can see there is many things here, first we have `--save-dev` 
+Relaunch the previous command `npx babel src -d lib`.
+Check again the `welcome.component.js`:
+``` js
+"use strict";
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+(function () {
+  function _startGame(name, size) {
+    window.location = "../game/game.component.html?name=" + name + "&size=" + size;
+  }
+
+  window.WelcomeComponent =
+  /*#__PURE__*/
+  function () {
+    function WelcomeComponent() {
+      _classCallCheck(this, WelcomeComponent);
+    }
+
+    _createClass(WelcomeComponent, [{
+      key: "render",
+      value: function render() {
+        var form = document.querySelector("form.form-signin");
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+...
+```
+and you can see all the things babel has done to convert your ES6 class to an old style ES5 code,
+you can recover the function style to create a class for instance as you saw in the beginning of this tutorial.
+
+But we can do better things with NPM, we can add a new common command: `npm run build` which will build our Javascript files with Babel.
+It's gonna be also better if we let babel take care of this part without npx.
+So we need to install babel cli (command line interpreter) and adding it to the `package.json`.
+
+``` shell
+npm install --save-dev @babel/core @babel/cli
+```
+
+then edit your `package.json` with the new build command:
+``` json
+"scripts": {
+  "build": "./node_modules/.bin/babel src -d lib",
+  "test": "echo \"Error: no test specified\" && exit 1"
+}
+```
+As you can see we don't call babel directly because we didn't install babel globally with npm.
+This is better on this way for futur developper on the project, when they will came they just have to run `npm install` and
+it will install all `devDependencies` and `dependencies` from the `package.json`, so babel will be also installed.
 
 ### Step - PhantomJS
 test parseUrl with arrow functions => crash!
