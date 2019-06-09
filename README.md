@@ -752,7 +752,7 @@ This is better on this way for futur developper on the project, when they will c
 it will install all `devDependencies` and `dependencies` from the `package.json`, so babel will be also installed and they also have the right version !
 
 
-#### File produced:
+#### Files produced:
 ```
 meme-ory/front-end/.babelrc
 meme-ory/front-end/lib/
