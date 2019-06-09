@@ -151,9 +151,9 @@ Now, navigate to [localhost:8080/src](http://localhost:8080/src): this should se
 
 #### Files produced:
 ```
-meme-ory/src/app/scripts/...
-meme-ory/src/app/styles/...
-meme-ory/src/app/views/...
+meme-ory/front-end/src/app/scripts/...
+meme-ory/front-end/src/app/styles/...
+meme-ory/front-end/src/app/views/...
 ```
 
 ### Checklist
@@ -684,7 +684,7 @@ If we check the `welcome.component.js`:
   window.WelcomeComponent = class WelcomeComponent {
 ...
 ```
-nothing changes, that's not really inteded, because we still have our classes and old browsers don't know how to deal with it.  
+nothing changes, that's not really intended, because we still have our classes and old browsers don't know how to deal with it.  
 Babel need instruction on how to compile code, so we are going to add a babel config file: `.babelrc` next to `package.json`.  
 ``` json
 {
@@ -733,7 +733,7 @@ and you can see all the things babel has done to convert your ES6 class to an ol
 you can recover the function style to create a class for instance as you saw in the beginning of this tutorial.
 
 But we can do better things with NPM, we can add a new common command: `npm run build` which will build our Javascript files with Babel.
-It's gonna be also better if we let babel take care of this part without npx.
+It's gonna be also better if we let babel takes care of this part without npx.
 So we need to install babel cli (command line interpreter) and adding it to the `package.json`.
 
 ``` shell
@@ -749,7 +749,20 @@ then edit your `package.json` with the new build command:
 ```
 As you can see we don't call babel directly because we didn't install babel globally with npm.
 This is better on this way for futur developper on the project, when they will came they just have to run `npm install` and
-it will install all `devDependencies` and `dependencies` from the `package.json`, so babel will be also installed.
+it will install all `devDependencies` and `dependencies` from the `package.json`, so babel will be also installed and they also have the right version !
+
+
+#### File produced:
+```
+meme-ory/front-end/.babelrc
+meme-ory/front-end/lib/
+```
+
+### Checklist
+ - [ ] I know how to compile my ES6 code to ES5 one with babel
+ - [ ] I understand the importance to be compatible with old browsers
+ - [ ] I have generated all my ES6 component to ES5 ones
+ - [ ] I can run babel command with `npm run build`
 
 ### Step - PhantomJS
 test parseUrl with arrow functions => crash!
