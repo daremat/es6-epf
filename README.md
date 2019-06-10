@@ -1168,10 +1168,22 @@ You have to convert the other component the same way, and have fun to create you
  - [ ] I know the differences between `css-loader`, `style-loader` and `sass-loader`.
  - [ ] I have converted all my css files to sass files.
  - [ ] I used the nesting sass feature on my components
+ - [ ] All my css files are deleted
 
 ## Step 7.2 Add bootstrap with Webpack
 
+Now we have implemented everything to handle style files, we can add simply bootstrap with:  
+`@import "~bootstrap/scss/bootstrap";`
 
+> ![question] What means `~` symbol above ?
+
+But where to import it ? We won't import it within all our components.
+Create an `app.scss` file next to `main.js` file and add `import './app.scss';` inside `main.js`,
+then last thing to do is to add the import of bootstrat within `app.scss`.
+
+### Checklist
+ - [ ] I know what means `~` symbol.
+ - [ ] I have only one import of bootstrap and my style is not broken.
 
 
 
