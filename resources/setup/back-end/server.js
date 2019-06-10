@@ -19,6 +19,8 @@ const scores = [];
 scores.push({name: 'Alexis', time: _.random(999, true), size: _.random(0, 12)});
 scores.push({name: 'Nicolas', time: _.random(999, true), size: _.random(0, 12)});
 
+// used to parse body request
+app.use(express.json())
 
 app.use(cors());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
@@ -66,25 +68,29 @@ app.get('/board', (req, res) => {
  *    post:
  *      summary: Post score for a player
  *      description: Save player's score on the server.
+ *      consumes:
+ *        - application/json
  *      parameters:
- *        - in: query
- *          name: size
- *          schema:
- *            type: integer
+ *        - in: body
+ *          name: score
  *          required: true
- *          description: "Size (ie: amount of card) of the generated board."
- *        - in: query
- *          name: name
+ *          description: The score to create.
  *          schema:
- *            type: string
- *          required: true
- *          description: "Name of the player."
- *        - in: query
- *          name: time
- *          schema:
- *            type: float
- *          required: true
- *          description: "Time player spend to resolve the game."
+ *            type: object
+ *            required:
+ *              - name
+ *              - time
+ *              - size
+ *            properties:
+ *              name:
+ *                type: string
+ *                example: Toast
+ *              time:
+ *                type: number
+ *                example: 5.12
+ *              size:
+ *                type: integer
+ *                example: 12
  *      responses:
  *        - '201':
  *          description: Score saved
@@ -100,9 +106,9 @@ app.get('/board', (req, res) => {
  * @name player name
  */
 app.post('/scores', (req, res) => {
-    const size = req.query.size && parseInt(req.query.size);
-    const time = req.query.time && (req.query.time);
-    const name = req.query.name;
+    const size = req.body.size && parseInt(req.body.size);
+    const time = req.body.time && (req.body.time);
+    const name = req.body.name;
 
     if (!size || !name || !time) {
         return res.status(400).send('Missing parameter, size, name and time are required');
@@ -136,6 +142,8 @@ app.post('/scores', (req, res) => {
  *          description: "Name of the player."
  *      responses:
  *        - '200':
+ *          content:
+ *            application/json:
  *          description: List returned
  *        - '400':
  *          description: One paramater was not well set.
