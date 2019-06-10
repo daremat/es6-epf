@@ -1192,6 +1192,65 @@ To be sure you have only one import of bootstrap, make sure you have remove all
 
 
 
+## Step 8 Features
+
+### Step 8.1 LocalStorage
+
+Our goal is to preserve our game even if we exist the browser or someone reload the page.
+You have to use the following library to help you to communicate with the LocalStorage.  
+
+
+> With web storage, web applications can store data locally within the user's browser.
+> Before HTML5, application data had to be stored in cookies, included in every server request. Web storage is more secure, and large amounts of data can be stored locally, without affecting website performance.  
+> Unlike cookies, the storage limit is far larger (at least 5MB) and information is never transferred to the server.  
+>Web storage is per origin (per domain and protocol). All pages, from one origin, can store and access the same data.  
+> https://www.w3schools.com/html/html5_webstorage.asp
+
+For each step of the player you have to store the current state into the storage,
+and when come into the website you have to load the store from the storage if it is present.
+
+### Step 8.2 Multiplayer scores
+
+If you checked the [server Swagger](http://localhost:8081/api-docs/) maybe you have seen two endpoints that are not used in the tutorial:
+``` js
+[POST]  /scores   Save score on the server.
+[GET]   /scores   Return a json of all scores saved
+```
+
+Your goal is to post the player score at the end of the game and to fetch 
+all scores saved to print them in a beautiful way on the almost empty score page.
+
+Example to fetch all scores:
+```javascript
+//Fetch API
+  const scores = await fetch(`${environment.api.host}/scores`,{method: 'GET'})
+                      .then(response => response.json());
+```
+
+Example to post a score:
+```javascript
+//Fetch API
+  await fetch('http://localhost:8081/scores', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({name: 'Toast', time: 2, size: 3})
+  });
+```
+
+You can learn more about the difference methods available on the web:
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
+
+
+
+
+
+
+
+
+
 * add webpack static loaders to the project
 ```sh
 npm install --save-dev style-loader css-loader url-loader file-loader
