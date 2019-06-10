@@ -1053,8 +1053,6 @@ module.exports = env => {
 
 ```
 
-
-
 ### Checklist
  - [ ] I know how to setup a npm module
  - [ ] I know npm package basis
@@ -1062,14 +1060,120 @@ module.exports = env => {
 
 [troubleshoot](#troubleshoot)
 
-## Step 2 - Style the application
-> semantic-ui, webpack loader, sass
+## Step 7 - Style the application
 
-This step is about adding some styling to the application: semantic-ui and sass support.
+This step is about adding better way to handle style files with the help of sass and webpack.
 
-**Why ?** Have some initial styling and support compiled css.
+**Why ?** Use the power of Webpack previously installed and do beautiful things.
 
-**At the end, we should have a semantic-ui app embedding sass custom styling.**
+After adding sass files we gonna implement bootstrap with it.
+
+## Step 7.1 Add Sass
+
+First things to use sass files is to tell Webpack how to load sass files, we saw previously
+we can do this with loader.  
+Therefore install a sass loader with npm:  
+`npm install autoprefixer sass-loader style-loader css-loader --save-dev`
+
+> ![question] What are the objectives of `sass-loader`, `style-loader` and `css-loader` ?
+
+Then add them to the webpack.config.js:
+``` js
+module: {
+  rules: [
+      {
+          test: /\.(scss|css)$/,
+          use: [
+              'style-loader',
+              'css-loader',
+              'sass-loader'
+          ]
+      },
+      ...
+  ]
+  ...
+}
+```
+
+Before deleting all css files we gonna add one sass file which will contain our palette color.  
+`./src/app/style/_colors.scss`  
+``` sass
+/* https://flatuicolors.com/palette/defo */
+$primary: #8e44ad;
+$primary-light: #9b59b6;
+$primary-txt: #ecf0f1;
+$primary-txt-shadow: #95a5a6;
+$primary-background: #34495e;
+```
+Don't hesitate to custom it.  
+
+> ![info] If you need help to create your own palette color you can help you with famous ones: https://flatuicolors.com https://material.io/tools/color
+
+How to use my palette now?  
+Instead of using a css file for a component create a sass file, for instance for welcome component:  :
+```
+├── welcome/
+│   ├── welcome.component.js
+│   ├── welcome.html
+│   └── welcome.scss
+```
+And import `welcome.scss` within the js file:  
+``` js
+import './welcome.scss';
+```
+Then to import your colors inside your `welcome.scss` file you have to write:  
+``` sass
+@import '../../styles/colors.scss';
+```
+Finally in your `welcome.scss` you can use the variables from `colors.scss`.  
+
+Now you can move all content of your css files into new sass files for each components!  
+
+Let's use a bit more of sass feature! In our card style we have many times `.card-cmp .card-wrapper`, this is kinda boring to write.
+Sass bring us the nesting feature, instead of writing the old way:
+``` sass
+.card-cmp {
+  position: relative;
+  display: inline-block !important;
+  width: 14%;
+}
+
+.card-cmp .card-wrapper {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: all .5s;
+}
+...
+```
+we can write:
+``` sass
+.card-cmp {
+  position: relative;
+  display: inline-block !important;
+
+  width: 14%;
+
+  .card-wrapper {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: all .5s;
+  }
+}
+...
+``` and so on.
+
+You have to convert the other component the same way, and have fun to create your own style !
+
+### Checklist
+ - [ ] I know the differences between `css-loader`, `style-loader` and `sass-loader`.
+ - [ ] I have converted all my css files to sass files.
+ - [ ] I used the nesting sass feature on my components
+
+## Step 7.2 Add bootstrap with Webpack
+
+
+
+
 
 * add webpack static loaders to the project
 ```sh
