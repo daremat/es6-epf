@@ -1107,10 +1107,10 @@ $primary-background: #34495e;
 ```
 Don't hesitate to custom it.  
 
-> ![info] If you need help to create your own palette color you can help you with famous ones: https://flatuicolors.com https://material.io/tools/color
+> ![info] If you need help to create your own palette colors you can help you with famous ones: https://flatuicolors.com https://material.io/tools/color
 
 How to use my palette now?  
-Instead of using a css file for a component create a sass file, for instance for welcome component:  :
+Instead of using a css file for a component create a sass file, for instance for welcome component:  
 ```
 ├── welcome/
 │   ├── welcome.component.js
@@ -1160,8 +1160,8 @@ we can write:
   }
 }
 ...
-``` and so on.
-
+```
+and so on.
 You have to convert the other component the same way, and have fun to create your own style !
 
 ### Checklist
