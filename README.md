@@ -1181,6 +1181,9 @@ But where to import it ? We won't import it within all our components.
 Create an `app.scss` file next to `main.js` file and add `import './app.scss';` inside `main.js`,
 then last thing to do is to add the import of bootstrat within `app.scss`.
 
+To be sure you have only one import of bootstrap, make sure you have remove all  
+`<link rel="stylesheet" href="../../../../node_modules/bootstrap/dist/css/bootstrap.css">` lines.
+
 ### Checklist
  - [ ] I know what means `~` symbol.
  - [ ] I have only one import of bootstrap and my style is not broken.
