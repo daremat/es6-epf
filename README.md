@@ -1164,6 +1164,8 @@ we can write:
 and so on.
 You have to convert the other component the same way, and have fun to create your own style !
 
+> ![info] You can find much more sass feature from the docs: https://sass-lang.com/guide
+
 ### Checklist
  - [ ] I know the differences between `css-loader`, `style-loader` and `sass-loader`.
  - [ ] I have converted all my css files to sass files.
