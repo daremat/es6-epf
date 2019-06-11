@@ -145,7 +145,7 @@ Now, navigate to [localhost:8080/src](http://localhost:8080/src): this should se
 
 > ![tip] **Did you know**? Your web browser can tell you a lot on what happens behind the scene (javascript execution, stack-traces, network, errors, ...). Press F12 (firefox, chrome, chromium) to access the developper tools. You will need it all this tutorial long.
 
-> ![question] While going through the 3 views of the application, how many files did your browser download in total? What was the total loading time? 
+> ![question] While going through the 3 views of the application, how many files did your browser download in total? What was the total size of transfered data? 
 
 #### Files produced:
 ```
@@ -187,8 +187,8 @@ At the end, our application have a total of 4 components:
 
 For the beginning, let's start together with `WelcomeComponent`:
  - create a folder named `components/welcome`
- - move **[`scripts/welcome.js`](resources/setup/front-end/src/app/scripts/welcome.js) => `components/welcome.component.js`**
- - move **[`views/welcome.html`](resources/setup/front-end/src/app/views/welcome.html) => `components/welcome.component.html`**
+ - move **[`scripts/welcome.js`](resources/setup/front-end/src/app/scripts/welcome.js) => `components/welcome/welcome.component.js`**
+ - move **[`views/welcome.html`](resources/setup/front-end/src/app/views/welcome.html) => `components/welcome/welcome.component.html`**
  - from **[`styles/style.css`](resources/setup/front-end/src/app/styles/style.css)**, move all needed classes for `WelcomeComponent` to **`components/welcome.component.css`**
  - open `components/welcome.component.html`, and update links toward CSS & JS:
    ```html
@@ -221,7 +221,7 @@ For the beginning, let's start together with `WelcomeComponent`:
    </html>
    ```
 
- - open `components/welcome.component.js`, and replace link toward `GameComponent`:
+ - open `components/welcome/welcome.component.js`, and replace link toward `GameComponent`:
    ```javascript
    window.location = './game.html?name=' + name + '&size=' + size;
    ```
@@ -231,7 +231,7 @@ For the beginning, let's start together with `WelcomeComponent`:
    ```
    > ![info] In javascript we can use quotes (`'`) and double quotes (`""`) independently. However, using simple quotes is a lot more common practise. 
 
- - navigate to [http://localhost:8080/app/components/welcome/welcome.component.html](http://localhost:8080/app/components/welcome/welcome.component.html): The welcome page should look and behave as usual.
+ - navigate to [http://localhost:8080/src/app/components/welcome/welcome.component.html](http://localhost:8080/app/components/welcome/welcome.component.html): The welcome page should look and behave as usual.
 
 > ![info] Component oriented architecture is not only about file structure. 
 The most important part is: a component should be **contained** (all required code at the same place), **standalone** (few or no external dependencies) and **reusable**. 
