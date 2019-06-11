@@ -581,6 +581,7 @@ Open `game.component.js`, and look at the `gotoScore()` method:
 function gotoScore() {
     var now = Date.now();
     var timeElapsedInSeconds = Math.floor((now - this._startTime ) / 1000);
+    clearInterval(this._timer);
 
     setTimeout(function() {
             window.location = '../score/score.component.html?name=' + this._name + '&size=' + this._size + '&time=' + timeElapsedInSeconds;
@@ -589,7 +590,7 @@ function gotoScore() {
 ```
 This methods waits 750ms before redirecting to the `ScoreComponent`.
 Here is a bit of work to do: 
- - Since ES6 introduced `let` and `const`, usage of `var` is deprecated. Here, you need to replace both `var` by `const`.
+ - Since ES6 introduced `let` and `const`, usage of `var` is deprecated. Here, you need to replace `var` by both `let` and `const`.
    > ![question] What are the differences between `var` and `let`;
 
  - Concatenate strings is not something we should enjoy in any language. Fortunately, ES6 offers an alternative for that, named **template litterals**.  
@@ -1121,15 +1122,15 @@ Let's get started!
 - We should give our components a way to display their respective HTML and CSS:  
     - copy file [`resources/component/component.js`](resources/component/component.js) into your `utils/` folder.
         It defines a `class Component {}` with the following methods:
-          - `getTemplate()`: return the template associated with this component.
-          - `render()`: attach the component's template to the document's DOM.
-    - let your `XXXComponent` classes extend the `Component` class defined above
-    - call `super()\ constructor with a name. This name will be used by `Component` to create a tag `<name>`
+          - `getTemplate()`: returns the template associated with this component.
+          - `render()`: attaches the component's template to the document's DOM.
+    - let your `XXXComponent` classes extend the `Component` class defined above.
+    - call `super()` constructor with a name. This name will be used by `Component` to create a tag `<name>`
     - make all `xxx.component.js` import its own html.
         ```javascript
         import template from 'xxx.component.html';
         ```
-     It can the return this template in the `getTemplate()` method.
+     It can then returns this template in the `getTemplate()` method.
     - make all `xxx.component.js` import its own css.
         ```javascript
         import 'xxx.component.css';
@@ -1195,6 +1196,7 @@ Let's get started!
         .register('score', ScoreComponent);
     ``` 
     The code above tells the router to load `GameComponent` and `ScoreComponent` when respectively paths `game` and `score` are fetched.
+    > ![info] We do not give `WelcomeComponent` a path, because we want it to be loaded at the root of our application.
     
      - Go to `welcome.component.js`, and change the function `_startGame` with following path:
         ```javascript
@@ -1213,7 +1215,7 @@ Let's get started!
         }
 
 Phew, that was tough! 
-At the end of this step, you should be able to play the game as usual, and the 3 components should render without any errors  
+At the end of this step, you should be able to play the game as usual, and the 3 components should render without any errors.
  
 > ![question] Play the whole game with `size=2`. While going through the 3 views of the application, how many files did your browser download in total? What was the total size of transfered data? 
 
