@@ -663,7 +663,54 @@ return dates
 
 **![commit] commit step**
 
-## Step 4 - Babel, transpilation
+## Step 4 - Promises - Async/await
+
+Let's enjoy an other feature of ES6, Promises to fight against the callback hell !
+Dive into the game component and into the `fetchConfig` method.
+The method contains the old way to do an Ajax method, we gonna keep only the method argument `cb` of the method
+and the endpoint used to get the config: `environment.api.host${/board?size=}${this._size}`
+
+Yes the other part of this function is tough to read and we want something more readable.
+
+Below it's how to replace all code of the `fetchConfig` method.
+```js
+return fetch(`${environment.api.host}/board?size${this._size}`, {method: 'GET'})
+        .then(response => response.json())
+        .catch(error => console.log('Fetch config error', error));
+```
+
+> [question] What are the advantages of Promises?
+
+Lighter right?
+But the `cb` argument is missing, instead of calling it we are returning a Promise, so how to handle it in our
+`init` method ?
+We gonna use an other (better in some cases) way to handle async call.
+The async, await way, first you have to declare your method in async way:
+```js
+async fetchConfig() {
+    return fetch(`${environment.api.host}/board?size${this._size}`, {
+      method: "GET"
+    })
+      .then(response => response.json())
+      .catch(error => console.log("Fetch config error", error));
+  }
+```
+And recover the config in the `init` method:
+```js
+const config = await fetchConfig();
+```
+> ![danger] We cannot call an `async` method from a non `async` method, if you want to call `fetchConfig` from `init` method you also have to convert the `init`
+to a async one. 
+
+### Checklist
+  - [ ] I converted the old Ajax request with Fetch Api.
+  - [ ] I know how to use a promise.
+  - [ ] I know how to use async/await.
+  - [ ] My game is still running as expected.
+
+**![commit] commit step**
+
+## Step 5 - Babel, transpilation
 
 All all things all good, our code start to look as something clean and modern... 
 
@@ -731,7 +778,7 @@ Let's get one step ahead with another powerful tool: **Webpack**
 
 **![commit] commit step**
 
-## Step 5 - Webpack & imports
+## Step 6 - Webpack & imports
 
 Did you remember that function at the bottom of `game.component.js`?
 ```javascript
@@ -745,7 +792,7 @@ It would be a great idea to define it once for all, and import it from both `gam
 
 **That's where [ES6 modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) comes in!**  
 
-### Step 5.1 - import, export
+### Step 6.1 - import, export
 
 In this step, we will create a new `main.js` file, to ensure `parseUrl` function works properly once imported. 
  - Create a new `meme-ory/src/utils/utils.js` file, and paste the `parseUrl` function as follows:
@@ -809,7 +856,7 @@ meme-ory/front-end/src/main.js
 
 **![commit] commit step**
 
-### Step 5.2 - The bundler
+### Step 6.2 - The bundler
 topics: **webpack**
 
 Bundlers have several use cases:
@@ -891,7 +938,7 @@ In this step, **[Webpack](https://webpack.js.org/)** will be a bundler of choice
 
 > [info] Only the files that are imported by `main.js` are part of the bundle.
 
-> ![tip] Did you notice your browser automatically live-reload each time you change `main.js` or `util.js`?
+> ![tip] Did you notice your browser automatically live-reload each time you change `main.js` or `utils.js`?
 
 > ![info] Where did the `dist/` folder go? In fact, webpack is able to keep everything in memory, to transpile and serve your files as fast as possible.
 
@@ -907,7 +954,7 @@ meme-ory/front-end/webpack.config.js
 
 **![commit] commit step**
 
-### Step 5.3 - The source maps
+### Step 6.3 - The source maps
 
 Did you get into `bundle.js`? Did you managed to locate where your sources are? Now, imagine you have to debug your `parseUrl` function:
  - put a `debugger` statement at the first line of `parseUrl`:
@@ -950,7 +997,7 @@ In this step, before leaving, lets enable another webpack feature to produce **s
 
 **![commit] commit step**
 
-## Step 6 - SPA
+## Step 7 - SPA
 
 At the moment, webpack does not care of our components. As a result, `game.component.js`, `welcome.component.js`, `card.component.js` and `score.component.js` are all ignored.
 Now, we need to wire-them up through a bunch of `import` so they are part of the bundle.
@@ -1138,7 +1185,7 @@ meme-ory/front-end/src/app/components/game/card/card.component.html
 
 ### Checklist
  - [ ] My application is now an SPA.
- - [ ] I left no unresolved `// TODO Step 6` in my code
+ - [ ] I left no unresolved `// TODO Step 7` in my code
  - [ ] My application runs as usual
  - [ ] All my HTML, JS and CSS code is now **bundled** within a single js file
 
@@ -1298,6 +1345,18 @@ You have to use the following library [https://github.com/localForage/localForag
 For each step of the player you have to store the current state (which card is flipped, wich one is not, time elapsed, ...) into the storage,
 and when come into the website you have to load the store from the storage if it is present.
 
+Use the Promise style with the LocalForage library:
+``` js
+localforage.setItem('key', 'value').then(() => {
+  return localforage.getItem('key');
+}).then((value) => {
+  // we got our value
+}).catch((err) => {
+  // we got an error
+});
+```
+
+
 ### Step 8.2 Multiplayer scores
 
 If you checked the [Back-end's api docs](http://localhost:8081/api-docs/) maybe you have seen two endpoints that are not used in the tutorial:
@@ -1312,7 +1371,7 @@ all scores saved to print them in a beautiful way on the score page.
 Example to fetch all scores:
 ```javascript
 //Fetch API
-  const scores = await fetch(`${environment.api.host}/scores`,{method: 'GET'})
+const scores = await fetch(`${environment.api.host}/scores`, {method: 'GET'})
                       .then(response => response.json());
 ```
 
