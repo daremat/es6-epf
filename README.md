@@ -788,7 +788,7 @@ Let's get one step ahead with another powerful tool: **Webpack**
 
 ## Step 6 - Webpack & imports
 
-Did you remember that function at the bottom of `game.component.js`?
+Do you remember the function at the bottom of `game.component.js`?
 ```javascript
 function parseUrl() {
     // ...
@@ -796,7 +796,7 @@ function parseUrl() {
 ```
 Its purpose is to take all the parameters found in the URL (`window.location`), so the component can load them.
 If you remember, this function is also copy-pasted at the bottom of `score.component.js`. 
-It would be a great idea to define it once for all, and import it from both `game.component.js` & `score.component.js`.
+It would be a great idea to define it once for all, and import it to `game.component.js` & `score.component.js`.
 
 **That's where [ES6 modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) comes in!**  
 
@@ -812,14 +812,14 @@ In this step, we will create a new `main.js` file, to ensure `parseUrl` function
    > ![info] The `export` keyword means the symbol `parseUrl` will be public, and can be imported by other files.
  - Remove `function parseUrl()` from `game.component.js`, and instead, write the following at the beginning of the file:
    ```javascript
-   import {parseUrl} from '../../utils/utils';
+   import { parseUrl } from '../../utils/utils';
    ```
    > ![info] When a file contains at least one `import` or one `export`, it is automatically considered as an ES6 module. 
    All the symbols defined within that file won't be part of the global scope, and will be encapsulated in that module.
  - Create a new `meme-ory/src/main.js` file, that make use of `parseUrl`: 
     ```javascript
     // meme-ory/src/main.js
-    import { parseUrl } from './app/utils/utils';
+    import { parseUrl } from './utils/utils';
     
     const parameters = parseUrl();
     
@@ -850,7 +850,7 @@ In this step, we will create a new `main.js` file, to ensure `parseUrl` function
 That's right: even ES6 defines `import` and `export`, and even your browser is up to date, it is not able to execute this statement; 
 And, guess what? Transpilers like Babel will be **of no help**.
 
-In fact, by no mean a browser could be able to import synchronously a file, that is located on a distant server.
+In fact, by no, it means a browser could be able to import synchronously a file, that is located on a distant server.
 For this purpose, it is mandatory to use other tools called **Bundlers**.
 
 ### Produced files
@@ -875,7 +875,7 @@ Bundlers have several use cases:
 
 In this step, **[Webpack](https://webpack.js.org/)** will be a bundler of choice:
  - it is configurable with plugins
- - it offers a development server with code **live-reload**
+ - it offers a development server with **live-reload**
  - can be configured with **loaders** to transform your source code. 
  - ... and much more
 
@@ -896,46 +896,49 @@ In this step, **[Webpack](https://webpack.js.org/)** will be a bundler of choice
       }
     }
     ```
+
+
 - create `webpack.config.js` file: 
     ```javascript
-    {
-        const path = require('path');
-        const HtmlWebpackPlugin = require('html-webpack-plugin');
-        
-        module.exports = {
-            watch: false,
-            mode: 'development',
-            entry: './src/main.js',
-            plugins: [
-                new HtmlWebpackPlugin({
-                    filename: 'index.html',
-                    template: './src/index.html'
-                }),
-            ],
-            output: {
-                path: path.resolve(__dirname, 'dist'),
-                filename: 'bundle.js'
-            },
-            module: {
-                rules: [
-                    {
-                        test: /\.(png|svg|jpg|gif|woff|woff2|eot|ttf|otf)$/,
-                        use: [
-                            'file-loader'
-                        ]
-                    },
-                    {
-                        test: /\.js$/,
-                        use: 'babel-loader',
-                        exclude: /node_modules/
-                    }
-                ]
-            }
-        };
-    }
+    const path = require('path');
+    const HtmlWebpackPlugin = require('html-webpack-plugin');
+    
+    module.exports = {
+        watch: false,
+        mode: 'development',
+        entry: './src/main.js',
+        plugins: [
+            new HtmlWebpackPlugin({
+                filename: 'index.html',
+                template: './src/index.html'
+            }),
+        ],
+        output: {
+            path: path.resolve(__dirname, 'dist'),
+            filename: 'bundle.js'
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.(png|svg|jpg|gif|woff|woff2|eot|ttf|otf)$/,
+                    use: [
+                        'file-loader'
+                    ]
+                },
+                {
+                    test: /\.js$/,
+                    use: 'babel-loader',
+                    exclude: /node_modules/
+                }
+            ]
+        }
+    };
     ```
-- as you can see, our webpack configuration defines `./src/main.js` as the single entrypoint.
-  That means, at the moment, only `main.js` and `index.html` gets transpiled and are part of our application.
+- as you can see our webpack configuration defines `./src/main.js` as the single entrypoint.
+  That means, only `main.js`, `utils.js` and `index.html` will be transpiled and will be part of our application.
+
+> ![question] why the `utils.js` will be also transpiled?
+
   Run the application: 
   ```bash
   >$ npm start
@@ -947,6 +950,11 @@ In this step, **[Webpack](https://webpack.js.org/)** will be a bundler of choice
   
   Look at the source of `index.html` in your web browser: 
   file `main.js` is not found (you can remove it from `index.html`), but instead a file `bundle.js` is served and contains all your source code ![tadaa]. 
+
+
+> ![question] What does the `webpack --config webpack.config.js` do ?
+
+> ![question] What does the `webpack-dev-server` do ?
 
 > [info] Only the files that are imported by `main.js` are part of the bundle.
 
@@ -1017,7 +1025,7 @@ In this step, before leaving, lets enable another webpack feature to produce **s
  - press F5 on your web browser: See the debugger is now stopped on some
 > ![info] Sourcemap can be separate files `main.js.map`, or inlined directly inside the transpiled source code. 
 
-> ![warning] Never produce sourcemaps when going production. Otherwise, not only you produce an unnecessary bug bundle, you give your clients the key to reverse-engeener your application.   
+> ![warning] Never produce sourcemaps when you are going in production. Otherwise, not only you produce an unnecessary bug bundle, you give your clients the key to reverse engineering your application.   
 
 > ![info] You can produce sourcemaps for any language of the web (javascript, typescript, css, coffescript, ...).
 
@@ -1049,21 +1057,21 @@ Let's summarize what we have at the moment:
 One big question still remains unanswered: 
 **How to write imports between components, JS, HTML & CSS so that everything is part of the bundle?**
  
-The challenge of this step is to transform our current components so that our application becames a **Single Page Application** (*SPA*). 
+The challenge of this step is to transform our current components so that our application becomes a **Single Page Application** (*SPA*). 
 
 Here are the core principles of an *SPA*:
  - Our application have a shell (ie: the common navigation controls).
- - There is a unique **Single HTML page** (`index.html`), loaded once, that displays the shell 
+ - There is a unique **Single HTML page** (`index.html`), loaded once, that displays the shell.
  - `index.html` loads some javascript. 
  - The application has a **router**
- - The router listens to URL changes, and patches the page to show the component that matches the current URL
- - The application is then **driven by JS not HTML**
+ - The router listens to URL changes and patches the page to show the component that matches the current URL.
+ - The application is then **driven by JS not HTML**.
  
 In other words, it's up to the JS in place to display its associated HTML template, not the HTML to load its javascript.
 ![single_page]
 
 Let's get started!
-- To begin with, copy the file [`resources/router/router.js`](resources/router/router.js) onto your `utils` folder.
+- To begin with, copy the file [`resources/router/router.js`](resources/router/router.js) into your `utils` folder.
     This file declares the router that will display components according to the current URL.
     > ![info] As you can see with router's `_renderComponent` method, the router will call any `Component.init()` method if it exists.
 
