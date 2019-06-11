@@ -49,7 +49,7 @@ In this module, we will cover the following topics:
 
 #### Prerequisites
 
- - **nodejs** and **npm** installed (NodeJS 6+)
+ - Have **nodejs** and **npm** installed (NodeJS 6+)
     ```sh
    $ node -v
    v9.11.0 ### at least
@@ -59,11 +59,11 @@ In this module, we will cover the following topics:
    ```
    > ![tip] __Pro tip__: NVM is a very useful tool if you want to manage different versions of node at the same time.
 Check it out at [github.com/creationix/nvm](https://github.com/creationix/nvm)
- - web browser that offers good tools for web developers
+ - Have a web browser that offers good tools for web developers
  
    > ![tip] __Pro tip__: Both Google Chrome and [Chromium](https://download-chromium.appspot.com/) surpasses Firefox & other web browsers in term of debugging capabilities (HTML, JS, CSS, ...).
    I recommend to install one of those right now, and prefer using it whenever you have to develop web applications.  
- - [`npx`](https://www.npmjs.com/package/npx) installed globally
+ - Have [`npx`](https://www.npmjs.com/package/npx) installed globally
  ```sh
  npm install -g npx
  ```

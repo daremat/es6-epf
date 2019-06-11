@@ -15,7 +15,7 @@ export class Component {
     }
 
     /**
-     * Called by the Component constructr to create an element out of the component's HTML.
+     * Called by the Component constructor to create an element out of the component's HTML.
      * You MUST override this method in your component subclasses
      */
     getTemplate() {
