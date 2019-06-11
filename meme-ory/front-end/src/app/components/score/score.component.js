@@ -1,22 +1,24 @@
-(function() {   // TODO remove closure
+import './score.component.css';
+import template from './score.component.html';
+import { Component } from '../../utils/component';
+import { parseUrl} from '../../utils/utils';
 
-    /* class ScoreComponent constructor */
-    // TODO create a class
-    function ScoreComponent() {
+export class ScoreComponent extends Component {
+    constructor() {
+        super("score");
         const params = parseUrl(window.location.href);
         this.name = params.name;
         this.size = parseInt(params.size);
         this.time = parseInt(params.time);
     }
 
-    /* method ScoreComponent.render */
-    ScoreComponent.prototype.render = render;
-
-    function render() {
+    init() {
         document.getElementById('name').innerText = this.name;
         document.getElementById('size').innerText = this.size;
         document.getElementById('time').innerText = this.time;
     }
 
-    window.ScoreComponent = ScoreComponent;
-})();
+    getTemplate() {
+        return template;
+    }
+}

@@ -3,6 +3,10 @@ import { getRenderId } from './component';
 
 export class Router {
 
+    /**
+     * Create a new router. This router will load components into the given outlet.
+     * @param {HTMLElement} outlet The element to put components into.
+     */
     constructor(outlet) {
         this._routesUrl = {};
         this._outlet =  outlet;
@@ -11,9 +15,15 @@ export class Router {
         window.addEventListener('hashchange', event => this._onLocationChanged(event.newURL));
     }
 
+    /**
+     * Bind a component ot be displayed when the registered URL is reached.
+     * @param url
+     * @param componentCtor
+     * @returns {Router}
+     */
     register(url, componentCtor) {
         if (!componentCtor || !isFunction((componentCtor.prototype || {}).getTemplate)) {
-            throw new TypeError(`provided arg should be a Component. Got: ${get(componentCtor, 'prototype.constructor.name', componentCtor)}. Did you forget to extend "Component" ?`);
+            throw new TypeError(`provided arg should be a Component. Got: ${get(componentCtor, 'prototype.constructor.name', componentCtor)}`);
         }
 
         if (!isString(url)) {

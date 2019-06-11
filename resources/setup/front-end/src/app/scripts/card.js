@@ -1,4 +1,6 @@
-(function() {
+// TODO Step 6 import "./card.component.html"
+
+(function() {   // TODO Step 6 remove this closure
 
     // TODO Step 3.1 create a class
     /* class CardComponent constructor */
@@ -21,6 +23,8 @@
 
     /* method CardComponent.getElement */
     CardComponent.prototype.getElement = getElement;
+
+    // TODO Step 6 implement getTemplate() {}
 
     /* method CardComponent.flip */
     CardComponent.prototype.flip = flip;
@@ -62,6 +66,8 @@
         }
     });
 
-    // put component in global scope, to be runnable right from the HTML. TODO remove in step XXX
+
+    // put component in global scope, tu be runnable right from the HTML.
+    // TODO Step 6 export CardComponent
     window.CardComponent = CardComponent;
 })();

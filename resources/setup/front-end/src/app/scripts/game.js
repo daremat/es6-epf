@@ -1,4 +1,6 @@
-(function() {
+// TODO Step 6 import "./game.component.html"
+
+(function() {    // TODO Step 6 remove this closure
     var environment = {
         api: {
             host: 'http://localhost:8081'
@@ -18,9 +20,11 @@
         this._matchedPairs = 0;
     }
 
-    /* method GameComponent.render */
-    GameComponent.prototype.render = render;
-    
+    /* method GameComponent.init */
+    GameComponent.prototype.init = init;
+
+    // TODO Step 6 implement getTemplate() {}
+
     /* method GameComponent.start */
     GameComponent.prototype.start = start;
 
@@ -33,7 +37,7 @@
     /* method GameComponent._flipCard */
     GameComponent.prototype._flipCard = _flipCard;
 
-    function render() {
+    function init() {
         // fetch the cards configuration from the server
         this.fetchConfig((function(config) { // TODO Step 3.2: use arrow function
             this._config = config;
@@ -64,7 +68,7 @@
         // TODO Step 3.2: use template literals
         document.querySelector('nav .navbar-title').textContent = 'Player: ' + this._name + '. Elapsed time: ' + seconds++;
 
-        setInterval(function() { // TODO Step 3.2: use arrow function
+        this._timer = setInterval(function() { // TODO Step 3.2: use arrow function
             // TODO Step 3.2: use template literals
             document.querySelector('nav .navbar-title').textContent = 'Player: ' + this._name + '. Elapsed time: ' + seconds++;
         }.bind(this), 1000);
@@ -72,10 +76,12 @@
 
     function gotoScore() {
         var timeElapsedInSeconds = Math.floor((Date.now() - this._startTime )/1000);
+        clearInterval(this._timer);
 
         setTimeout(function() {  // TODO Step 3.2: use arrow function.
             // TODO Step 1: replace with score.component location
             // TODO Step 3.2: use template literals
+            // TODO Step 6: change path to: `score?name=${this._name}&size=${this._size}'&time=${timeElapsedInSeconds}`;
             window.location = 'score.html?name=' + this._name + '&size=' + this._size + '&time=' + timeElapsedInSeconds;
         }.bind(this), 750);    // TODO Step 3.2: Why bind(this)?
     }
@@ -175,7 +181,8 @@
         return result;
     }
 
-    // put component in global scope, tu be runnable right from the HTML. TODO remove in step XXX
+    // put component in global scope, tu be runnable right from the HTML.
+    // TODO Step 6: export GameComponent
     window.GameComponent = GameComponent;
 })();
 

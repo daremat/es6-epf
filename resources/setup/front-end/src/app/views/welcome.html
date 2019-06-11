@@ -23,6 +23,7 @@
 
 <div class="container-fluid flex-grow-1 overflow-auto">
     <div class="welcome-cmp">
+        <!-- TODO Step 6: Keep only this element -->
         <main class="container">
             <form id="start-form" class="form-signin card" novalidate>
                 <div class="card-body">
@@ -72,7 +73,6 @@
                 </div>
             </form>
         </main>
-
     </div>
 
     <footer class="navbar position-absolute fixed-bottom bg-dark">
@@ -87,7 +87,7 @@
 <script src="../scripts/welcome.js"></script>
 <script>
     // execute the controller
-    var wc = new WelcomeComponent().render();
+    var wc = new WelcomeComponent().init();
 </script>
 
 </html>

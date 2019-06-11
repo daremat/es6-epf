@@ -1,4 +1,5 @@
-import './app/styles/style.scss'
+import 'bootstrap/dist/css/bootstrap.css';
+import './app/styles/style.css';
 
 import { Router } from './app/utils/router';
 import { WelcomeComponent } from './app/components/welcome/welcome.component';

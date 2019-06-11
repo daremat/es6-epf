@@ -1,4 +1,6 @@
-(function() {
+// TODO Step 6 import "./score.component.html"
+
+(function() {      // TODO Step 6 remove this closure
 
     // TODO Step 3.1 create a class
     /* class ScoreComponent constructor */
@@ -9,14 +11,16 @@
         this.time = parseInt(params.time);
     }
 
-    /* method ScoreComponent.render */
-    ScoreComponent.prototype.render = render;
+    /* method ScoreComponent.init */
+    ScoreComponent.prototype.init = init;
 
-    function render() {
+    function init() {
         document.getElementById('name').innerText = this.name;
         document.getElementById('size').innerText = this.size;
         document.getElementById('time').innerText = this.time;
     }
+
+    // TODO Step 6 implement getTemplate() {}
 
     function parseUrl() {
         var url = window.location;
@@ -36,5 +40,7 @@
         return result;
     }
 
+    // put component in global scope, tu be runnable right from the HTML.
+    // TODO Step 6 export ScoreComponent
     window.ScoreComponent = ScoreComponent;
 })();

@@ -1,10 +1,8 @@
-> ![info] In javascript we can use quotes (') and double quotes ("") independently, though using simple quote is far more widespread 
-
 # Initiation to modern web & ESNext ![Web 01: 10 credits]
 
 [![milestone-status]](https://master3-assistant.takima.io?milestoneId=40&redirectUri=https%3A%2F%2Fmaster3.takima.io%2Fmaster3%2Fes6-01)
 
-> Estimated reading time: **30 minutes**.
+> Estimated reading time: **90 minutes**.
 
 ![javascript advanced]
 
@@ -218,7 +216,7 @@ For the beginning, let's start together with `WelcomeComponent`:
    <script src="./welcome.component.js"></script> <!-- <=== HERE -->
    <script>
        // execute the controller
-       var wc = new WelcomeComponent().render();
+       var wc = new WelcomeComponent().init();
    </script>
    </html>
    ```
@@ -231,6 +229,8 @@ For the beginning, let's start together with `WelcomeComponent`:
    ```javascript
    window.location = '../game/game.component.html?name=' + name + '&size=' + size;
    ```
+   > ![info] In javascript we can use quotes (`'`) and double quotes (`""`) independently. However, using simple quotes is a lot more common practise. 
+
  - navigate to [http://localhost:8080/app/components/welcome/welcome.component.html](http://localhost:8080/app/components/welcome/welcome.component.html): The welcome page should look and behave as usual.
 
 > ![info] Component oriented architecture is not only about file structure. 
@@ -449,7 +449,7 @@ Time has come to refactor all that mess with new [ESNext bells and whistles](htt
 topics: **classes**
 
 At the moment, your legacy code already use classes. 
-If you look carefully at the `render()` method of [`game.component.js`](resources/setup/front-end/src/app/scripts/game.js#L45), you can see the following: 
+If you look carefully at the `init()` method of [`game.component.js`](resources/setup/front-end/src/app/scripts/game.js#L45), you can see the following: 
 ```javascript
 for (var i in this._config.ids) {
     this._cards[i] = new CardComponent(this._config.ids[i]);
@@ -666,399 +666,483 @@ return dates
 ## Step 4 - Babel, transpilation
 
 All all things all good, our code start to look as something clean and modern... 
+
 However, there is still a major drawback: While virtually [all browsers can run ES5 code](http://kangax.github.io/compat-table/es5/),
-[not all web browser are compatible with ES6](http://kangax.github.io/compat-table/es6/) / ESNext (looking at you, Internet explorer and the other one).
-So we gonna add a famous compiler to compile our code to ES5 Javascript.  
-Let's bring in [babel js](https://babeljs.io) !
+ [not all web browser are compatible with ES6](http://kangax.github.io/compat-table/es6/) / ESNext (looking at you, Internet explorer and the other one).
 
-We can simply use it with the following command `npx babel src -d lib`  
-Analyze together what did this command, first a `dist` folder has been generated and it contains all the Javascript files
-of our project.  
-If we check the `welcome.component.js`:
-``` js
-(function () {
-  function _startGame(name, size) {
-    window.location = "../game/game.component.html?name=" + name + "&size=" + size;
-  }
+We have the choice: 
+ - write modern ESNext code, that may won't run if your client has an outdated browser
+ - write ugly but compatible ES5 code, that is harder to write and maintain.
 
-  window.WelcomeComponent = class WelcomeComponent {
-...
-```
-nothing changes, that's not really intended, because we still have our classes and old browsers don't know how to deal with it.  
-Babel need instruction on how to compile code, so we are going to add a babel config file: `.babelrc` next to `package.json`.  
-``` json
-{
-  "presets": ["@babel/preset-env"]
-}
-```
-You need to install the corresponding module to use it:  
-`npm install @babel/preset-env --save-dev`
+Fortunately, we have another third choice: Write modern JS code, and let some third-party tool convert it to compatible ES5.
+Those kind of tools are called **transpilers**. In this step, let's bring in [**Babel**](https://babeljs.io/)
 
-> ![question] What means the `@` symbol above?  
+> ![info] Transpilers are like compilers, that converts some code into some lower-level code rather instead of producing binaries.
 
-> ![info] You can find more about `@babel/preset-env` on https://babeljs.io/docs/en/babel-preset-env
-
-Relaunch the previous command `npx babel src -d lib`.  
-Check again the `welcome.component.js`:  
-``` js
-"use strict";
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-(function () {
-  function _startGame(name, size) {
-    window.location = "../game/game.component.html?name=" + name + "&size=" + size;
-  }
-
-  window.WelcomeComponent =
-  /*#__PURE__*/
-  function () {
-    function WelcomeComponent() {
-      _classCallCheck(this, WelcomeComponent);
+##### Your job: 
+ - install Babel with NPM
+   ```bash
+   >$ npm install -D @babel/cli @babel/core @babel/preset-env
+   >$ npm install core-js
+   ```
+   > ![question] What does the `@` symbol mean in `@babel/***`?
+ - setup the npm `build` script to run babel
+    ```json
+    // package.json
+    {
+       "scripts": {
+           "build": "babel src -d dist"
+       }
     }
+    ```
+ - create babel `.babelrc` config file just near to `package.json`:
+    ```json
+    // .babelrc
+     {
+       "presets": [
+         ["@babel/preset-env", { "useBuiltIns": "usage", "corejs": 3 }]
+       ],
+       "plugins": []
+     }
+    ``` 
+ - run babel:
+    ```bash
+    >$ npm run build
+    ```
 
-    _createClass(WelcomeComponent, [{
-      key: "render",
-      value: function render() {
-        var form = document.querySelector("form.form-signin");
-        form.addEventListener("submit", function (event) {
-          event.preventDefault();
-...
+    > ![question] Look a files produuced within `dist/` folder. How did babel transpiled your class `WelcomeComponent`?
+
+    > ![question] What is the weight of the transpiled sources compared to your original sources?
+
+> ![warning] Do not forget to add to `.gitignore` your `dist` folder.
+
+At this point we would have to run babel each time we do some modification on the code, so that we can test it on the web browser.
+As you imagine, this would get really annoying. 
+Let's get one step ahead with another powerful tool: **Webpack** 
+
+### Produced files
 ```
-and you can see all the things babel has done to convert your ES6 class to an old style ES5 code,
-you can recover the function style to create a class for instance as you saw in the beginning of this tutorial.
-
-But we can do better things with NPM, we can add a new common command: `npm run build` which will build our Javascript files with Babel.
-It's gonna be also better if we let babel takes care of this part without npx.
-So we need to install babel cli (command line interpreter) and adding it to the `package.json`.
-
-``` shell
-npm install --save-dev @babel/core @babel/cli
-```
-
-then edit your `package.json` with the new build command:
-``` json
-"scripts": {
-  "build": "./node_modules/.bin/babel src -d lib",
-  "test": "echo \"Error: no test specified\" && exit 1"
-}
-```
-As you can see we don't call babel directly because we didn't install babel globally with npm.
-This is better on this way for futur developper on the project, when they will came they just have to run `npm install` and
-it will install all `devDependencies` and `dependencies` from the `package.json`, so babel will be also installed and they also have the right version !
-
-
-#### Files produced:
-```
-meme-ory/front-end/.babelrc
-meme-ory/front-end/lib/
+.babelrc
 ```
 
 ### Checklist
- - [ ] I know how to compile my ES6 code to ES5 one with babel
- - [ ] I understand the importance to be compatible with old browsers
- - [ ] I have generated all my ES6 component to ES5 ones
- - [ ] I can run babel command with `npm run build`
+ - [ ] I know what a transpiler is 
+ - [ ] I can configure babel on my project
 
-### Step - PhantomJS
-test parseUrl with arrow functions => crash!
+**![commit] commit step**
 
-## Step - import
+## Step 5 - Webpack & imports
 
-
-
-
-## Step 1 - NPM & webpack setup
-> NPM, webpack
-
-This step is about setting up a standard npm module containing a webpack application, this will be the project skeleton.
-
-**Why ?** Have a standardized NPM module and an easily runnable webpack application.
-
-**At the end, we should have a standard NPM/webpack project starting base.**
-
-### Step 1.1 - init your npm project
-```sh
-mkdir meme-mory
-cd meme-mory/
-npm init -y
-npm install
-```
-Files produced:
-```sh
-package.json
-```
-
-> ![info] You just created a NPM module, that is not different from any module in the central registry at
-[www.npmjs.com](https://www.npmjs.com/). Your NPM module relies on this json file, you can find the documentation
-for this file here: [docs.npmjs.com/files/package.json](https://docs.npmjs.com/files/package.json).
-
-> ![info] There are alternatives to npm, yarn for example is quite notorious and has very good performance:
-[yarnpkg.com](https://yarnpkg.com/en/).
-
-* set your package as private
+Did you remember that function at the bottom of `game.component.js`?
 ```javascript
-//package.json
-{
-  ...
-  "private": true,
-  ...
+function parseUrl() {
+    // ...
 }
 ```
-> ![info] Making it private so we do not accidentally push to the central (you will need to be connected to do so)
+Its purpose is to take all the parameters found in the URL (`window.location`), so the component can load them.
+If you remember, this function is also copy-pasted at the bottom of `score.component.js`. 
+It would be a great idea to define it once for all, and import it from both `game.component.js` & `score.component.js`.
 
-![commit] **commit step**
-### Step 1.2 - webpack: install and naive setup
+**That's where [ES6 modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) comes in!**  
 
-Webpack is a javascript tool used to bundle a web application, basically a coffee maker used in 99% of web projects.
-Webpack can be quite a complex bundler and does a lot of its work behind the scene, we will go trough a simple manual 
-setup to check what is going on. You can check the documentation to get a deeper insight of this tool:
-[webpack.js.org/guides/getting-started/](https://webpack.js.org/guides/getting-started/)
-(you might also want to check webpack-cli, a tool to help you create your webpack config: [github.com/webpack/webpack-cli](https://github.com/webpack/webpack-cli))
+### Step 5.1 - import, export
 
-Let's head to our setup, this will start by installing everything we need:
-```sh
-npm install --save-dev webpack webpack-dev-server webpack-cli \
-babel-loader @babel/core @babel/preset-env \
-clean-webpack-plugin html-webpack-plugin
-```
+In this step, we will create a new `main.js` file, to ensure `parseUrl` function works properly once imported. 
+ - Create a new `meme-ory/src/utils/utils.js` file, and paste the `parseUrl` function as follows:
+   ```javascript
+   export function parseUrl() {
+      return result;
+   }
+   ``` 
+   > ![info] The `export` keyword means the symbol `parseUrl` will be public, and can be imported by other files.
+ - Remove `function parseUrl()` from `game.component.js`, and instead, write the following at the beginning of the file:
+   ```javascript
+   import {parseUrl} from '../../utils/utils';
+   ```
+   > ![info] When a file contains at least one `import` or one `export`, it is automatically considered as an ES6 module. 
+   All the symbols defined within that file won't be part of the global scope, and will be encapsulated in that module.
+ - Create a new `meme-ory/src/main.js` file, that make use of `parseUrl`: 
+    ```javascript
+    // meme-ory/src/main.js
+    import { parseUrl } from './app/utils/utils';
+    
+    const parameters = parseUrl();
+    
+    document.querySelector('body')
+        .appendChild(document.createTextNode(JSON.stringify(parameters)));
+    ```
+    > ![question] What is the difference between `import * from './utils'` and `import { parseUrl } from './utils'`?
 
-Let's also install the polyfills as we are going to use javascript advanced features:
-```sh
-npm install --save @babel/polyfill
-```
-
-> ![info] __Tip__: We use polyfills to patch our browser with some code it might miss
-
-> ![question] We just installed a bunch of libraries but with different options, check your package.json. Do you know 
-what's the difference between the options --save-dev, --save and none?
-
-Create your webpack client application containing: .babelrc, src/index.html and src/app/index.js:
-```
-meme-ory
-│   .babelrc
-│   package.json
-└───src
-    │   index.html
-    └───app
-        |   index.js
-```
-```javascript
-// .babelrc
-{
-    "presets": [
-      ["@babel/preset-env", { "useBuiltIns": "usage", "corejs": 3 }]
-    ],
-    "plugins": []
-}
-```
-
-> ![troubleshoot] ES6 object.defineProperty caused by some wrong dependencies
->```sh
->Module not found: Error: Can't resolve 'core-js/modules/es6.object.define-property' 
->```
->Check your version against the ones provided, clean your node_modules/ and reinstall.
->The preset-env may also need the corejs version to be defined: corejs: 3
-
-> ![tip] __Pro tip__: You can check how babel actually process javascript easily there: [babeljs.io/repl](https://babeljs.io/repl)
-
+ - change your `index.html` to the following:
 ```html
-<!--src/index.html-->
+<!-- src/index.html -->
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello World</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>MÈME ory</title>
+  </head>
+
+  <body class="d-flex flex-column">
+    <script src="./main.js"></script>
+  </body>
 </html>
 ```
-```javascript
-// src/app/index.js
-console.log('Hello World');
+ - Test the result: go to [http://localhost:8080/src/index.html?value1=someValue1&value2=someValue2](http://localhost:8080/src/index.html?value1=someValue1&value2=someValue2), and open your dev console
+    > ![boom] Uncaught SyntaxError: **Unexpected token export**
+ 
+That's right: even ES6 defines `import` and `export`, and even your browser is up to date, it is not able to execute this statement; 
+And, guess what? Transpilers like Babel will be **of no help**.
 
-function component() {
-  let element = document.createElement('div');
+In fact, by no mean a browser could be able to import synchronously a file, that is located on a distant server.
+For this purpose, it is mandatory to use other tools called **Bundlers**.
 
-  element.innerHTML = ['Hello', 'webpack', 'App'].join('\n\n');
-
-  return element;
-}
-
-document.body.appendChild(component());
+### Produced files
 ```
-We will now tell webpack how to bundle the application properly and use babel
-```javascript
-//webpack.config.js
-const path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-module.exports = {
-  watch: false,
-  entry: './src/app/index.js',
-  plugins: [
-    new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: './src/index.html'
-    })
-  ],
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
-  },
-  module: {
-    rules: [
-        {
-            test: /\.js$/,
-            use: 'babel-loader',
-            exclude: /node_modules/
-        }
-    ]
-  }
-};
-```
-> ![tip] __Tip__: Have a look at [webpack.jakoblind.no](https://webpack.jakoblind.no/) to easily scaffold your webpack config.
-
-> ![tip] __Tip__: If you want to simplify your _../../../relative/import/paths_, have a look at 
-[webpack.js.org/configuration/resolve/](https://webpack.js.org/configuration/resolve/) and 
-[www.jetbrains.com/help/idea/using-webpack.html](https://www.jetbrains.com/help/idea/using-webpack.html).
-
-### Step 1.3 - run webpack
-
-Now let's configure how we run our application using webpack by defining 2 npm scripts:
-```javascript
-// package.json
-{
-  ...
-  "scripts": {
-      "build": "webpack --config webpack.config.js",
-      "dev": "webpack-dev-server"
-  },
-  ...
-}
-```
-* *npm run build* will be used to generate a production bundle in dist/
-* *npm run dev* will be used to start a local development server at [localhost:8080](http://localhost:8080/)
-
-![commit] **commit step**
-
-> ![tip] __Pro tip__: You can run npm scripts like so and add additional options:
-```sh
-npm run build
-npm run build -- -d
-npm run dev -- -p
-```
-> ![question] Have a look at the console output when building with production (-p) or development (-d) options, noticing any difference?
-Check the dist/ folder on build and inspect how the file is built, can you find your javascript code?
-
-### Step 1.4 - How Source Map ?
-
-First of all we'll see how this simple piece of code comes with when map-sources are disabled.
-
-```javascript
-//webpack.config.js
-  ...
-  module.exports = {
-      ...
-      devtool:false,
-      ...
-  },
-  ...
-```
-
-* what is the difference in the javascript console?
-* In which .js file and which line is the console.log ('Hello World'); ? 
-
-When we want to debug, it will quickly be a problem. 
-
-
-**The solution: Map sources**
-
-However in production we will not debug and of course we want to keep the big advantage of bundle.js of webpack (saving time because less opening file ...).
-For this we need to know in the webpack configuration file, when we are in development or production.
-
-**Environment variable webpack**
-
-see : https://webpack.js.org/guides/environment-variables/
-
-
-* In the node scripts, from the package.json file, add a Webpack environment variable that will give us information:
-
-```javascript
-// package.json
-{
-  ...
-  "scripts": {
-      "build": "webpack --config webpack.config.js --env.NODE_ENV=prod",
-      "dev": "webpack-dev-server --env.NODE_ENV=dev"
-  },
-  ...
-}
-```
-
-
-
-* By retrieving the NodeJs process we can retrieve our environment variable to limit the source map to the dev environment.
-
-
-see https://webpack.js.org/configuration/devtool/
-
-
-* In the table of **devtools** at the previous link we chose: cheap-module-eval-source-map. Quick to rebuild and shows us the original code.
-
-
-```javascript
-//webpack.config.js
-const path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-
-module.exports = env => {
-
-  return {
-    watch: true,
-    devtool: env.NODE_ENV === "dev" ? "cheap-module-eval-source-map" : "source-map",
-    entry: './src/app/index.js',
-    plugins: [
-      new CleanWebpackPlugin(),
-      new HtmlWebpackPlugin({
-        filename: 'index.html',
-        template: './src/index.html'
-      })
-    ],
-    output: {
-      filename: 'bundle.js',
-      path: path.resolve(__dirname, 'dist')
-    },
-    module: {
-      rules: [
-        {
-          test: /\.js$/,
-          use: 'babel-loader',
-          exclude: /node_modules/
-        }
-      ]
-    }
-  }
-};
-
+meme-ory/front-end/src/app/utils/utils.js
+meme-ory/front-end/src/main.js
 ```
 
 ### Checklist
- - [ ] I know how to setup a npm module
- - [ ] I know npm package basis
- - [ ] I know webpack basic setup and commands
+ - [ ] I know how to write `imports` and `exports`
 
-[troubleshoot](#troubleshoot)
+**![commit] commit step**
+
+### Step 5.2 - The bundler
+topics: **webpack**
+
+Bundlers have several use cases:
+ - concat all sources in a single source file
+ - optimize source code
+ - **resolve imports**
+ - ... 
+
+In this step, **[Webpack](https://webpack.js.org/)** will be a bundler of choice:
+ - it is configurable with plugins
+ - it offers a development server with code **live-reload**
+ - can be configured with **loaders** to transform your source code. 
+ - ... and much more
+
+##### Your job: 
+ - add webpack to your project: 
+   ```bash
+   >$ npm install -D webpack webpack-cli webpack-dev-server babel-loader html-webpack-plugin file-loader
+   ```
+   > ![info] `babel-loader` will be used to *babelify* all the source code that goes into webpack
+ - edit your `package.json`; change your `build` & `start` script to: 
+    ```json
+    // package.json
+    {
+      "scripts": {
+         "build": "webpack --config webpack.config.js",
+         "start": "webpack-dev-server"
+      }
+    }
+    ```
+- create `webpack.config.js` file: 
+    ```javascript
+    {
+        const path = require('path');
+        const HtmlWebpackPlugin = require('html-webpack-plugin');
+        
+        module.exports = {
+            watch: false,
+            mode: 'development',
+            entry: './src/main.js',
+            plugins: [
+                new HtmlWebpackPlugin({
+                    filename: 'index.html',
+                    template: './src/index.html'
+                }),
+            ],
+            output: {
+                path: path.resolve(__dirname, 'dist'),
+                filename: 'bundle.js'
+            },
+            module: {
+                rules: [
+                    {
+                        test: /\.(png|svg|jpg|gif|woff|woff2|eot|ttf|otf)$/,
+                        use: [
+                            'file-loader'
+                        ]
+                    },
+                    {
+                        test: /\.js$/,
+                        use: 'babel-loader',
+                        exclude: /node_modules/
+                    }
+                ]
+            }
+        };
+    }
+    ```
+- as you can see, our webpack configuration defines `./src/main.js` as the single entrypoint.
+  That means, at the moment, only `main.js` and `index.html` gets transpiled and are part of our application.
+  Run the application: 
+  ```bash
+  >$ npm start
+  ```
+  ... and see the result at [http://localhost:8080/index.html?value1=someValue1&value2=someValue2](http://localhost:8080/index.html?value1=someValue1&value2=someValue2)
+  
+  Look at the source of `index.html` in your web browser: 
+  file `main.js` is not found (you can remove it from `index.html`), but instead a file `bundle.js` is served and contains all your source code ![tadaa]. 
+
+> [info] Only the files that are imported by `main.js` are part of the bundle.
+
+> ![tip] Did you notice your browser automatically live-reload each time you change `main.js` or `util.js`?
+
+> ![info] Where did the `dist/` folder go? In fact, webpack is able to keep everything in memory, to transpile and serve your files as fast as possible.
+
+### Produced files
+```
+meme-ory/front-end/webpack.config.js
+```
+
+### Checklist
+ - [ ] I understand why bundlers are mandatory
+ - [ ] I know how to configure webpack
+ - [ ] I have some clues on all the magic webpack can do
+
+**![commit] commit step**
+
+### Step 5.3 - The source maps
+
+Did you get into `bundle.js`? Did you managed to locate where your sources are? Now, imagine you have to debug your `parseUrl` function:
+ - put a `debugger` statement at the first line of `parseUrl`:
+    ```javascript
+    export function parseUrl() {
+        debugger; // <---
+        const url = window.location.href;
+        
+        // ...
+    }
+    ```
+ - press F5 on your web browser, and see your debugger stop at a bunch of transpiled code mess that you don't even want to read.
+
+Of course, bundlers would have no point if we are not able to debug properly the produced code. 
+In this step, before leaving, lets enable another webpack feature to produce **sourcemap**
+
+> ![info] A sourcemap is some data read by the web browser so that it can recover the original source code from transpiled source code while debugging. 
+
+ - Open your `webpack.config.js`, and put the following
+    ```javascript
+    // webpack.config.js
+    
+    module.exports = {
+        devtool: 'cheap-module-eval-source-map',
+        
+        // ...
+    }
+    ```
+ - press F5 on your web browser: See the debugger is now stopped on some
+> ![info] Sourcemap can be separate files `main.js.map`, or inlined directly inside the transpiled source code. 
+
+> ![warning] Never produce sourcemaps when going production. Otherwise, not only you produce an unnecessary bug bundle, you give your clients the key to reverse-engeener your application.   
+
+> ![info] You can produce sourcemaps for any language of the web (javascript, typescript, css, coffescript, ...).
+
+### Checklist
+ - [ ] I understand why bundlers are mandatory
+ - [ ] I know how to configure webpack
+ - [ ] I have some clues on all the magic webpack can do
+
+**![commit] commit step**
+
+## Step 6 - SPA
+
+At the moment, webpack does not care of our components. As a result, `game.component.js`, `welcome.component.js`, `card.component.js` and `score.component.js` are all ignored.
+Now, we need to wire-them up through a bunch of `import` so they are part of the bundle.
+
+Let's summarize what we have at the moment:
+ - 3 components: basically 3 different full-blown HTMLs pages
+ - tied to 3 different URLs,
+ - each HTML choose its own *JS* and *CSS*. 
+    - `<link rel="stylesheet" href="***.css">`
+    - `<script src="***.js"></script>`
+ - we have to `import` javascript so that it is integrated to the bundle
+ - we cannot `import` from HTML files
+  
+![multi_page]
+
+> ![info] From the schema above, notice that it's up to the HTML to choose its CSS/JS
+
+One big question still remains unanswered: 
+**How to write imports between components, JS, HTML & CSS so that everything is part of the bundle?**
+ 
+The challenge of this step is to transform our current components so that our application becames a **Single Page Application** (*SPA*). 
+
+Here are the core principles of an *SPA*:
+ - Our application have a shell (ie: the common navigation controls).
+ - There is a unique **Single HTML page** (`index.html`), loaded once, that displays the shell 
+ - `index.html` loads some javascript. 
+ - The application has a **router**
+ - The router listens to URL changes, and patches the page to show the component that matches the current URL
+ - The application is then **driven by JS not HTML**
+ 
+In other words, it's up to the JS in place to display its associated HTML template, not the HTML to load its javascript.
+![single_page]
+
+Let's get started!
+- To begin with, copy the file [`resources/router/router.js`](resources/router/router.js) onto your `utils` folder.
+    This file declares the router that will display components according to the current URL.
+    > ![info] As you can see with router's `_renderComponent` method, the router will call any `Component.init()` method if it exists.
+
+- let's give `CardComponent` its own html file.  
+    In `game.component.html`, you will find the `<template></template>` that defines the view for `CardComponent`:
+    ```html
+    <div class="card-cmp">
+        <div class="card-wrapper">
+            <img class="card front-face" alt="card">
+            <img class="card back-face" alt="card" src="./card/assets/back.png">
+        </div>
+    </div>
+    ``` 
+    Move the content of this template within its own `card.component.html` file.
+    > ![warning] Do not forget to update `<img src="...">` from `"./card/assets/back.png"` to "`./assets/back.png`"
+
+- Create the shell in `index.html`.  
+    At the moment, all of our `welcome.component.html`, `game.component.html` & `score.componet.html` display their own shell. 
+    Move all the common elements (`<body>`, `<head>`, `<nav>`, `<footer>`, ...) in `index.html`, **and drop all the `<script>` and `<link>` tags**.
+
+    > ![info] As you can see, there is now no more link between HTML and its JS/CSS
+
+- Add the "*outer outlet*" to `index.html`.  
+    ```html
+    <!-- index.html -->
+    
+    <!-- ... -->
+    <div class="container-fluid flex-grow-1 overflow-auto">
+        <div id="content-outlet"></div>     
+    <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  HERE -->
+    
+        <footer class="navbar position-absolute fixed-bottom bg-dark">
+            <span>&copy The MÈME ory corporation | 2019</span>
+        </footer>
+    </div>
+    <!-- ... -->
+    ```
+    This is where our router will put components into.
+
+- Rewrite all our `**.component.js` to be ES6 modules.
+    Every time you see `window.XXXComponent = XXXXXXComponent`, `export` that component so it can be `imported` elsewhere.
+    > ![info] Closures are not necessary anymore when we have ES6 modules. It's time to drop them all. 
+
+- We should give our components a way to display their respective HTML and CSS:  
+    - copy file [`resources/component/component.js`](resources/component/component.js) into your `utils/` folder.
+        It defines a `class Component {}` with the following methods:
+          - `getTemplate()`: return the template associated with this component.
+          - `render()`: attach the component's template to the document's DOM.
+    - let your `XXXComponent` classes extend the `Component` class defined above
+    - call `super()\ constructor with a name. This name will be used by `Component` to create a tag `<name>`
+    - make all `xxx.component.js` import its own html.
+        ```javascript
+        import template from 'xxx.component.html';
+        ```
+     It can the return this template in the `getTemplate()` method.
+    - make all `xxx.component.js` import its own css.
+        ```javascript
+        import 'xxx.component.css';
+        ```
+    > ![tip] See [`welcome.component.js`](resources/component/welcome.component.js),
+    [`game.component.js`](resources/component/game.component.js),
+    [`card.component.js`](resources/component/card.component.js) 
+    and [`score.component.js`](resources/component/score.component.js) as an example.
+    
+    > ![tip] In no way it is legit to import HTML in javascript. 
+    It can only be done because webpack have some loaders to process our imports and rewrite it to something legit.  
+- Configure webpack with the `html-loader` and `css-loader`. 
+    They make the `import template from './xxx.component.html';` above possible:
+    - install `html-loader` & `css-loader`
+    ```bash
+    >$ npm install -D html-loader style-loader css-loader sass-loader node-sass
+    ```
+    - add the following in `webpack.config.js`
+    ```javascript
+    // webpack.config.js
+    
+    module.exports = {
+        // ...
+        module: {
+            rules: [  
+                {
+                    test: /\.(scss|css)$/,
+                    use: [
+                        'style-loader',
+                        'css-loader',
+                        'sass-loader'
+                    ]
+                },
+                {
+                    test: /\.(html)$/,
+                    use: {
+                        loader: 'html-loader',
+                        options: {
+                            attrs: ['img:src', 'link:href']
+                        }
+                    }
+                }
+                // ....
+            ]
+        }
+    };
+    ```
+- Lastly, open the `main.js` file. Because it is the entrypoint of our `webpack.config.js`, 
+    it is of its responsibility to load all the components of our application. Replace its content by the following:
+    ```javascript
+    import 'bootstrap/dist/css/bootstrap.css';
+
+    import { Router } from './app/utils/router';
+    import { WelcomeComponent } from './app/components/welcome/welcome.component';
+    import { GameComponent } from './app/components/game/game.component';
+    import { ScoreComponent } from './app/components/score/score.component';
+    
+    const outlet = document.querySelector('#content-outlet');
+    
+    const router = new Router(outlet)
+        .register('', WelcomeComponent)
+        .register('game', GameComponent)
+        .register('score', ScoreComponent);
+    ``` 
+    The code above tells the router to load `GameComponent` and `ScoreComponent` when respectively paths `game` and `score` are fetched.
+    
+     - Go to `welcome.component.js`, and change the function `_startGame` with following path:
+        ```javascript
+        // welcome.component.js
+        function _startGame(name, size) {
+            window.location.hash = `game?name=${name}=name&size=${size}`;
+        }
+        ``` 
+     - Go to `game.component.js`, and change the method `gotoScore()` with the following:
+        ```javascript
+        // game.component.js
+        gotoScore() {
+            const timeElapsedInSeconds = Math.floor((Date.now() - this._startTime) / 1000);
+    
+            setTimeout(() => window.location.hash = `score?name=${this._name}&size=${this._size}'&time=${timeElapsedInSeconds}`, 750);
+        }
+
+Phew, that was tough! 
+At the end of this step, you should be able to play the game as usual, and the 3 components should render without any errors  
+ 
+> ![question] Play the whole game with `size=2`. While going through the 3 views of the application, how many files did your browser download in total? What was the total size of transfered data? 
+
+### Produced files
+```
+meme-ory/front-end/src/main.js
+meme-ory/front-end/src/index.html.js
+meme-ory/front-end/src/app/utils.router.js
+meme-ory/front-end/src/app/components/game/card/card.component.html
+```
+
+### Checklist
+ - [ ] My application is now an SPA.
+ - [ ] I left no unresolved `// TODO Step 6` in my code
+ - [ ] My application runs as usual
+ - [ ] All my HTML, JS and CSS code is now **bundled** within a single js file
+
+**![commit] commit step**
 
 ## Step 7 - Style the application
 
@@ -1243,756 +1327,6 @@ Example to post a score:
 You can learn more about the difference methods available on the web:
 https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
 
-
-
-
-
-
-
-
-
-* add webpack static loaders to the project
-```sh
-npm install --save-dev style-loader css-loader url-loader file-loader
-```
-
-* add semantic-ui-css to the project
-```sh
-npm install --save semantic-ui-css
-```
-* load semantic-ui css in the application before your styling
-```javascript
-//index.js
-// ...
-import 'semantic-ui-css/semantic.min.css';
-// ...
-```
-* add webpack static loaders to handle css files and semantic-ui fonts / icons
-```javascript
-//webpack.config.js
-// ...
-module: {
-  rules: [
-    // ...
-    {
-      test: /\.(css)$/,
-      use: ['style-loader', 'css-loader']
-    },
-    {
-      test: /\.(png|svg|woff|woff2|eot|ttf|otf)$/,
-      use: [{
-        loader: 'url-loader',
-        options: { limit: 100000 } // in bytes
-      }]
-    }
-  ]
-}
-// ...
-```
-* add sass support and write your first sass styles, see
-[sass-lang.com/guide](https://sass-lang.com/guide) and 
-[github.com/webpack-contrib/sass-loader](https://github.com/webpack-contrib/sass-loader)
-
-### Checklist
- - [ ] I know how to load css in webpack
- - [ ] I know what sass is
-
-## Step 3 - Implement memory game
-> ES Next features, lodash, Promise, async/await, debugger
-
-In this step you will implement the memory game logic using ES Next features and more.
-
-**Why ?** Get to write modern Javascript code and use modern front-end development tools.
-
-At the end, the user should be able to play the memory game.
-
-### Step 3.1 - 3 views structure
-
-* you can use the following structure
-(each view should contain a simple template like "Hello view name", a simple script logging "Hello view name" and its 
-own background color)
-```
-es6-01
-├── resources/
-└── meme-ory/
-    ├── .babelrc
-    ├── package.json
-    └── src/
-        └── app/
-            └── modules/
-                ├── welcome/
-                │   ├── welcome.component.js
-                │   ├── welcome.html
-                │   └── welcome.scss
-                ├── game/
-                │   ├── game.component.js
-                │   ├── game.html
-                │   └── game.scss
-                └── end/
-                    ├── score.component.js
-                    ├── end.html
-                    └── end.scss
-```
-* webpack configuration should be adjusted to output 3 views as well, using chunks
-```javascript
-//webpack.config.js
-module.exports = {
-    // ...
-      entry: {
-        app: './src/app/modules/welcome/welcome.component.js',
-        game: './src/app/modules/game/game.component.js',
-        end: './src/app/modules/end/score.component.js'
-      },
-      plugins: [
-        new CleanWebpackPlugin(['dist']),
-        new HtmlWebpackPlugin({
-          files: {
-            chunks: {
-              app: {
-                entry: './src/app/modules/welcome/welcome.component.js'
-              },
-              game: {
-                entry: './src/app/modules/game/game.component.js'
-              },
-              end: {
-                entry: './src/app/modules/end/score.component.js'
-              }
-            }
-          }
-        }),
-        new HtmlWebpackPlugin({
-          filename: 'index.html',
-          template: './src/app/modules/welcome/welcome.html',
-          chunks: ['app']
-        }),
-        new HtmlWebpackPlugin({
-          filename: 'game.html',
-          template: './src/app/modules/game/game.html',
-          chunks: ['game']
-        }),
-        new HtmlWebpackPlugin({
-          filename: 'end.html',
-          template: './src/app/modules/end/end.html',
-          chunks: ['end']
-        })
-      ],
-      output: {
-        filename: 'bundle-[name].js',
-        path: path.resolve(__dirname, 'dist')
-      },
-    // ...
-}
-```
-* check that each view is properly served by both the dev server and generated by the build command
-
-### Step 3.2 - Welcome view
-* create the welcome view form, containing player name and game size
-* install and import lodash (documentation: [lodash.com/docs](https://lodash.com/docs))
-> ![info] Lodash is a utility library covering a lot of use cases, although we will not need to use it that much 
-in this project. Indeed we will emphasize on ES next features that actually include a lot of lodash functions (which is 
-a good sign) we encourage you to check useful functions like: _.clone, _.assign, _.partial, _.curry...
-```sh
-npm install --save lodash
-```
-> ![question] Have a look at your package.json file, what does the "^" mean in front of the versions?
-* add minimal validation, player name: alphanumerical and length between 3 and 20, size: number between 2 and 10
-* link the form to the **game view** passing parameters as get params
-
-To help you here are a couple code snippets:
-```javascript
-//welcome.component.js
-import 'semantic-ui-css/semantic.min.css';
-//...
-
-import { get } from 'lodash';
-
-class Welcome {
-  constructor() {
-    this._form = document.querySelector('#start-form');
-    this._nameField = document.getElementsByClassName('field')[0];
-    this._nameMessage = document.getElementsByClassName('message')[0];
-  }
-
-  startGame(e) {
-      e.preventDefault();
-
-      this._form.classList.add('loading');
-      const name = get(e, 'srcElement[0].value');
-
-      let nameError = false;
-      if (!/[A-Za-z0-9]$/.test(name)) {
-        this._nameField.classList.add('error');
-        this._nameMessage.classList.add('error');
-        nameError = true;
-      } else {
-        this._nameField.classList.remove('error');
-        this._nameMessage.classList.remove('error');
-        nameError = false;
-      }
-      //...
-      this._form.classList.remove('loading');
-      if (!nameError) {
-        console.log(`starting game: ${name}`);
-      } else {
-        this._form.classList.add('error');
-      }
-  }
-}
-
-let welcome = new Welcome();
-welcome._form.addEventListener('submit', e => welcome.startGame(e));
-```
-```html
-<!--welcome.html-->
-<form id="start-form" class="ui large form">
-    <div class="ui stacked segment">
-        <div class="field">
-            <div class="ui left icon input">
-                <i class="user icon"></i>
-                <input type="text" name="name" placeholder="Name" pattern="[A-Za-z0-9]{3,20}">
-            </div>
-        </div>
-        <div class="ui info message">
-            <p>Player name must be alphanumerical and between 3 and 20 characters.</p>
-        </div>
-        <input class="ui fluid large teal submit button" type="submit" value="Play"/>
-    </div>
-</form>
-```
-
-### Step 3.3 - Game implementation
-> Classes, Promise, lodash, transform, component template
-
-We are going to implement the logic of the game, composed of a board who contains cards. 
-we recommend to you to follow this structure :
-```
-es6-01
-...
-├── assets/
-│   └─ here your static card images
-└── app/
-    └── modules/
-        ├── welcome/
-        ├── game/
-        │   ├── card.component.js
-        │   ├── board.js
-        │   ├── game.component.js
-        │   ├── game.html
-        │   └── game.scss
-        └── end/
-```
-
-#### 3.3.1 - Preparation
-
-To begin, you need some static images for your cards
-
-##### Get the static images
-* put the following in your project (find them inside the resources/ folder)
-
-![unknown-card-img] ![takima-card-img] ![jawg-card-img] ![gatling-card-img]
-
-##### How to build a flippable card
-
-* import your image dynamically from your code _(url-loader)_
-```html
-<img alt="test" id="my-card-img"/>
-```
-```javascript
-import Back from '../../static/back-card.png';
-document.getElementById('my-card-img').src = Back;
-```
-
-* code a simple flippable card
-> A flippable card is very easy to write, here is an example: [jsfiddle.net/68agoj1q](https://jsfiddle.net/68agoj1q/)
-
-> ![tip] __Pro tip__: Use your browser debugger as often as you can, this can be tricky and sometimes confusing to go
-into javascript realtime machinery, but this is a very good habit.
-
-> ![tip] __Pro tip__: Using Javascript online runners can be very useful to isolate a bug and get help from the community.
-We used jsfiddle here but other like: [plnkr.co](https://plnkr.co/) or [jsbin.com](https://jsbin.com) will do. And the best interpreter will 
-be directly your browser console.
-
-##### How to handle this with the dom
-* create multiple flippable cards
-```html
-<template id="card-template">
-    <div class="ui card">
-        <div class="image">
-            <img class="front-face" alt="card">
-            <img class="back-face" alt="card">
-        </div>
-    </div>
-</template>
-<main class="ui container">
-    <div class="ui special cards" id="cards"></div>
-</main>
-```
-```javascript
-const htmlCards = document.getElementById('cards');
-const clonedHtmlCard = document.getElementById('card-template').content.cloneNode(true).firstElementChild
-htmlCards.appendChild(clonedHtmlCard);
-```
-
-##### Shuffle your cards
-We will use the server inside `/resources` ̀folder on this Git repository to handle the shuffle, 
-* install and run the server
-```sh
-cd ../resources/server
-npm install
-node server.js
-```
-
-![server-detail]
-
-
-**Fetch API or Ajax with promise ?**
-
-![asynchronous-communication]
-
-We will use the Fetch API because it is lighter to code it.
-
-```javascript
-//AJAX
-          const req = new XMLHttpRequest();
-
-          req.onreadystatechange = function(event) {
-              if (this.readyState === XMLHttpRequest.DONE) {
-                  if (this.status === 200) {
-                    ...
-                  } else {
-                    ...
-                  }
-              }
-          };
-
-          req.open('GET', 'http://domain/service', true);
-```
-*  That's already heavy without even mentioning the sending of the header
-
-**adopted solution?**
-
-
-```javascript
-//Fetch API
-  const myPromise = fetch('http://domain/service',{method: 'GET'})
-                      .then( response => response.json() )
-                      .catch( error => console.error('error:', error) );
-
-  (await myPromise) ...
-```
-
-
-* use the fetch api to call the server (localhost:8081/ with **nb** and **size** as get parameters)
-
-For the parameters, **nb** is the number of the image you have and **size** the number of pairs you want to guess.
-
-The server return a ID list : ?nb=5&size=2 will return {ids: [0, 4, 3, 4, 0, 3]}
-
-> ![tip] __Pro tip__: Use Postman to try your http request on your API
-
-* use the IDs list to shuffle you cards
-
-#### 3.3.2 - Implementation
-
-* initialize the game with *n* cards, using 2 classes: *Board* and *CardComponent*
-```javascript
-//board.js
-//note: the board contains an array of Cards
-import {CardComponent} from "./card";
-
-export class Board {
-
-  constructor(size) {
-    this._size = size;
-    this._cards = [];
-    //...
-  }
-
-  init() {
-      //...
-      for (let i = 0; i < this._size; i++) {
-        this._cards.push(new CardComponent());
-      }
-  }
-  
-  //...
-
-}
-```
-```javascript
-//card.component.js
-//the card is bound to an element and holds 2 flags: flipped and matched
-export class CardComponent {
-  //...
-
-  constructor(img) {
-    this._flipped = false;
-    this.matched = false;
-    this._img = img;
-    this._elt = {};
-    //...
-    this._imageElt = this._elt.querySelector('.image');
-    this._imageElt.addEventListener('click', () => this.flip());
-  }
-
-  flip() {
-    //...
-  }
-
-  equals(card) {
-    //...
-  }
-}
-```
-* implement the game logic: flip cards 2 by 2, keep matches flipped, end the game when all cards are flipped
-
-### Step 3.4 - End view
-
-* display a congratulation message to the user with his last performance
-
-> This view is very simple we will improve it in the section 
-
-### Checklist
- - [ ] I know how to modularize a webpack app
- - [ ] I know how to handle a basic form
- - [ ] I know how to use Javascript classes
- - [ ] I know lodash basis
- - [ ] I know how to handle Javascript asynchronous behavior using Promise and async/await 
- - [ ] I know the concept of Javascript scope/closure
- - [ ] I know the basis of debugging in a browser
-
-## Step 4 - Unit testing and browser support
-> Unit test, jasmine, phantomJS
-
-This step is about setting up a proper front-end testing environment.
-
-**Why ?** Have a good idea on how to unit test Javascript code.
-
-**At the end, we should have a proper unit test set and a task to run it.**
-
-### Step 4.1 - Jasmine
-
-[Jasmine](https://jasmine.github.io/) is a framework allowing to write and run unit tests for Javascript projects.
-
-At the end, we should have a _./spec_ folder next to our _./src_ folder containing all our tests.
-
-#### 4.1.1 - Installation
-
-* Install and init Jasmine
-```sh
-npm install --save-dev jasmine
-node node_modules/jasmine/bin/jasmine init
-```
-* Generate sample tests
-```sh
-node node_modules/jasmine/bin/jasmine examples
-```
-
-#### 4.2.2 - Run
-
-* Add a script _test_ to run Jasmine
-```javascript
-//package.json
-// ...
-"scripts": { "test": "jasmine" },
-// ...
-```
-
-* Start Jasmine and see the result
-```sh
-npm run test
-```
-
-### Step 4.2 - Karma
-
-Jasmine does not run in a browser and our user probably will. That's why we will now use 
-[Karma](https://karma-runner.github.io) to run our tests in a headless browser [PhantomJS](http://phantomjs.org/) 
-, but also to be able to generate reports.
-
-#### 4.2.1 - Preparation
-
-You can drop the `./spec/support/jasmine.json` file, it's unused with Karma.
-
-#### 4.2.2 - Installation
-
-We will use these plugins in our project :
-
-[karma-webpack](https://www.npmjs.com/package/karma-webpack) will generates a webpack bundle for each test _(and allow jasmine to understand the ESNext syntax)_
-
-[karma-jasmine](https://www.npmjs.com/package/karma-jasmine) will provide in an adapter for Jasmine
-
-[karma-mocha-reporter](https://www.npmjs.com/package/karma-mocha-reporter) will use the [Mocha](https://mochajs.org/) style logging for the cli report
-
-[karma-jasmine-html-reporter](https://www.npmjs.com/package/karma-jasmine-html-reporter) will dynamically shows our tests results on the debug.html page
-
-[karma-phantomjs-launcher](https://www.npmjs.com/package/karma-phantomjs-launcher) will run our tests on a headless browser
-
-* Install Karma
-```sh
-npm install karma karma-jasmine jasmine-core ^
-            karma-webpack ^
-            karma-mocha-reporter ^
-            karma-jasmine-html-reporter ^
-            karma-phantomjs-launcher --save-dev
-```
-
-* Init Karma
-```sh
-$karma init
-Which testing framework do you want to use ?
-Press tab to list possible options. Enter to move to the next question.
-> jasmine
-
-Do you want to use Require.js ?
-This will add Require.js plugin.
-Press tab to list possible options. Enter to move to the next question.
-> no
-
-Do you want to capture any browsers automatically ?
-Press tab to list possible options. Enter empty string to move to the next question.
-> PhantomJS
-> 
-
-What is the location of your source and test files ?
-You can use glob patterns, eg. "js/*.js" or "test/**/*Spec.js".
-Enter empty string to move to the next question.
-> spec/**/*.spec.js
-```
-
-> ![tip] in order to use Karma as a CLI, we need to globally install Karma-cli using ̀̀̀`npm install -g karma-cli`
-
-* Add the plugins _(optional)_
-> ![info] Karma adds the plugins automatically for you if the plugins array does not exist
-```javascript
-//karma.conf.js
-// ...
-plugins: [
-    require('karma-webpack'),
-    require('karma-jasmine'),
-    require('karma-mocha-reporter'),
-    require('karma-jasmine-html-reporter'),
-    require('karma-phantomjs-launcher')
-]
-// ...
-```
-
-### 4.2.3 - Configure the reporters
-
-Karma can do reports of your tests, but you need to configure it. In our project we use 
-[karma-mocha-reporter](https://www.npmjs.com/package/karma-mocha-reporter) and 
-[karma-jasmine-html-reporter](https://www.npmjs.com/package/karma-jasmine-html-reporter) but you can use others like 
-[karma-coverage-istanbul-reporter](https://www.npmjs.com/package/karma-coverage-istanbul-reporter) to do a coverage 
-report for example.
-
-* Add the reporters
-```javascript
-//karma.conf.js
-// ...
-reporters: ['mocha', 'kjhtml']
-// ...
-```
-
-### 4.2.4 - Configure the browsers
-
-We have configured Karma to use [PhantomJS](http://phantomjs.org/) as browser. Karma need you to specify what browsers where you want to launch your tests.
-
-#### PhantomJS
-
-We prefer use [PhantomJS](http://phantomjs.org/) because it's an headless browser but you can use browsers like Chrome, 
-Firefox or others, the Karma launcher of the desired browser need to be on your project. 
-
-* Make sure you have the following
-```javascript
-//karma.conf.js
-// ...
-browsers: ['PhantomJS']
-// ...
-```
-
-#### Let's try others browsers _(extra)_
-* Add the launchers to your projects
-```sh
-npm install karma-chrome-launcher karma-firefox-launcher --save-dev
-```
-
-* And change your browsers conf
-```javascript
-//karma.conf.js
-// ...
-browsers: ['Chrome', 'Firefox']
-// ...
-```
-
-### 4.2.5 - Configure the preprocessors
-
-You can define preprocessor to transpile your code if you use a non-standard syntax like CoffeeScript or TypeScript.
-In our project, the code need is bundled with webpack, so we use the webpack preprocessor
-
-* Add the preprocessor
-```javascript
-//karma.conf.js
-// ...
-preprocessors: {
-  'spec/**/*.spec.js': ['webpack']
-}
-// ...
-```
-
-You will see these problems if you run like so
-> ![troubleshoot] We use webpack without specifying the 'mode' option (production or development)
->```sh
->WARNING in configuration
->The 'mode' option has not been set, webpack will fallback to 'production' for this value. Set 'mode' option to 'development' or 'production' to enable defaults for each environment.
->```
-
-> ![troubleshoot] PhantomJS doesn't understand the ES6 syntax
->```sh
->PhantomJS 2.1.1 (Windows 8.0.0) ERROR
->  {
->    "message": "An error was thrown in afterAll\nSyntaxError: Use of reserved word 'let' in strict mode",
->    "str": "An error was thrown in afterAll\nSyntaxError: Use of reserved word 'let' in strict mode"
->  }
->```
-
-You need to add some webpack configurations to your Karma config file
-
-* Create a webpack-test.config.js next to the webpack.config.js 
-
-> ![tip] __Pro tip__: It's a good practice to create a webpack config file instead of putting the configuration directly on Karma
-
-```javascript
-//webpack-test.config.js
-module.exports = {
-  mode: 'development',
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /(node_modules)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env']
-          }
-        }
-      }
-    ]
-  }
-};
-```
-
-As you see, we define the mode for webpack, and the 
-[babel rule to transpile our code to ES5](https://babeljs.io/docs/en/babel-preset-env) for PhantomJS. 
-Add other configurations here if necessary
-
-* Put the webpack config into the Karma config
-```javascript
-var webpackConfig = require('./webpack-test.config.js');
-module.exports = function(config) {
-  config.set({
-    // ...
-    webpack: webpackConfig
-    // ...
-  }
-}
-```
-
-#### 4.2.6 - Run
-
-* Replace your script _test_ from "jasmine" to "karma start"
-```javascript
-//package.json
-// ...
-"scripts": { "test": "karma start" },
-// ...
-```
-
-* Start Karma and see the result at [localhost:9876/debug.html](http://localhost:9876/debug.html)
-```sh
-npm run test
-```
-
-### Checklist
- - [ ] I tested my app without karma, I saw the result on the terminal
- - [ ] I tested my app with karma, I saw the result on the terminal and on the [debug.html](http://localhost:9876/debug.html) page
- - [ ] I understand what do "describe" and "it" functions
- - [ ] I understand the Jasmine syntax to write tests
- - [ ] I know what is an headless browser
- - [ ] I am able to choose other reporters and browsers for Karma
-
-## Step 5 - Memory management
-> web storage usage, cookies
-
-In this section we will improve the end view by displaying the last performance of the user in a table.
-
-* store the game history using the web storage [developer.mozilla.org/fr/docs/Web/API/Web_Storage_API](https://developer.mozilla.org/fr/docs/Web/API/Web_Storage_API)
-     sessionStorage and localStorage
-> ![question] What is the main difference between the two? Check what happens if you close, the current tab or the browser.
-* also store the game history in indexedDB: [developer.mozilla.org/fr/docs/Web/API/API_IndexedDB/Using_IndexedDB](https://developer.mozilla.org/fr/docs/Web/API/API_IndexedDB/Using_IndexedDB),
-[developers.google.com/web/ilt/pwa/working-with-indexeddb](https://developers.google.com/web/ilt/pwa/working-with-indexeddb) 
-using the following *Storage* class should be very easy
-```javascript
-//utils.js
-export class Storage {
-
-    constructor() {
-        if (!('indexedDB' in window)) {
-            console.log('This browser doesn\'t support IndexedDB');
-            return;
-        }
-        let idb = indexedDB.open('memory', 1);
-        this._idb = idb;
-
-        idb.onupgradeneeded = e => {
-            if (!e.target.result.objectStoreNames.contains('game')) {
-                e.target.result.createObjectStore('game',{keyPath: 'id', autoIncrement: true});
-            }
-        };
-    }
-
-    write(data) {
-        const tx = this._idb.result.transaction('game', 'readwrite');
-        const gameStore = tx.objectStore('game');
-        gameStore.add(data);
-        return new Promise((resolve, reject) => {
-            tx.oncomplete = resolve;
-            tx.onerror = reject;
-        });
-    }
-
-    readAll() {
-        const tx = this._idb.result.transaction('game', 'readonly');
-        const gameStore = tx.objectStore('game');
-        const get = gameStore.getAll();
-        return new Promise((resolve, reject) => {
-            get.onsuccess = e => resolve(e.target.result);
-            get.onerror = reject;
-        });
-    }
-}
-```
-> ![question] What is the difference between localStorage and indexedDB?
-
-> ![info] The cookie interface is quite similar to the one we used although it has a different lifecycle, have a look at:
-(developer.mozilla.org/fr/docs/Mozilla/Add-ons/WebExtensions/API/cookies)[https://developer.mozilla.org/fr/docs/Mozilla/Add-ons/WebExtensions/API/cookies]
-
-### Checklist
- - [ ] I stored the user game history in sessionStorage, localStorage and indexedDB
- - [ ] I mapped proper Promise from indexedDB and resolve/reject it
- - [ ] I know how to use web storage and differences between APIs
-
-## Step 6 - Bonus: Production deployment
-
-Deploy the built application in a nginx docker image for a production ready meme-ory client.
-We will use this image: (nginx)[https://hub.docker.com/_/nginx]
-
-```dockerfile
-FROM nginx
-COPY dist /usr/share/nginx/html
-```
-
-> ![info] Do not forget to build the app with webpack before building the docker container (*npm run build*)
-
 ## The end
 
 Congrats, you now have a working ![heart] Meme-ory app ![heart] !
@@ -2008,12 +1342,12 @@ Any specific troubles? Keep us updated and we will add those here.
 # Contributors
  - Logan LEPAGE <[llepage@takima.fr](mailto://llepage@takima.fr)>
  - Alexandre NUNESSE <[anunesse@takima.fr](mailto://anunesse@takima.fr)>
- - Pierre-Quentin Warlot <[pqwarlot@takima.fr](mailto://pqwarlot@takima.fr)>
+ - Pierre-Quentin WARLOT <[pqwarlot@takima.fr](mailto://pqwarlot@takima.fr)>
+ - Alexis PURET <[apuret@takima.fr](mailto://apuret@takima.fr)>
+ - Nicolas THIERION <[nthierion@takima.fr](mailto://nthierion@takima.fr)>
 
 ### Mentors
- - Logan LEPAGE <[llepage@takima.fr](mailto://llepage@takima.fr)>
  - Alexandre NUNESSE <[anunesse@takima.fr](mailto://anunesse@takima.fr)>
-
 
 | <sub>contact us: <[formation@takima.io](mailto://formation@takima.io)></sub> | <sub>© Takima 2019</sub> |
 | --- | ---:|
@@ -2036,13 +1370,12 @@ Any specific troubles? Keep us updated and we will add those here.
 [yarn]: .README/icons/yarn-64x64.png
 
 [game mockup]: .README/mockup.png
-[ecmascript-support]: .README/ecmascript-support.png
 [welcome screenshot]: .README/meme-ory-1.png
 [mvc-architecture]: .README/mvc-architecture.png
 [component-architecture]: .README/component-architecture.png
-[server-detail]: .README/server-detail.png
-
-[asynchronous-communication]: .README/asynchronous-communication.png
+[frameworks_battle]: .README/frameworks_battle.jpg
+[single_page]: .README/single_page_application.png
+[multi_page]: .README/multiple_page_application.png
 
 [info]: .README/info.png
 [warning]: .README/warning.png
@@ -2052,12 +1385,7 @@ Any specific troubles? Keep us updated and we will add those here.
 [TODO]: .README/error.png
 [question]: .README/question.png
 [troubleshoot]: .README/error.png
+[boom]: .README/smileys/boom_14x14.png
 [commit]: .README/commit.png
-
-[frameworks_battle]: .README/frameworks_battle.jpg
-[unknown-card-img]: .README/cards-miniatures/back-card.png
-[takima-card-img]: .README/cards-miniatures/takima-card.png
-[jawg-card-img]: .README/cards-miniatures/jawg-card.png
-[gatling-card-img]: .README/cards-miniatures/gatling-card.png
-
+[tadaa]: .README/smileys/tadaa_14x14.png
 [heart]: .README/smileys/heart_14x14.png "heart"

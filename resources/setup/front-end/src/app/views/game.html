@@ -23,6 +23,7 @@
 
 <div class="container-fluid flex-grow-1 overflow-auto">
     <div class="game-cmp">
+        <!-- TODO Step 6: Keep only this element -->
         <main class="cards flex-row h-100"></main>
     </div>
 
@@ -32,7 +33,7 @@
 </div>
 </body>
 
-<!-- TODO put in card.component.html in step XXX -->
+<!-- TODO Step 6: move card-cmp in card.component.html -->
 <template id="card-template">
     <div class="card-cmp">
         <div class="card-wrapper">
@@ -49,6 +50,6 @@
 <!-- TODO Step 1: change script location to './card/card.component.js' -->
 <script src="../scripts/card.js"></script>
 <script>
-    new GameComponent().render();
+    new GameComponent().init();
 </script>
 </html>

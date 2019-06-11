@@ -1,14 +1,16 @@
-(function() {
+// TODO Step 6 import "./welcome.component.html"
+
+(function() {   // TODO Step 6 remove this closure
 
     // TODO Step 3.1 create a class
     /* class WelcomeComponent constructor  */
     function WelcomeComponent() {
     }
 
-    /* method WelcomeComponent.render */
-    WelcomeComponent.prototype.render = render;
+    /* method WelcomeComponent.init */
+    WelcomeComponent.prototype.init = init;
 
-    function render() {
+    function init() {
         var form = document.querySelector('form.form-signin');
 
         form.addEventListener('submit', function(event) {     // TODO Step 3.2: use arrow function
@@ -28,11 +30,15 @@
         return this;
     }
 
+    // TODO Step 6 implement getTemplate() {}
+
     function _startGame(name, size) {
         // TODO Step 3.2: use template literals
+        // TODO Step 6: change path to: `game?name=${name}=name&size=${size}`
         window.location = './game.html?name=' + name + '&size=' + size;
     }
 
-    // put component in global scope, tu be runnable right from the HTML. TODO remove in step XXX
+    // put component in global scope, tu be runnable right from the HTML.
+    // TODO Step 6 export WelcomeComponent
     window.WelcomeComponent = WelcomeComponent
 })();
