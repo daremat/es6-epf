@@ -5,13 +5,9 @@ export function getRenderId() {
 }
 
 export class Component {
-    /**
-     *
-     * @param name the name of component tag. ie: This component will be inserted as <name> within the DOM.
-     */
     constructor(name) {
         if (!name) {
-            throw new TypeError('you should give a name to components');
+            throw new TypeError('you should give a name to Component. Did you forget to call super(name)?');
         }
 
         this._elt = document.createElement(name);

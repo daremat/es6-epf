@@ -1150,14 +1150,16 @@ This step is about adding better way to handle style files with the help of sass
 
 **Why ?** Use the power of Webpack previously installed and do beautiful things.
 
-After adding sass files we gonna implement bootstrap with it.
+After adding sass support, we gonna use the sass version of bootstrap instead of the CSS one.
 
 ## Step 7.1 Add Sass
 
 First things to use sass files is to tell Webpack how to load sass files, we saw previously
 we can do this with loader.  
 Therefore install a sass loader with npm:  
-`npm install autoprefixer sass-loader style-loader css-loader --save-dev`
+```bash
+>$ npm install -D autoprefixer sass-loader style-loader css-loader --save-dev
+```
 
 > ![question] What are the objectives of `sass-loader`, `style-loader` and `css-loader` ?
 
@@ -1179,7 +1181,7 @@ module: {
 }
 ```
 
-Before deleting all css files we gonna add one sass file which will contain our palette color.  
+Before deleting all css files we gonna add one sass file which will contains our color palette.  
 `./src/app/style/_colors.scss`  
 ``` sass
 /* https://flatuicolors.com/palette/defo */
@@ -1198,12 +1200,12 @@ Instead of using a css file for a component create a sass file, for instance for
 ```
 ├── welcome/
 │   ├── welcome.component.js
-│   ├── welcome.html
-│   └── welcome.scss
+│   ├── welcome.component.html
+│   └── welcome.component.scss
 ```
-And import `welcome.scss` within the js file:  
+And import `welcome.component.scss` within the js file:  
 ``` js
-import './welcome.scss';
+import './welcome.component.scss';
 ```
 Then to import your colors inside your `welcome.scss` file you have to write:  
 ``` sass

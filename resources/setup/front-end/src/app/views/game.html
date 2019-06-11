@@ -22,10 +22,10 @@
 </nav>
 
 <div class="container-fluid flex-grow-1 overflow-auto">
-    <div class="game-cmp">
-        <!-- TODO Step 6: Keep only this element -->
-        <main class="cards flex-row h-100"></main>
-    </div>
+    <!-- TODO Step 6: Keep only this element -->
+    <main class="game-cmp">
+        <div class="cards flex-row h-100"></div>
+    </main>
 
     <footer class="navbar position-absolute fixed-bottom bg-dark">
         <span>&copy The MÈME ory corporation | 2019</span>
@@ -33,15 +33,15 @@
 </div>
 </body>
 
-<!-- TODO Step 6: move card-cmp in card.component.html -->
 <template id="card-template">
-    <div class="card-cmp">
+    <!-- TODO Step 6: move card-cmp in card.component.html -->
+    <main class="card-cmp">
         <div class="card-wrapper">
             <img class="card front-face" alt="card">
             <!-- TODO Step 1: change image location to './card/assets/back.png' -->
             <img class="card back-face" alt="card" src="../../assets/cards/back.png">
         </div>
-    </div>
+    </main>
 </template>
 
 <!-- link to welcome controller -->
