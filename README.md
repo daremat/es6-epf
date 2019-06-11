@@ -231,7 +231,7 @@ For the beginning, let's start together with `WelcomeComponent`:
    ```
    > ![info] In javascript we can use quotes (`'`) and double quotes (`""`) independently. However, using simple quotes is a lot more common practise. 
 
- - navigate to [http://localhost:8080/src/app/components/welcome/welcome.component.html](http://localhost:8080/app/components/welcome/welcome.component.html): The welcome page should look and behave as usual.
+ - navigate to [http://localhost:8080/src/app/components/welcome/welcome.component.html](http://localhost:8080/src/app/components/welcome/welcome.component.html): The welcome page should look and behave as usual.
 
 > ![info] Component oriented architecture is not only about file structure. 
 The most important part is: a component should be **contained** (all required code at the same place), **standalone** (few or no external dependencies) and **reusable**. 
