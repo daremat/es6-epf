@@ -1277,14 +1277,14 @@ To be sure you have only one import of bootstrap, make sure you have remove all
  - [ ] I have only one import of bootstrap and my style is not broken.
 
 
-
 ## Step 8 Features
+
+For the following features, be free to make your own style and create new component if you thing you need new one.
 
 ### Step 8.1 LocalStorage
 
-Our goal is to preserve our game even if we exist the browser or someone reload the page.
-You have to use the following library to help you to communicate with the LocalStorage.  
-
+Our goal is to preserve our game even if we exit the browser or the user reload the page.
+You have to use the following library [https://github.com/localForage/localForage](https://github.com/localForage/localForage) to help you to communicate with the LocalStorage.  
 
 > With web storage, web applications can store data locally within the user's browser.
 > Before HTML5, application data had to be stored in cookies, included in every server request. Web storage is more secure, and large amounts of data can be stored locally, without affecting website performance.  
@@ -1292,19 +1292,21 @@ You have to use the following library to help you to communicate with the LocalS
 >Web storage is per origin (per domain and protocol). All pages, from one origin, can store and access the same data.  
 > https://www.w3schools.com/html/html5_webstorage.asp
 
-For each step of the player you have to store the current state into the storage,
+> ![info] Remember you how to install a NPM package.
+
+For each step of the player you have to store the current state (which card is flipped, wich one is not, time elapsed, ...) into the storage,
 and when come into the website you have to load the store from the storage if it is present.
 
 ### Step 8.2 Multiplayer scores
 
-If you checked the [server Swagger](http://localhost:8081/api-docs/) maybe you have seen two endpoints that are not used in the tutorial:
+If you checked the [Back-end's api docs](http://localhost:8081/api-docs/) maybe you have seen two endpoints that are not used in the tutorial:
 ``` js
 [POST]  /scores   Save score on the server.
 [GET]   /scores   Return a json of all scores saved
 ```
 
 Your goal is to post the player score at the end of the game and to fetch 
-all scores saved to print them in a beautiful way on the almost empty score page.
+all scores saved to print them in a beautiful way on the score page.
 
 Example to fetch all scores:
 ```javascript
