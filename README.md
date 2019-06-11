@@ -1279,7 +1279,8 @@ To be sure you have only one import of bootstrap, make sure you have remove all
 
 ## Step 8 Features
 
-For the following features, be free to make your own style and create new component if you thing you need new one.
+It's time to let you dive yourself into the code, be free to make your own style and create new component if you think you need new one.
+Keep in mind all the good practices we explain you previously or in the course, and use them to create beautiful code !
 
 ### Step 8.1 LocalStorage
 
