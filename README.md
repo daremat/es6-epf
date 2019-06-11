@@ -81,7 +81,7 @@ This folder contains sources for the back-end and the front-end that compose our
 Our web application will work together with a server. Set it up right now:
  - install the dependencies 
    ```bash
-   cd server;
+   cd setup/back-end
    npm install
    npm start
    ```
