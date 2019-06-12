@@ -705,6 +705,8 @@ const config = await fetchConfig();
 > ![danger] We cannot call an `async` method from a non `async` method, if you want to call `fetchConfig` from `init` method you also have to convert the `init`
 to a async one. 
 
+> ![question] Inside wich version of ECMAScript async/await has been released ? 
+
 ### Checklist
   - [ ] I converted the old Ajax request with Fetch Api.
   - [ ] I know how to use a promise.
