@@ -1299,6 +1299,7 @@ front-end/src/app/components/game/card/card.component.scss
 ```
 
 ### Checklist
+ - [ ] I have converted all my css files to sass files.
  - [ ] I can import `.scss` files in my code
  - [ ] My sass can `@import` other sass files
  - [ ] I understand the magic behind **webpack loaders**
@@ -1353,12 +1354,14 @@ On your own, refactor all your `.scss` files to use nested blocks.
 > ![info] You can find much more sass feature from the docs: [https://sass-lang.com/guide](https://sass-lang.com/guide)
 
 ### Checklist
- - [ ] I know the differences between `css-loader`, `style-loader` and `sass-loader`.
- - [ ] I have converted all my css files to sass files.
  - [ ] I used the nesting sass feature on my components
  - [ ] All my css files are deleted
+ - [ ] My application still looks great
 
 ## Step 7.2 Add bootstrap with Webpack
+
+We told you earlier, the application uses [bootstrap 4]()
+
 
 Now we have implemented everything to handle style files, we can add simply bootstrap with:  
 `@import "~bootstrap/scss/bootstrap";`
