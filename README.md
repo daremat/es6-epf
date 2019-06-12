@@ -691,7 +691,7 @@ We gonna use an other (better in some cases) way to handle async call.
 The async, await way, first you have to declare your method in async way:
 ```js
 async fetchConfig() {
-    return fetch(`${environment.api.host}/board?size${this._size}`, {
+    return fetch(`${environment.api.host}/board?size=${this._size}`, {
       method: "GET"
     })
       .then(response => response.json())
