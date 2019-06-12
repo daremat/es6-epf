@@ -78,6 +78,8 @@ Check it out at [github.com/creationix/nvm](https://github.com/creationix/nvm)
 - Copy up all files from [`resources/setup`](resources/setup) to your working directory.
 This folder contains sources for the back-end and the front-end that compose our web application.
 
+> ![warning] All this tutorial long, we assume you work within a git repository. Do not work on a clone or a fork of this repository! Init your own empty repository instead.
+
 Our web application will work together with a server. Set it up right now:
  - install the dependencies 
    ```bash
@@ -409,6 +411,7 @@ They also serve as a documentation when new developers join your project. Use th
 ##### Your job:
  - Add a new `start` script, that crank-up the http server: 
     ```json
+    // package.json
     {
         "scripts": {
            "start": "http-server -c-1"
@@ -606,7 +609,7 @@ Here is a bit of work to do:
    > ```
    > and 
    > ```javascript
-   > setTimeout(() => console.log(this._name));
+   > setTimeout(() => console.log(this._name), 750);
    > ```
 
 Now, go ahead over all the code, and modernize every `var`, every `function() {}` and every string concatenation you can found.
@@ -715,7 +718,7 @@ to a async one.
 All all things all good, our code start to look as something clean and modern... 
 
 However, there is still a major drawback: While virtually [all browsers can run ES5 code](http://kangax.github.io/compat-table/es5/),
- [not all web browser are compatible with ES6](http://kangax.github.io/compat-table/es6/) / ESNext (looking at you, Internet explorer and the other one).
+ [not all web browser are compatible with ES6](http://kangax.github.io/compat-table/es6/) / ESNext (looking at you, Internet explorer ![trollface]).
 
 We have the choice: 
  - write modern ESNext code, that may won't run if your client has an outdated browser
@@ -729,7 +732,7 @@ Those kind of tools are called **transpilers**. In this step, let's bring in [**
 ##### Your job: 
  - install Babel with NPM
    ```bash
-   >$ npm install -D @babel/cli @babel/core @babel/preset-env
+   >$ npm install -D @babel/cli @babel/core @babel/preset-env @babel/polyfill
    >$ npm install core-js
    ```
    > ![question] What does the `@` symbol mean in `@babel/***`?
@@ -1193,25 +1196,10 @@ meme-ory/front-end/src/app/components/game/card/card.component.html
 
 ## Step 7 - Style the application
 
-This step is about adding better way to handle style files with the help of sass and webpack.
+Last step was a bit rude. Do not worry, this step is a lot more fun, as we gonna play with style and colors!
 
-**Why ?** Use the power of Webpack previously installed and do beautiful things.
-
-After adding sass support, we gonna use the sass version of bootstrap instead of the CSS one.
-
-## Step 7.1 Add Sass
-
-First things to use sass files is to tell Webpack how to load sass files, we saw previously
-we can do this with loader.  
-Therefore install a sass loader with npm:  
-```bash
->$ npm install -D autoprefixer sass-loader style-loader css-loader --save-dev
-```
-
-> ![question] What are the objectives of `sass-loader`, `style-loader` and `css-loader` ?
-
-Then add them to the webpack.config.js:
-``` js
+Did you remember from previous step the following lines in `webpack.config.js`?
+```javascript
 module: {
   rules: [
       {
@@ -1228,43 +1216,101 @@ module: {
 }
 ```
 
-Before deleting all css files we gonna add one sass file which will contains our color palette.  
-`./src/app/style/_colors.scss`  
+With those lines, we are giving the ability to webpack to write `import some-style.css` right from our javascript files.
+This way, our components have the power to pull their respective css, so it's not the HTML's job anymore.
+
+> ![question] Can you guess how `style-loader` works exactly?
+
+In this step, we go a little bit further, and leverage the power of [Sass](https://sass-lang.com/) to enhance our stylesheets.
+
+> ![tip] Another language we have to learn ![weary]? Do not worry. A valid `.CSS` file is also a valid `.scss` file.
+
+First, the boring and fastidious step: convert all your `*.css` files to `*.scss` file.
+ - rename all `***.css` to `***.scss`
+ - replace all `import "***.css"` to `import "***.scss"`
+ - ...and that's all!
+
+Of course, at the moment, we take no advantage of SASS. See you at next step.
+
+### Checklist
+ - [ ] I understand why bundlers are mandatory
+ - [ ] I know how to configure webpack
+ - [ ] I have some clues on all the magic webpack can do
+
+**![commit] commit step**
+
+> ![tip] **A not about web design**: As a rule of thumb, we try to keep a uniform style across all displayed elements: Have only few colors, 
+and a restraint common set of styles (shadow, borders, animations, ...). 
+If you use too many various style, your application won't be coherent and will suffer of bad UX (User eXperience)
+
+> ![tip] If you are interested in application UI (User Interfaces) and UX (User eXperience), you **must** have a look to google's [Material Design](https://material.io/design/) 
+
+## Step 7.1 Sass variables.
+
+What is your current main color? You know, that blue-ish color on the top nav bar... its `#007bff`
+![style-debugger]
+
+Would you remember? I guess not...
+
+One of the immediate benefit of sass is that we can set this once for all in a **sass variable**:
+- create a file `styles/_colors.scss`
+ > ![question] What does the `_` prefix means on a sass file?
+
+- define all the color variables you will use across all your application.
+    > ![tip] __My good advise__: Start by defining a `primary` color and a `secondary` color. Those colors are usually [**complementary**](https://www.w3schools.com/colors/colors_complementary.asp)
+
+    `./src/app/style/_colors.scss`  
+    ``` sass
+    /* https://flatuicolors.com/palette/defo */
+    $primary: #8e44ad;
+    $primary-light: #9b59b6;
+    $primary-txt: #ecf0f1;
+    $primary-txt-shadow: #95a5a6;
+    $primary-background: #34495e;
+    ```
+    > ![info] Feel free to customize the styles above  
+    
+    > ![tip] __Pro tip__ Never write a CSS class `.background-red` or a variable `$blue`. 
+    Tomorrow, you may want to turn those color `green`, and you dno't want to rename everything.
+    
+    > ![tip] If you lack of inspiration or good tastes, you can pick colors from a predefined palette: [https://flatuicolors.com/palette/defo](https://flatuicolors.com/palette/defo)
+
+- go ahead in `score.component.scss`, import your palette: 
+    ```scss
+    // score.component.scss
+    @import "../styles/_colors.scss";
+    
+    // ...
+    ```
+    Now, you can use variables from `_colors.scss` within `core.component.scss`.
+
+- and customize the view on your own. The final result may look like the following:
+
+- make sure any other of your `scss` that uses colors import them from `_colors.scss` as well.  
+
+### Produced files
+```
+front-end/src/app/styles/style.scss
+front-end/src/app/components/score/score.component.scss
+front-end/src/app/components/welcome/welcome.component.scss
+front-end/src/app/components/game/card/card.component.scss
+```
+
+### Checklist
+ - [ ] I can import `.scss` files in my code
+ - [ ] My sass can `@import` other sass files
+ - [ ] I understand the magic behind **webpack loaders**
+ - [ ] My application still looks great
+
+**![commit] commit step**
+
+## Step 7.2 Nested blocks
+
+Let's use a bit more of sass feature! 
+
+Go to `card.component.scss`, and see: we have many times `.card-cmp .card-wrapper`, this is kinda boring to write and read:
 ``` sass
-/* https://flatuicolors.com/palette/defo */
-$primary: #8e44ad;
-$primary-light: #9b59b6;
-$primary-txt: #ecf0f1;
-$primary-txt-shadow: #95a5a6;
-$primary-background: #34495e;
-```
-Don't hesitate to custom it.  
-
-> ![info] If you need help to create your own palette colors you can help you with famous ones: https://flatuicolors.com https://material.io/tools/color
-
-How to use my palette now?  
-Instead of using a css file for a component create a sass file, for instance for welcome component:  
-```
-├── welcome/
-│   ├── welcome.component.js
-│   ├── welcome.component.html
-│   └── welcome.component.scss
-```
-And import `welcome.component.scss` within the js file:  
-``` js
-import './welcome.component.scss';
-```
-Then to import your colors inside your `welcome.scss` file you have to write:  
-``` sass
-@import '../../styles/colors.scss';
-```
-Finally in your `welcome.scss` you can use the variables from `colors.scss`.  
-
-Now you can move all content of your css files into new sass files for each components!  
-
-Let's use a bit more of sass feature! In our card style we have many times `.card-cmp .card-wrapper`, this is kinda boring to write.
-Sass bring us the nesting feature, instead of writing the old way:
-``` sass
+// card.component.scss
 .card-cmp {
   position: relative;
   display: inline-block !important;
@@ -1276,10 +1322,14 @@ Sass bring us the nesting feature, instead of writing the old way:
   transform-style: preserve-3d;
   transition: all .5s;
 }
-...
+// ...
+
 ```
-we can write:
+
+With Sass, you can now nest your blocks within other blocks. Rewrite it as follows:
+
 ``` sass
+// card.component.scss
 .card-cmp {
   position: relative;
   display: inline-block !important;
@@ -1292,12 +1342,13 @@ we can write:
     transition: all .5s;
   }
 }
-...
+// ...
 ```
-and so on.
-You have to convert the other component the same way, and have fun to create your own style !
 
-> ![info] You can find much more sass feature from the docs: https://sass-lang.com/guide
+On your own, refactor all your `.scss` files to use nested blocks.
+> ![tip] A mistakes happens quickly. I recommend to check the result each time a component is refactored.
+
+> ![info] You can find much more sass feature from the docs: [https://sass-lang.com/guide](https://sass-lang.com/guide)
 
 ### Checklist
  - [ ] I know the differences between `css-loader`, `style-loader` and `sass-loader`.
@@ -1440,6 +1491,7 @@ Any specific troubles? Keep us updated and we will add those here.
 [frameworks_battle]: .README/frameworks_battle.jpg
 [single_page]: .README/single_page_application.png
 [multi_page]: .README/multiple_page_application.png
+[style-debugger]: .README/style-debugger.png
 
 [info]: .README/info.png
 [warning]: .README/warning.png
@@ -1453,3 +1505,5 @@ Any specific troubles? Keep us updated and we will add those here.
 [commit]: .README/commit.png
 [tadaa]: .README/smileys/tadaa_14x14.png
 [heart]: .README/smileys/heart_14x14.png "heart"
+[weary]: .README/smileys/weary_14x14.png
+[trollface]: .README/smileys/trollface_14x14.png
