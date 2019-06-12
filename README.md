@@ -671,13 +671,13 @@ return dates
 Let's enjoy an other feature of ES6, Promises to fight against the callback hell !
 Dive into the game component and into the `fetchConfig` method.
 The method contains the old way to do an Ajax method, we gonna keep only the method argument `cb` of the method
-and the endpoint used to get the config: `environment.api.host${/board?size=}${this._size}`
+and the endpoint used to get the config: `${environment.api.host}/board?size=${this._size}`
 
 Yes the other part of this function is tough to read and we want something more readable.
 
 Below it's how to replace all code of the `fetchConfig` method.
 ```js
-return fetch(`${environment.api.host}/board?size${this._size}`, {method: 'GET'})
+return fetch(`${environment.api.host}/board?size=${this._size}`, {method: 'GET'})
         .then(response => response.json())
         .catch(error => console.log('Fetch config error', error));
 ```
