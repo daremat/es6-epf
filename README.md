@@ -682,7 +682,7 @@ return fetch(`${environment.api.host}/board?size${this._size}`, {method: 'GET'})
         .catch(error => console.log('Fetch config error', error));
 ```
 
-> [question] What are the advantages of Promises?
+> ![question] What are the advantages of Promises?
 
 Lighter right?
 But the `cb` argument is missing, instead of calling it we are returning a Promise, so how to handle it in our
