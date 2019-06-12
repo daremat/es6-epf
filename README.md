@@ -700,7 +700,7 @@ async fetchConfig() {
 ```
 And recover the config in the `init` method:
 ```js
-const config = await fetchConfig();
+const config = await this.fetchConfig();
 ```
 > ![danger] We cannot call an `async` method from a non `async` method, if you want to call `fetchConfig` from `init` method you also have to convert the `init`
 to a async one. 
@@ -842,7 +842,7 @@ In this step, we will create a new `main.js` file, to ensure `parseUrl` function
 </html>
 ```
  - Test the result: go to [http://localhost:8080/src/index.html?value1=someValue1&value2=someValue2](http://localhost:8080/src/index.html?value1=someValue1&value2=someValue2), and open your dev console
-    > ![boom] Uncaught SyntaxError: **Unexpected token export**
+    > ![boom] Uncaught SyntaxError: **Unexpected token export** from Chrome or **SyntaxError: import declarations may only appear at top level of a module** from Firefox
  
 That's right: even ES6 defines `import` and `export`, and even your browser is up to date, it is not able to execute this statement; 
 And, guess what? Transpilers like Babel will be **of no help**.
