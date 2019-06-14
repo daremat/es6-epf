@@ -147,7 +147,10 @@ Now, navigate to [localhost:8080/src](http://localhost:8080/src): this should se
 
 > ![tip] **Did you know**? Your web browser can tell you a lot on what happens behind the scene (javascript execution, stack-traces, network, errors, ...). Press F12 (firefox, chrome, chromium) to access the developper tools. You will need it all this tutorial long.
 
-> ![question] While going through the 3 views of the application, how many files did your browser download in total? What was the total size of transfered data? 
+> ![question] While going through the 3 views of the application, how many files did your browser download in total? What was the total size of transfered data?
+
+> ![tip] Always use your browser dev tool. It provides a lot of information. For example, you can find a **network** tab:
+> ![network-dev-tool] 
 
 #### Files produced:
 ```
@@ -800,7 +803,7 @@ It would be a great idea to define it once for all, and import it from both `gam
 ### Step 6.1 - import, export
 
 In this step, we will create a new `main.js` file, to ensure `parseUrl` function works properly once imported. 
- - Create a new `meme-ory/src/utils/utils.js` file, and paste the `parseUrl` function as follows:
+ - Create a new `meme-ory/src/app/utils/utils.js` file, and paste the `parseUrl` function as follows:
    ```javascript
    export function parseUrl() {
       return result;
@@ -879,6 +882,7 @@ In this step, **[Webpack](https://webpack.js.org/)** will be a bundler of choice
 ##### Your job: 
  - add webpack to your project: 
    ```bash
+   >$ cd meme-ory/front-end
    >$ npm install -D webpack webpack-cli webpack-dev-server babel-loader html-webpack-plugin file-loader
    ```
    > ![info] `babel-loader` will be used to *babelify* all the source code that goes into webpack
@@ -938,6 +942,9 @@ In this step, **[Webpack](https://webpack.js.org/)** will be a bundler of choice
   ```
   ... and see the result at [http://localhost:8080/index.html?value1=someValue1&value2=someValue2](http://localhost:8080/index.html?value1=someValue1&value2=someValue2)
   
+  > ![info] Did you see? The new URL is `localhost:8080/index.html` rather than `localhost:8080/src/index.html`. Webpack produces an in-memory file called `/index.html`, 
+    that automatically links to the newly created bundle.   
+  
   Look at the source of `index.html` in your web browser: 
   file `main.js` is not found (you can remove it from `index.html`), but instead a file `bundle.js` is served and contains all your source code ![tadaa]. 
 
@@ -961,18 +968,37 @@ meme-ory/front-end/webpack.config.js
 
 ### Step 6.3 - The source maps
 
-Did you get into `bundle.js`? Did you managed to locate where your sources are? Now, imagine you have to debug your `parseUrl` function:
- - put a `debugger` statement at the first line of `parseUrl`:
-    ```javascript
-    export function parseUrl() {
-        debugger; // <---
-        const url = window.location.href;
-        
-        // ...
-    }
-    ```
- - press F5 on your web browser, and see your debugger stop at a bunch of transpiled code mess that you don't even want to read.
+Did you get into your transpiled code? Did you managed to locate where your sources are?
 
+> ![tip] At the moment, your bundle is located in webpack's memory only. You cannot open it via your file manager. If you want to observe it, use your browser's development console. 
+>
+> - put a `debugger` statement at the first line of `parseUrl`:
+>     ```javascript
+>     export function parseUrl() {
+>         debugger; // <---
+>         const url = window.location.href;
+>         
+>         // ...
+>     }
+>     ```
+> - press F5 on your web browser, and see your debugger stop at a bunch of transpiled code mess that you don't even want to read.
+
+On my setup, the `parseUrl` function looks like this:
+```javascript
+function parseUrl() {
+  debugger;
+  var url = window.location.href;
+  var query = url.split('?')[1] || '';
+  var delimiter = '&';
+  return query.split(delimiter).map(function (p) {
+    return p.split('=');
+  }).reduce(function (acc, kv) {
+    acc[kv[0]] = kv[1];
+    return acc;
+  }, {});
+}
+```
+ 
 Of course, bundlers would have no point if we are not able to debug properly the produced code. 
 In this step, before leaving, lets enable another webpack feature to produce **sourcemap**
 
@@ -1055,8 +1081,11 @@ Let's get started!
     > ![warning] Do not forget to update `<img src="...">` from `"./card/assets/back.png"` to "`./assets/back.png`"
 
 - Create the shell in `index.html`.  
+    > ![tip] We call **Shell** all the navigation and controls that remains unchanged from one page to another. In our application, this means the **top nav** (`<nav class="navbar ...">`, and the **footer** (`<footer>`))
+    
     At the moment, all of our `welcome.component.html`, `game.component.html` & `score.componet.html` display their own shell. 
     Move all the common elements (`<body>`, `<head>`, `<nav>`, `<footer>`, ...) in `index.html`, **and drop all the `<script>` and `<link>` tags**.
+    ![shell-html]
 
     > ![info] As you can see, there is now no more link between HTML and its JS/CSS
 
@@ -1196,7 +1225,7 @@ meme-ory/front-end/src/app/components/game/card/card.component.html
 
 **![commit] commit step**
 
-## Step 7 - Style the application
+## Step 8 - Style the application
 
 Last step was a bit rude. Do not worry, this step is a lot more fun, as we gonna play with style and colors!
 
@@ -1234,10 +1263,24 @@ First, the boring and fastidious step: convert all your `*.css` files to `*.scss
 
 Of course, at the moment, we take no advantage of SASS. See you at next step.
 
+### Produced files
+```
+front-end/src/app/styles/style.scss
+front-end/src/app/components/score/score.component.scss
+front-end/src/app/components/welcome/welcome.component.scss
+front-end/src/app/components/game/card/card.component.scss
+```
+
 ### Checklist
- - [ ] I understand why bundlers are mandatory
- - [ ] I know how to configure webpack
- - [ ] I have some clues on all the magic webpack can do
+ - [ ] I have converted all my css files to sass files.
+ - [ ] I can import `.scss` files from JS files
+ - [ ] I understand the magic behind **webpack loaders**
+ - [ ] My application still has some style! 
+
+**![commit] commit step**
+
+
+### Checklist
 
 **![commit] commit step**
 
@@ -1245,7 +1288,7 @@ Of course, at the moment, we take no advantage of SASS. See you at next step.
 and a restraint common set of styles (shadow, borders, animations, ...). 
 If you use too many various style, your application won't be coherent and will suffer of bad UX (User eXperience)
 
-> ![tip] If you are interested in application UI (User Interfaces) and UX (User eXperience), you **must** have a look to google's [Material Design](https://material.io/design/) 
+> ![tip] If you are interested in application **UI** (User Interfaces) and **UX** (User eXperience), you **must** have a look to google's [Material Design](https://material.io/design/) 
 
 ## Step 7.1 Sass variables.
 
@@ -1288,24 +1331,23 @@ One of the immediate benefit of sass is that we can set this once for all in a *
 
 - and customize the view on your own. The final result may look like the following:
 
-- make sure any other of your `scss` that uses colors import them from `_colors.scss` as well.  
+![score-component-styled]
+
+- make sure all other `scss` files that uses colors import them from `_colors.scss` as well.  
+
 
 ### Produced files
 ```
 front-end/src/app/styles/style.scss
-front-end/src/app/components/score/score.component.scss
-front-end/src/app/components/welcome/welcome.component.scss
-front-end/src/app/components/game/card/card.component.scss
+front-end/src/app/styles/_colors.scss
 ```
 
 ### Checklist
- - [ ] I have converted all my css files to sass files.
- - [ ] I can import `.scss` files in my code
- - [ ] My sass can `@import` other sass files
- - [ ] I understand the magic behind **webpack loaders**
- - [ ] My application still looks great
+ - [ ] I cam `@import` **sass** files from other **sass** files
 
 **![commit] commit step**
+
+### Checklist
 
 ## Step 7.2 Nested blocks
 
@@ -1326,10 +1368,9 @@ Go to `card.component.scss`, and see: we have many times `.card-cmp .card-wrappe
   transition: all .5s;
 }
 // ...
-
 ```
 
-With Sass, you can now nest your blocks within other blocks. Rewrite it as follows:
+With Sass, you can now nest your blocks within other blocks. As an example, `card.component.scss` can be rewritten as follows:
 
 ``` sass
 // card.component.scss
@@ -1349,6 +1390,7 @@ With Sass, you can now nest your blocks within other blocks. Rewrite it as follo
 ```
 
 On your own, refactor all your `.scss` files to use nested blocks.
+
 > ![tip] A mistakes happens quickly. I recommend to check the result each time a component is refactored.
 
 > ![info] You can find much more sass feature from the docs: [https://sass-lang.com/guide](https://sass-lang.com/guide)
@@ -1360,46 +1402,63 @@ On your own, refactor all your `.scss` files to use nested blocks.
 
 ## Step 7.2 Add bootstrap with Webpack
 
-We told you earlier, the application uses [bootstrap 4]()
+We told you earlier, our application uses [bootstrap 4](https://getbootstrap.com/).
 
+At the moment, we use a transpiled `css` version of bootstrap, as you can see from your `index.html`: 
+```html
+<!-- meme-ory/src/index.html -->
+<link rel="stylesheet" href="../node_modules/bootstrap/dist/css">
+```
+> ![info] By now, this should be the only place that imports bootstrap
 
-Now we have implemented everything to handle style files, we can add simply bootstrap with:  
-`@import "~bootstrap/scss/bootstrap";`
+You can remove that line right now, as in this step we will rather make use of the `scss` version of bootstrap.
+Bootstrap sass defines a set of variable by default ([default colors](https://github.com/twbs/bootstrap/blob/v4.3.1/scss/_variables.scss#L69), [default dimensions](https://github.com/twbs/bootstrap/blob/v4.3.1/scss/_variables.scss#L278), ...)
+By using CSS, we can customize bootstrap right before transpiling it to css, so that we don't have to override bootstrap's generated styles.
 
-> ![question] What means `~` symbol above ?
+> ![tip] The `!default` in [bootstrap sources](https://github.com/twbs/bootstrap/blob/v4.3.1/scss/_variables.scss#L69) means: 'Hey, sass: use that value for variable `$primary` unless someone already sat it.'
 
-But where to import it ? We won't import it within all our components.
-Create an `app.scss` file next to `main.js` file and add `import './app.scss';` inside `main.js`,
-then last thing to do is to add the import of bootstrat within `app.scss`.
+- Remove the bootstrap import from `index.html`
+- Navigate to [http://localhost:8080/#](http://localhost:8080) and see your application is missing some styles.
+- Go to `meme-ory/front-end/src/styles/styles.scss`, and import bootstrap at the very first line of the file
+    ```scss
+    @import "~bootstrap/scss/bootstrap";
+    ```  
+    Check that bootstrap styles are back!
+- Now, before the `@import` line, define the `$primary` color to what you prefer.
+    > ![tip] you can `@import` it from `_colors.scss`.
 
-To be sure you have only one import of bootstrap, make sure you have remove all  
-`<link rel="stylesheet" href="../../../../node_modules/bootstrap/dist/css/bootstrap.css">` lines.
+![tadaa] Tadaa, you can tell bootstrap what color scheme it should use!
 
 ### Checklist
  - [ ] I know what means `~` symbol.
  - [ ] I have only one import of bootstrap and my style is not broken.
 
+**![commit] commit step**
 
-## Step 8 Features
+## Step 8 Additional features
+
+> ![info] The next steps are all optional. Feel free to skip them if time is running out. 
+If you have time however, I bet you will enjoy them, as you will have to use on your own everything we learned so far to develop some really cool features!
 
 It's time to let you dive yourself into the code, be free to make your own style and create new component if you think you need new one.
 Keep in mind all the good practices we explain you previously or in the course, and use them to create beautiful code !
 
 ### Step 8.1 LocalStorage
 
-Our goal is to preserve our game even if we exit the browser or the user reload the page.
-You have to use the following library [https://github.com/localForage/localForage](https://github.com/localForage/localForage) to help you to communicate with the LocalStorage.  
+In this step, our goal is to preserve our game's state even if we exit the browser or the user reload the page.
+You can achieve that by using the native [`window.localStorage` api](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage),
+but we will rather use mozilla's [localForage](https://github.com/localForage/localForage) library, that works like an asynchrounous localStorage.
 
-> With web storage, web applications can store data locally within the user's browser.
-> Before HTML5, application data had to be stored in cookies, included in every server request. Web storage is more secure, and large amounts of data can be stored locally, without affecting website performance.  
-> Unlike cookies, the storage limit is far larger (at least 5MB) and information is never transferred to the server.  
->Web storage is per origin (per domain and protocol). All pages, from one origin, can store and access the same data.  
-> https://www.w3schools.com/html/html5_webstorage.asp
+> ![info] Localstorage allows to store any data directly to the user's browser.
 
-> ![info] Remember you how to install a NPM package.
+> ![info] Web storage is per origin (per domain and protocol). No other website can access what you store in the `localStorage`.  
 
-For each step of the player you have to store the current state (which card is flipped, wich one is not, time elapsed, ...) into the storage,
-and when come into the website you have to load the store from the storage if it is present.
+> ![tip] You will need to install the [localForage](https://www.npmjs.com/package/localforage) npm package
+
+Your job: 
+ - Each time the player flips a card, you need to store the current state (ie: the cards array, the elapsed time, ...) into the storage.
+ - When the game is over, you can clean the storage
+ - When `GameComponent` loads up, you need to check first if a previous game was saved, or use the `fetchConfig()` otherwise.
 
 Use the Promise style with the LocalForage library:
 ``` js
@@ -1412,6 +1471,11 @@ localforage.setItem('key', 'value').then(() => {
 });
 ```
 
+### Checklist
+ - [ ] When I reload the `GameComponent`, my game state is not lost
+ - [ ] I know how to use web storage.
+
+**![commit] commit step**
 
 ### Step 8.2 Multiplayer scores
 
@@ -1422,7 +1486,7 @@ If you checked the [Back-end's api docs](http://localhost:8081/api-docs/) maybe 
 ```
 
 Your goal is to post the player score at the end of the game and to fetch 
-all scores saved to print them in a beautiful way on the score page.
+all scores saved to le `ScoreComponent` print a beautifull **hi-scores** top.
 
 Example to fetch all scores:
 ```javascript
@@ -1497,6 +1561,9 @@ Any specific troubles? Keep us updated and we will add those here.
 [single_page]: .README/single_page_application.png
 [multi_page]: .README/multiple_page_application.png
 [style-debugger]: .README/style-debugger.png
+[shell-html]: .README/shell-html.png
+[score-component-styled]: .README/score-component.png
+[network-dev-tool]: .README/chrome-dev-tools-network.png
 
 [info]: .README/info.png
 [warning]: .README/warning.png
