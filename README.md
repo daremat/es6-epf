@@ -1,3 +1,9 @@
+> # Deprecation notice!!
+> 
+> ![warning] This repository has been deprecated and will be removed soon. Please find the tutorial at its new location: 
+> https://epf.master3.takima.io/master3/es6-01
+
+
 # Initiation to modern web & ESNext ![Web 01: 10 credits]
 
 [![milestone-status]](https://master3-assistant.takima.io?milestoneId=40&redirectUri=https%3A%2F%2Fmaster3.takima.io%2Fmaster3%2Fes6-01)
